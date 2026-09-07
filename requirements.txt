@@ -1,0 +1,18 @@
+# Install PyTorch FIRST and SEPARATELY — see MASTER_PROMPT.md section 3.
+# Detect the GPU (nvidia-smi), then install a matching torch/torchvision build
+# from the correct PyTorch index. Do NOT `pip install torch` blindly.
+#
+# Then:  pip install -r requirements.txt
+
+numpy>=1.26
+pandas>=2.2
+scipy>=1.13
+scikit-learn>=1.5
+matplotlib>=3.9
+seaborn>=0.13
+pillow>=10.3
+opencv-python>=4.10
+timm>=1.0.9
+pyyaml>=6.0
+tqdm>=4.66
+requests>=2.32
