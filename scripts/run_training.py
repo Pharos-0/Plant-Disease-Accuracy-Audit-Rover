@@ -25,6 +25,19 @@ def build_jobs(stage: str) -> list[TrainConfig]:
         for seed in SEEDS:
             jobs.append(TrainConfig(version="V1", protocol="v1_image", seed=seed, epochs=12))
             jobs.append(TrainConfig(version="V2", protocol="v2_leaf", seed=seed, epochs=12))
+    if stage in ("shared8", "all"):
+        # Arm B evaluates PlantDoc over SHARED_8, which needs an 8-class source
+        # model; the SHARED_3 models physically cannot produce those logits.
+        for seed in SEEDS:
+            jobs.append(
+                TrainConfig(
+                    version="V2S8",
+                    protocol="v2_leaf",
+                    label_set="SHARED_8",
+                    seed=seed,
+                    epochs=12,
+                )
+            )
     if stage in ("v9", "all"):
         for backbone in V9_BACKBONES:
             for seed in SEEDS:
@@ -42,7 +55,7 @@ def build_jobs(stage: str) -> list[TrainConfig]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--stage", default="v1v2", choices=["v1v2", "v9", "all"])
+    ap.add_argument("--stage", default="v1v2", choices=["v1v2", "shared8", "v9", "all"])
     args = ap.parse_args()
 
     jobs = build_jobs(args.stage)
