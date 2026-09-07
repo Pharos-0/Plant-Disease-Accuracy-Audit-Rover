@@ -11,17 +11,58 @@ import numpy as np
 from scipy import linalg
 
 
-def frechet_distance(x: np.ndarray, y: np.ndarray, eps: float = 1e-6) -> float:
-    """Frechet (Wasserstein-2 between Gaussians) distance, as used by FID."""
+def _sqrtm(a: np.ndarray) -> np.ndarray:
+    """``scipy.linalg.sqrtm`` across versions.
+
+    SciPy dropped the ``disp`` keyword (and the ``(root, errest)`` return) in
+    1.18, so probe for it rather than pinning a version.
+    """
+    try:
+        out = linalg.sqrtm(a, disp=False)
+    except TypeError:
+        out = linalg.sqrtm(a)
+    return out[0] if isinstance(out, tuple) else out
+
+
+def reduce_dims(
+    source: np.ndarray, target: np.ndarray, n_components: int = 64
+) -> tuple[np.ndarray, np.ndarray]:
+    """Project both sides onto source-fitted principal components.
+
+    Penultimate features are 2048-d while a source split here holds only a few
+    hundred images, so a full-rank covariance is not estimable and a raw 2048-d
+    Frechet distance would be dominated by noise. Projecting onto the leading
+    source components first makes the covariance well posed. The projection is
+    fitted on the source only, so it does not peek at the target's geometry.
+    """
+    k = int(min(n_components, source.shape[1], max(source.shape[0] - 1, 1)))
+    mu = source.mean(0, keepdims=True)
+    # economy SVD of the centred source gives the principal directions
+    _u, _s, vt = np.linalg.svd(source - mu, full_matrices=False)
+    basis = vt[:k].T
+    return (source - mu) @ basis, (target - mu) @ basis
+
+
+def frechet_distance(
+    x: np.ndarray, y: np.ndarray, eps: float = 1e-6, n_components: int | None = 64
+) -> float:
+    """Frechet (Wasserstein-2 between Gaussians) distance, as used by FID.
+
+    When ``n_components`` is set, both sides are first projected onto
+    source-fitted principal components; see ``reduce_dims``.
+    """
     x, y = np.asarray(x, np.float64), np.asarray(y, np.float64)
+    if n_components:
+        x, y = reduce_dims(x, y, n_components)
+
     mu1, mu2 = x.mean(0), y.mean(0)
     s1, s2 = np.cov(x, rowvar=False), np.cov(y, rowvar=False)
 
     diff = mu1 - mu2
-    covmean, _ = linalg.sqrtm(s1.dot(s2), disp=False)
+    covmean = _sqrtm(s1.dot(s2))
     if not np.isfinite(covmean).all():
         offset = np.eye(s1.shape[0]) * eps
-        covmean = linalg.sqrtm((s1 + offset).dot(s2 + offset))
+        covmean = _sqrtm((s1 + offset).dot(s2 + offset))
     if np.iscomplexobj(covmean):
         covmean = covmean.real
     return float(diff.dot(diff) + np.trace(s1) + np.trace(s2) - 2 * np.trace(covmean))

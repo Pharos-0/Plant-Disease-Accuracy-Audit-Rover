@@ -118,6 +118,9 @@ def fig_n_sweep(agg: pd.DataFrame) -> tuple[Path, Path]:
             ax.set_xscale("log")
             ax.set_xticks([25, 50, 100, 200, 400])
             ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+            # a log axis also draws minor ticks (4x10^0, 3x10^1, ...) whose
+            # labels collide with ours; silence them
+            ax.get_xaxis().set_minor_formatter(matplotlib.ticker.NullFormatter())
             ax.set_xlabel("session size N")
             ax.set_title(ARM_LABEL.get(arm, arm), fontsize=8)
             ax.set_ylim(bottom=0)
