@@ -50,15 +50,45 @@ class MeanEntropy(Estimator):
 # ---------------------------------------------------------------------------
 
 
-class ATC(Estimator):
-    """Average Thresholded Confidence.
+def find_atc_threshold(scores: np.ndarray, correct: np.ndarray) -> tuple[float, float]:
+    """Vectorised transcription of ``find_ATC_threshold`` from the official
+    ATC release (github.com/saurabhgarg1996/ATC_code, ``ATC_helper.py``).
 
-    Pick a threshold t on a confidence score so that the fraction of *source
-    validation* points scoring below t equals the source validation error.
-    The estimate on the target is then the fraction scoring at or above t.
+    Sweeping the sorted scores, ``fp`` counts mistakes still above the
+    threshold and ``fn`` counts correct predictions already below it. The
+    chosen threshold minimises ``|fp - fn|``, which balances the two and makes
+    the count below the threshold match the number of source mistakes.
+
+    Returns ``(min_fp_fn, threshold)``, matching the reference signature.
+    """
+    order = np.argsort(scores, kind="stable")
+    sorted_scores = scores[order]
+    sorted_correct = correct[order].astype(bool)
+
+    total_incorrect = float((~sorted_correct).sum())
+    # after position i: fp = mistakes strictly after i, fn = correct up to i
+    fp = total_incorrect - np.cumsum(~sorted_correct)
+    fn = np.cumsum(sorted_correct).astype(float)
+    diff = np.abs(fp - fn)
+
+    # the reference seeds the search with (|fp - fn| = total_incorrect, thres = 0.0)
+    # and updates only on a strict improvement, so ties keep the earliest.
+    best = int(np.argmin(diff))
+    if diff[best] < total_incorrect:
+        return float(diff[best]), float(sorted_scores[best])
+    return float(total_incorrect), 0.0
+
+
+class ATC(Estimator):
+    """Average Thresholded Confidence (Garg et al., ICLR 2022).
+
+    A threshold is fitted on a *source validation* confidence score so that the
+    number of points falling below it matches the number of source mistakes.
+    The estimate on the target is the fraction of points at or above it.
 
     ``score="mc"`` uses maximum confidence, ``score="ne"`` negative entropy -
-    the two variants reported in the paper.
+    the two variants reported in the paper. Threshold selection follows the
+    official implementation exactly; see ``find_atc_threshold``.
     """
 
     def __init__(self, score: str = "mc") -> None:
@@ -76,9 +106,7 @@ class ATC(Estimator):
     def _fit(self, source: SourceStats) -> None:
         s = self._score(source.logits)
         self.source_error_ = source.error
-        # t is the source-error quantile of the score distribution, so that
-        # #{s < t} matches the number of source validation mistakes.
-        self.threshold_ = float(np.quantile(s, source.error))
+        _, self.threshold_ = find_atc_threshold(s, source.correct)
 
     def _estimate(self, logits: np.ndarray, features: np.ndarray | None) -> float:
         return float((self._score(logits) >= self.threshold_).mean())
