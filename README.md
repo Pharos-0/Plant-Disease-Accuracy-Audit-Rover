@@ -34,17 +34,29 @@ is selective prediction — a different literature with different guarantees.
 
 ## Headline findings
 
+Based on **30 trained models** (4 backbones × 5 seeds, plus the V1/V2 leakage ablation)
+and **720,000 scored sessions** across four target arms.
+
 | | |
 |---|---|
 | Lab→field drop is real | source 0.985 → Tomato-Village 0.503 (**48 pp**); Arm A control drops 0.9 pp |
-| Arm A control passes | ATC/DoC reach MAE ≈ 0.011 with no shift — the estimators are correctly implemented |
-| Estimators break under field shift | 6 of 8 over-estimate by >15 points; MaNo by +0.41 |
-| **They stop ranking sessions at all** | 5 of 8 have zero or negative correlation with true session accuracy on arm D |
+| Arm A control passes | ATC/DoC reach MAE ≈ 0.013 with no shift — the estimators are correctly implemented |
+| Estimators break under field shift | 6 of 8 over-estimate by >15 points; MaNo by +0.46 |
+| **They stop ranking sessions at all** | correlation with true session accuracy collapses from 0.53 (arm A) to ≈0.07 (arm D) |
 | **The gate carries no information** | precision-of-operate equals the base rate exactly (lift 1.00×) for every confidence-based estimator |
+| **N\* essentially does not exist** | only **1 of 96** shifted (arm, estimator, backbone) cells reaches MAE ≤ 0.05 at any N, against 41 of 48 with no shift |
+| Not architecture-dependent | source accuracy spans 0.923–0.997 across four backbones; arm-D bias stays +0.25 to +0.33 throughout |
+| A wider label space is worse | 3 → 7 classes degrades 6 of 8 estimators (nuclear norm by +0.374) |
 | The trivial baselines win | mean entropy and COT are far better calibrated than every sophisticated method |
-| N\* mostly does not exist | 94% of shifted (arm, estimator) pairs never reach MAE ≤ 0.05 at any N — the error is bias-dominated |
 | Shift is not a severity ladder | arms C and D have near-identical covariate shift but very different label shift |
-| **H4 falsified** | leaf leakage changes nothing: source accuracy 0.9804 vs 0.9812 over 5 seeds |
+| **H4 falsified** | leaf leakage changes nothing: source accuracy 0.9804 vs 0.9812 over 5 seeds, and 0/8 estimators shift significantly |
+
+**Verdict.** On this evidence, tomato field accuracy **cannot** be reliably estimated
+from unlabeled images with the current generation of confidence-based estimators. They
+are correctly implemented, they fail identically across architectures, and they fail in
+the unsafe direction. COT — the one method that uses the class marginal rather than the
+confidence distribution — is the only one retaining useful signal, and it is
+threshold-fragile.
 
 Full detail: [`reports/phase1_feasibility_report.md`](reports/phase1_feasibility_report.md),
 and [`docs/stop_condition_F_investigation.md`](docs/stop_condition_F_investigation.md)
@@ -136,8 +148,15 @@ implementations of the published scores (L2). AETTA and AutoEval are argued
 
 ## Status
 
-Arms A, C and D are complete over 5 seeds. Arm B (PlantDoc under `SHARED_8`) and the
-V9 architecture sweep are in progress.
+**Arms A, B, C and D are complete** — 30 models, 5 seeds each, 720,000 scored sessions,
+with figures and the Phase 1 report generated from the logged tables.
+
+Arm B uses `SHARED_7` rather than `SHARED_8`: PlantVillage ships no leafmap for
+`Tomato_mosaic_virus`, so none of its 373 images can enter a leakage-free leaf-grouped
+split. Training `SHARED_8` on the grouped pool would leave that head with zero examples
+and make PlantDoc's 54 ToMV images guaranteed errors. We checked whether leaf identity
+could be recovered from filename numbering instead; the rule reproduces 100% of healthy
+leaves but only 19% of late blight, so it is not usable. See `data.mapping.SHARED_7`.
 
 **Arm E (rover) is not started.** The frozen `rover/original/web_rover.py` baseline was
 not delivered with the handoff bundle, and the physical rover has not been inspected —
