@@ -158,10 +158,21 @@ and make PlantDoc's 54 ToMV images guaranteed errors. We checked whether leaf id
 could be recovered from filename numbering instead; the rule reproduces 100% of healthy
 leaves but only 19% of late blight, so it is not usable. See `data.mapping.SHARED_7`.
 
-**Arm E (rover) is not started.** The frozen `rover/original/web_rover.py` baseline was
-not delivered with the handoff bundle, and the physical rover has not been inspected —
-every row of `docs/rover_hardware_inventory.md` is `UNVERIFIED`. The thesis is designed
-to remain complete if that chapter is deleted.
+**Arm E (rover): unblocked, not yet collected.** The frozen
+`rover/original/web_rover.py` baseline has now been supplied and is **SHA-256 verified
+against the audit** (`8801697b…`, 241 lines); `.gitattributes` marks it `-text` and
+`tests/test_frozen_baseline.py` is the tripwire against line-ending corruption. That
+test also re-verifies every claim in `docs/rover_code_audit.md` directly against the
+artefact — all ten defects confirmed, including **zero logging**, which settles that
+the delivered paper's Table I cannot have come from this code.
+
+Hardware is inventoried from photographs and the **camera height is measured at
+24–25 cm**, so Arm E is viable. What remains: one camera frame pointed at a real
+plant, the per-component isolation tests, and locating the motor driver — which does
+not appear in any photograph despite the code requiring an H-bridge. See
+`docs/rover_hardware_inventory.md`.
+
+The thesis is still designed to remain complete if the rover chapter is deleted.
 
 ## Never claim
 

@@ -187,11 +187,18 @@ help you"** — which is only visible if you study the regime.
 
 ---
 
-## 5. Remaining open item
+## 5. Remaining open item — now half resolved
 
-- [ ] **Rover camera sample frame + measured camera height** — blocked on physical
-      access to the rover. Decides whether arm E is viable. See
-      `docs/rover_hardware_inventory.md` and `rover/hardware_tests/test_components.py`.
+- [x] **Measured camera height: 24–25 cm** (steel rule to lens centre, 2026-09-08).
+      **Arm E is viable.** At that height the camera images the lower canopy, which is
+      where late blight and early blight appear first — so the mast height is
+      defensible on epidemiological grounds rather than being an accident. The caveat
+      is that a 24 cm wide-field frame is a *further* shift beyond the laboratory
+      leaf close-up, and `src/rover/leaf_proposal.py` exists to narrow it. See
+      `docs/rover_hardware_inventory.md` §3.
+- [ ] **One camera frame pointed at a real plant.** Still outstanding — all supplied
+      photographs are indoors on tile. `rover/hardware_tests/test_components.py
+      --test camera` saves this frame automatically.
 
 ## 6. Actions required in the thesis
 

@@ -1,0 +1,3 @@
+# web_rover.py is the FROZEN V0 baseline. Every rover before/after number is
+# measured against this exact file, so git must not touch its bytes.
+rover/original/web_rover.py -text

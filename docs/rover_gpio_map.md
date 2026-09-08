@@ -1,9 +1,14 @@
 # Rover GPIO Map
 
-**Status: derived from source code, NOT measured.** Every pin below comes from the
-static audit of the delivered `web_rover.py` recorded in `docs/rover_code_audit.md`.
-None has been confirmed against the physical wiring, because the physical rover has
-not been inspected in this session (§9 requires hands-on verification).
+**Status: derived from source code, NOT measured.** Every pin below comes from
+`rover/original/web_rover.py`, which is now present and SHA-256 verified
+(`8801697b…`), so the pin numbers themselves are certain — they are read straight
+off lines 9–12 of the frozen file. What remains unverified is the **wiring**: no pin
+has been continuity-checked or driven against the physical hardware.
+
+Photographs (2026-09-08) confirm the *presence* of the relay module, the HC-SR04 and
+four motors. They do **not** show a motor driver, so the six motor pins below have no
+identified destination yet — see `docs/rover_hardware_inventory.md` §2.2.
 
 Treat this file as **a hypothesis about the wiring**, to be confirmed or corrected by
 running `rover/hardware_tests/` on the actual Pi. A pin that has not been tested is
@@ -17,7 +22,7 @@ Numbering convention: **BCM**, as used by `RPi.GPIO.setmode(GPIO.BCM)`.
 
 | BCM pin | Subsystem | Role | Direction | Verified? |
 |---:|---|---|---|---|
-| 17 | Motor driver | IN1 — left motor direction A | OUT | `UNVERIFIED` |
+| 17 | Motor driver | IN1 — left motor direction A | OUT | `UNVERIFIED` (driver not located) |
 | 27 | Motor driver | IN2 — left motor direction B | OUT | `UNVERIFIED` |
 | 22 | Motor driver | IN3 — right motor direction A | OUT | `UNVERIFIED` |
 | 23 | Motor driver | IN4 — right motor direction B | OUT | `UNVERIFIED` |
@@ -28,8 +33,9 @@ Numbering convention: **BCM**, as used by `RPi.GPIO.setmode(GPIO.BCM)`.
 | 6 | HC-SR04 | ECHO | IN | `UNVERIFIED` |
 
 Camera is not a GPIO device: the code opens `cv2.VideoCapture(0)` at 320×240, i.e. a
-USB/V4L2 device, **not** the CSI ribbon camera. Which physical camera occupies index 0
-is `UNVERIFIED`.
+USB/V4L2 device, **not** the CSI ribbon camera. Photographs confirm a small USB webcam
+on a PVC mast with its lead running to a Pi USB port, at a **measured 24–25 cm** above
+ground. Which device index it enumerates as remains `UNVERIFIED`.
 
 ## 2. The relay float trick — preserve it
 
