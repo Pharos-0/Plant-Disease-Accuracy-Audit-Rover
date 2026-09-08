@@ -554,6 +554,28 @@ def main() -> int:
     add("- These are **estimates of session accuracy**, never per-image correctness. "
         "Nothing here licenses a claim about whether an individual leaf was classified "
         "correctly.")
+    add("- Arm B uses `SHARED_7`, not `SHARED_8`. PlantVillage ships no leafmap for "
+        "`Tomato_mosaic_virus`, so its 373 images cannot enter a leakage-free grouped "
+        "split; see `data.mapping.SHARED_7` for the fallback and the evidence behind it.")
+    add("- The source domain is a single dataset (PlantVillage). A conclusion about "
+        "*confidence-based estimators under lab-to-field shift* rests on one lab dataset, "
+        "and would be stronger with a second.")
+    add("")
+    add("## 9. What would change the conclusion")
+    add("")
+    add("The negative result is specific, which makes it testable:")
+    add("")
+    add("- **A better-calibrated source model.** Every failing estimator reads the "
+        "confidence distribution. Temperature scaling on source validation is label-free "
+        "with respect to the target and is the obvious next ablation — the official ATC "
+        "release specifies it and then no-ops it (see `docs/estimator_reproducibility.md`).")
+    add("- **Marginal-based rather than confidence-based estimators.** COT is the only "
+        "method here that uses the class marginal, and it is the only one retaining lift "
+        "over the base rate. That points at a family worth extending, not abandoning.")
+    add("- **A source domain closer to the field.** The collapse is driven by the model "
+        "staying confident while wrong. Anything narrowing the lab-to-field gap should "
+        "restore the coupling between confidence and correctness that these estimators "
+        "assume.")
     add("")
 
     out = paths.REPORTS_DIR / "phase1_feasibility_report.md"
