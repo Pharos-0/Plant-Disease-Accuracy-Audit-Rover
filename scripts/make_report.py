@@ -121,9 +121,9 @@ def main() -> int:
         best = d100.groupby("estimator").mae.mean().sort_values()
         worst_name, worst_mae = best.index[-1], best.iloc[-1]
         best_name, best_mae = best.index[0], best.iloc[0]
-        best_kind = "baseline" if best_name in BASELINES else "imported method"
+        best_kind = "a baseline" if best_name in BASELINES else "an imported method"
         add(f"On the real-field arm (Tomato-Village, N=100) estimation error ranges from "
-            f"**MAE {best_mae:.3f}** (`{best_name}`, a {best_kind}) to "
+            f"**MAE {best_mae:.3f}** (`{best_name}`, {best_kind}) to "
             f"**MAE {worst_mae:.3f}** (`{worst_name}`). ")
         biased = d100.groupby("estimator").bias.mean().sort_values(ascending=False)
         over = biased[biased > 0.15]
@@ -336,6 +336,33 @@ def main() -> int:
             "measured. PlantDoc SHARED_3 (262 images) cannot supply N=400 at all, and "
             "those sessions are flagged rather than silently truncated.")
     add("")
+
+    # ---- arms B vs C: does the label space itself matter? ---------------
+    bc = agg[(agg.n_requested == 100) & (agg.arm.isin(["B", "C"]))]
+    if bc.arm.nunique() == 2:
+        add("### Arms B vs C — isolating label-space width")
+        add("")
+        add("Both arms are PlantDoc under the same leaf-grouped source protocol; arm C's 262 "
+            "images are the `SHARED_3` **subset** of arm B's 690. So the domain is held "
+            "fixed and what changes is the width of the label space the model must choose "
+            "within (3 vs 7 classes). The image pools are nested rather than identical, so "
+            "read this as a controlled contrast, not a perfectly matched pair.")
+        add("")
+        piv_bc = bc.pivot_table(index="estimator", columns="arm", values="mae", aggfunc="mean")
+        piv_bc["difference"] = piv_bc["B"] - piv_bc["C"]
+        add("| estimator | MAE arm C (3 classes) | MAE arm B (7 classes) | difference |")
+        add("|---|---:|---:|---:|")
+        for est, r in piv_bc.sort_values("difference", ascending=False).iterrows():
+            add(f"| `{est}` | {r['C']:.3f} | {r['B']:.3f} | {r['difference']:+.3f} |")
+        add("")
+        worse = int((piv_bc["difference"] > 0).sum())
+        add(f"**{worse} of {len(piv_bc)} estimators get worse** as the label space widens, "
+            f"by up to {piv_bc['difference'].max():+.3f}. Widening the label space gives the "
+            "model more ways to be confidently wrong, and the confidence-derived estimators "
+            "absorb that directly. This matters practically: a deployment that tracks more "
+            "diseases is not just a harder classification problem, it is a harder "
+            "*estimation* problem on top.")
+        add("")
 
     # ------------------------------------------------------------------ 5b
     if agg.backbone.nunique() > 1:
