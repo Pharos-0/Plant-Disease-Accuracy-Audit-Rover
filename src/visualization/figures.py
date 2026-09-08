@@ -215,31 +215,53 @@ def fig_v1_v2_leakage(agg: pd.DataFrame, n: int = 100) -> Path | None:
 
 
 def fig_shift_magnitude(shift: pd.DataFrame) -> Path | None:
-    """Is there actually a severity ordering across arms? Measured, not assumed."""
+    """Is there actually a severity ordering across arms? Measured, not assumed.
+
+    MMD (bounded) and the label-prior TV distance are comparable across
+    backbones, so those carry the cross-arm comparison. Frechet distance is
+    **not** - it scales with the geometry of each backbone's feature space, and
+    averaging it over architectures would compare incommensurable numbers
+    (EfficientNet-B0 reports ~14,500 on arm D where ResNet-50 reports ~48).
+    It is therefore drawn per backbone on a log axis, which shows the ordering
+    each backbone agrees on while making the scale-dependence visible.
+    """
     if shift is None or not len(shift):
         return None
+    arms = [a for a in ARM_ORDER if a in set(shift.arm)]
     d = shift.groupby("arm").agg(
-        frechet=("frechet_distance", "mean"),
         mmd=("mmd_rbf", "mean"),
         tv=("tv_distance", "mean"),
         target_acc=("target_accuracy", "mean"),
-    )
-    d = d.reindex([a for a in ARM_ORDER if a in d.index])
+    ).reindex(arms)
 
-    fig, axes = plt.subplots(1, 4, figsize=(12, 3.2))
+    fig, axes = plt.subplots(1, 4, figsize=(13, 3.4))
     for ax, (col, title) in zip(
         axes,
         [
-            ("frechet", "Frechet distance\n(penultimate features)"),
-            ("mmd", "MMD (RBF)"),
-            ("tv", "label-prior TV distance"),
+            ("mmd", "MMD (RBF)\ncomparable across backbones"),
+            ("tv", "label-prior TV distance\n(label shift)"),
             ("target_acc", "true target accuracy"),
         ],
     ):
         ax.bar(d.index, d[col], color="#4c72b0")
         ax.set_title(title, fontsize=8.5)
         ax.set_xlabel("arm")
-    fig.suptitle("Measured shift magnitude per arm - ordering is a result, not an assumption", y=1.04)
+
+    ax = axes[3]
+    piv = shift.pivot_table(
+        index="arm", columns="backbone", values="frechet_distance", aggfunc="mean"
+    ).reindex(arms)
+    for bb in piv.columns:
+        ax.plot(piv.index, piv[bb], marker="o", ms=4, lw=1.3, label=bb)
+    ax.set_yscale("log")
+    ax.set_xlabel("arm")
+    ax.set_title("Frechet distance, per backbone\n(scale is NOT comparable)", fontsize=8.5)
+    ax.legend(fontsize=6.5)
+
+    fig.suptitle(
+        "Measured shift magnitude per arm - the ordering is a result, not an assumption",
+        y=1.04,
+    )
     fig.tight_layout()
     return _save(fig, "fig12_shift_magnitude.png")
 
