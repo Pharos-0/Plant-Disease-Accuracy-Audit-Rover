@@ -337,6 +337,71 @@ def main() -> int:
             "those sessions are flagged rather than silently truncated.")
     add("")
 
+    # ------------------------------------------------------------------ 6b
+    gate_path = paths.TABLES_DIR / "gate_operating_characteristic.parquet"
+    if gate_path.exists():
+        gate = pd.read_parquet(gate_path)
+        g = gate[(gate.arm == "D") & (gate.n_requested == 100)]
+        if len(g):
+            add("## 6b. The deployment gate — does it carry any information?")
+            add("")
+            add("The gate turns an estimate into a decision: operate when the estimate "
+                "clears τ. The costly error is an **unsafe operate** — the estimate says go "
+                "and the session was not actually good.")
+            add("")
+            add("Gate *accuracy* is the wrong headline here, and the table below shows why. "
+                "When almost no session is truly good, a gate that always withholds scores "
+                "very high accuracy while being useless. The honest test is whether "
+                "**precision-of-operate beats the base rate**: if the sessions you chose to "
+                "spray are no better than a random selection, the gate has told you nothing.")
+            add("")
+            for tau in (0.60, 0.70):
+                sub = g[g.tau.round(2) == tau]
+                if not len(sub):
+                    continue
+                s = sub.groupby("estimator")[
+                    ["base_rate_good", "operate_rate", "recall_of_good",
+                     "precision_of_operate", "unsafe_operate_rate"]
+                ].mean()
+                base = float(s.base_rate_good.iloc[0])
+                add(f"**τ = {tau:.2f}** — {base * 100:.1f}% of arm-D sessions truly clear this bar.")
+                add("")
+                add("| estimator | operates on | recall of good sessions | precision of operate | lift over base rate | unsafe operate rate |")
+                add("|---|---:|---:|---:|---:|---:|")
+                for est, r in s.iterrows():
+                    prec = r.precision_of_operate
+                    if pd.isna(prec):
+                        prec_s, lift_s = "n/a (never operates)", "—"
+                    else:
+                        prec_s = f"{prec:.3f}"
+                        lift_s = f"**{prec / base:.2f}×**" if base > 0 else "—"
+                    add(f"| `{est}` | {r.operate_rate:.3f} | {r.recall_of_good:.3f} | "
+                        f"{prec_s} | {lift_s} | {r.unsafe_operate_rate:.3f} |")
+                add("")
+            add("Read the lift column. A lift of **1.00× means the gate is worthless** — the "
+                "sessions it authorised were exactly as likely to be good as sessions picked "
+                "at random. Every confidence-based estimator sits at 1.00×, because it "
+                "operates on essentially every session, and selecting everything is not "
+                "selecting.")
+            add("")
+            add("Only two estimators ever beat the base rate, and neither does so at both "
+                "thresholds: **COT reaches 1.63× at τ=0.60** by operating on just 24% of "
+                "sessions, and **nuclear norm reaches 1.22× at τ=0.70**. At τ=0.70 COT stops "
+                "operating altogether, so its lift is undefined rather than good. No "
+                "estimator provides usable selectivity across the whole range.")
+            add("")
+            add("Three failure modes, all present:")
+            add("")
+            add("- **Reckless.** MaNo, DoC and confidence authorise operation on ~100% of "
+                "sessions. At τ=0.70 that means spraying on sessions where the classifier "
+                "is near chance, ~94% of the time.")
+            add("- **Inert.** Entropy withholds almost everywhere. That is safe, but a rover "
+                "that never operates has not been gated, it has been switched off.")
+            add("- **Threshold-fragile.** COT is selective at τ=0.60 and silent at τ=0.70. A "
+                "gate whose usefulness depends this sharply on a threshold the operator has "
+                "no labelled data to tune is not yet deployable.")
+            add("")
+
     # ------------------------------------------------------------------ 7
     add("## 7. Hypotheses")
     add("")

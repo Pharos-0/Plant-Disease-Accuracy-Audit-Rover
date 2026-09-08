@@ -75,6 +75,8 @@ def gate_operating_characteristic(
         correct_op = int((operate & truly_ok).sum())
         correct_wh = int((~operate & ~truly_ok).sum())
         n = len(est)
+        n_good = int(truly_ok.sum())
+        n_op = int(operate.sum())
         rows.append(
             {
                 "tau": float(tau),
@@ -85,8 +87,16 @@ def gate_operating_characteristic(
                 "correct_withhold": correct_wh,
                 "unsafe_operate_rate": unsafe / n if n else float("nan"),
                 "wasted_withhold_rate": wasted / n if n else float("nan"),
-                "operate_rate": int(operate.sum()) / n if n else float("nan"),
+                "operate_rate": n_op / n if n else float("nan"),
                 "accuracy_of_gate": (correct_op + correct_wh) / n if n else float("nan"),
+                # --- the three below are what stop the accuracy paradox ---
+                # base rate: when almost no session is truly good, a gate that
+                # always withholds scores high "accuracy" while being useless.
+                "base_rate_good": n_good / n if n else float("nan"),
+                # of the sessions that really were good, how many did we use?
+                "recall_of_good": correct_op / n_good if n_good else float("nan"),
+                # of the sessions we operated on, how many really were good?
+                "precision_of_operate": correct_op / n_op if n_op else float("nan"),
             }
         )
     return pd.DataFrame(rows)
