@@ -1,0 +1,174 @@
+{
+  "version": "V1",
+  "written_at": "2026-09-07T21:39:18.065451+00:00",
+  "seed": 4,
+  "config": {
+    "version": "V1",
+    "protocol": "v1_image",
+    "backbone": "resnet50",
+    "label_set": "SHARED_3",
+    "seed": 4,
+    "epochs": 12,
+    "batch_size": 64,
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "label_smoothing": 0.05,
+    "num_workers": 8,
+    "warmup_epochs": 1
+  },
+  "config_hash": "d3a4f0abe43b50fa",
+  "git_commit": "4198e97a6f0cd5270a6c7f8ed211203ab1f0622b",
+  "git_dirty": true,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "metrics": {
+    "best_val_acc": 0.9885844748858448,
+    "best_epoch": 6,
+    "source_test_acc": 0.9794520547945206,
+    "source_test_loss": 0.0896413184055999,
+    "train_seconds": 470.68975043296814,
+    "n_train": 2042,
+    "n_val": 438,
+    "n_test": 438,
+    "leakage": {
+      "straddling_groups": 566,
+      "affected_images": 2264
+    },
+    "confusion_matrix": [
+      [
+        150,
+        0,
+        0
+      ],
+      [
+        1,
+        142,
+        7
+      ],
+      [
+        0,
+        1,
+        137
+      ]
+    ],
+    "history": [
+      {
+        "epoch": 0,
+        "train_loss": 1.036971531757295,
+        "val_acc": 0.8470319634703196,
+        "val_loss": 0.8343717706257894,
+        "lr": 0.00029999402591961757
+      },
+      {
+        "epoch": 1,
+        "train_loss": 0.4931736290308918,
+        "val_acc": 0.9497716894977168,
+        "val_loss": 0.15086862917768357,
+        "lr": 0.00029354107619562986
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.25311879704211065,
+        "val_acc": 0.9748858447488584,
+        "val_loss": 0.10251187198884683,
+        "lr": 0.0002754593307583541
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.20800039483039082,
+        "val_acc": 0.9863013698630136,
+        "val_loss": 0.0683755375036638,
+        "lr": 0.0002472136650868378
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.20422100191835557,
+        "val_acc": 0.9794520547945206,
+        "val_loss": 0.09993473016848303,
+        "lr": 0.00021109237503034523
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.2016851158555411,
+        "val_acc": 0.9726027397260274,
+        "val_loss": 0.092927980436582,
+        "lr": 0.00017002179268766983
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.18593420676456493,
+        "val_acc": 0.9885844748858448,
+        "val_loss": 0.07265923124606206,
+        "lr": 0.0001273292123840571
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.19292337544459437,
+        "val_acc": 0.9863013698630136,
+        "val_loss": 0.0750838546550165,
+        "lr": 8.647333307315434e-05
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.1850337861625735,
+        "val_acc": 0.9885844748858448,
+        "val_loss": 0.06759982801055255,
+        "lr": 5.076405511746071e-05
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.18480552744620227,
+        "val_acc": 0.9885844748858448,
+        "val_loss": 0.06714688894683368,
+        "lr": 2.3094331845693393e-05
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.1822871243714352,
+        "val_acc": 0.9885844748858448,
+        "val_loss": 0.06666016263980844,
+        "lr": 5.705799679150375e-06
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.18435889848824463,
+        "val_acc": 0.9885844748858448,
+        "val_loss": 0.0691499840383116,
+        "lr": 7.174080382371524e-09
+      }
+    ]
+  },
+  "labels": [
+    "healthy",
+    "early_blight",
+    "late_blight"
+  ],
+  "checkpoint": "D:\\Final Project M.Tech\\results\\raw\\V1\\resnet50_seed4.pt",
+  "split_file": "D:\\Final Project M.Tech\\results\\raw\\V1\\split_v1_image_seed4.parquet",
+  "n_excluded_images": 18
+}

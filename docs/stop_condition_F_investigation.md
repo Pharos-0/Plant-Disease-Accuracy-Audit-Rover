@@ -11,56 +11,63 @@ Verdict: **not a bug — a real and reportable property of the estimators under
 field shift.** The ladder continues, with the finding promoted to a headline
 result rather than a footnote.
 
+All numbers below are averaged over **10 trained models** (V1 and V2 protocols ×
+5 seeds), not a single run.
+
 ---
 
 ## 1. What triggered it
 
 The capture-day diagnostic (`scripts/run_capture_day_diagnostic.py`) treats each
-Tomato-Village capture day as one session. True accuracy varies enormously across
-the three days; the estimates barely move.
+Tomato-Village capture day as one session — a real acquisition outing rather than
+a constructed subset. True accuracy varies enormously across the three days. The
+estimates barely move.
 
-| capture date | images | **true accuracy** | ATC-MC | DoC | MaNo | entropy | COT |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| 2022-03-23 | 620 | **0.635** | 0.750 | 0.810 | 0.892 | 0.461 | 0.586 |
-| 2022-03-24 | 609 | **0.493** | 0.783 | 0.818 | 0.893 | 0.473 | 0.584 |
-| 2022-03-25 | 387 | **0.306** | 0.758 | 0.804 | 0.886 | 0.440 | 0.546 |
-| **spread** | | **0.329** | 0.033 | 0.014 | 0.007 | 0.033 | 0.040 |
+| capture date | images | true accuracy | atc_mc | atc_ne | confidence | cot | doc | entropy | mano | nuclear_norm |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2022-03-23 | 620 | **0.655** | 0.836 | 0.799 | 0.775 | 0.584 | 0.816 | 0.468 | 0.933 | 0.808 |
+| 2022-03-24 | 609 | **0.515** | 0.837 | 0.811 | 0.769 | 0.577 | 0.811 | 0.457 | 0.930 | 0.806 |
+| 2022-03-25 | 387 | **0.345** | 0.808 | 0.752 | 0.759 | 0.568 | 0.800 | 0.439 | 0.928 | 0.802 |
+| **spread** | | **0.309** | 0.029 | 0.059 | 0.016 | 0.017 | 0.016 | 0.029 | 0.004 | 0.006 |
 
-True accuracy spans **33 points**. Every estimate spans **4 points or less**, and
-none of them moves in the right direction reliably. DoC reports ~0.81 on the day
-the classifier actually achieves **0.306 — below the 0.333 chance level for three
-classes**.
+True accuracy spans **31 points**. Every estimate spans **6 points or less**.
+MaNo moves by 0.004 while the thing it is estimating moves by 0.309.
+
+On the hardest day the classifier achieves **0.345** on a three-class problem —
+barely above the 0.333 chance level — while DoC reports 0.800 and MaNo 0.928.
 
 ## 2. Is it a bug?
 
 No. Three independent checks say the machinery is sound.
 
 **(a) The same code is accurate when there is no shift.** On arm A (PlantVillage
-held-out, leaf-grouped) ATC-MC reaches MAE 0.0126 and DoC 0.0118, and the spread
-of the estimates matches the spread of the truth almost exactly
-(`std_estimate` 0.0147 vs `std_actual` 0.0142). A broken estimator does not do that.
+held-out, leaf-grouped) DoC reaches MAE 0.0104 and ATC-MC 0.0113. A broken
+estimator does not do that.
 
 **(b) Correlation with the truth collapses only under shift.** Pearson r between
-estimated and true session accuracy, at N=100, over 100 bootstrap sessions:
+estimated and true session accuracy at N=100, over 200 bootstrap sessions × 10
+models:
 
-| estimator | arm A (no shift) | arm C (web) | arm D (real field) |
-|---|---:|---:|---:|
-| atc_mc | 0.656 | 0.214 | **0.008** |
-| atc_ne | 0.521 | 0.353 | 0.060 |
-| confidence | 0.629 | 0.413 | 0.138 |
-| doc | 0.629 | 0.413 | 0.138 |
-| mano | 0.381 | 0.497 | 0.225 |
-| nuclear_norm | 0.487 | 0.401 | 0.378 |
-| entropy | 0.535 | 0.500 | 0.175 |
-| cot | 0.109 | 0.122 | 0.424 |
+| estimator | arm A (no shift) | arm C (web) | arm D (real field) | sd of estimate (D) |
+|---|---:|---:|---:|---:|
+| atc_mc | 0.509 | 0.379 | **0.034** | 0.098 |
+| atc_ne | 0.369 | 0.374 | **0.012** | 0.132 |
+| confidence | 0.596 | 0.127 | **−0.044** | 0.036 |
+| doc | 0.560 | 0.224 | **−0.016** | 0.036 |
+| entropy | 0.496 | 0.168 | **−0.008** | 0.058 |
+| mano | 0.244 | 0.495 | **0.260** | 0.029 |
+| nuclear_norm | 0.273 | 0.519 | **0.266** | 0.092 |
+| cot | 0.049 | 0.508 | **0.429** | 0.044 |
 
-**On the real-field arm, ATC — the canonical method — has essentially zero
-correlation with true session accuracy (r = 0.008).**
+**Five of eight estimators have essentially zero or negative correlation with true
+session accuracy on the real-field arm** — including ATC, the canonical method,
+and DoC. Only COT (0.43), nuclear norm (0.27) and MaNo (0.26) retain any signal.
 
-**(c) The variance of the estimate collapses relative to the truth.** Arm D,
-N=100: `std_actual` = 0.106, but `std_estimate` = 0.026 for DoC and confidence.
-The estimate is roughly four times less variable than the quantity it is
-estimating. It has become close to a constant.
+**(c) The estimate is far less variable than the truth.** On arm D the true
+session accuracy has standard deviation **0.112**, but the estimates have 0.036
+(confidence, DoC) to 0.132. The low-variance ones have collapsed toward a
+constant; the higher-variance ones (ATC-NE at 0.132) vary *without tracking*,
+which the near-zero correlation confirms is noise rather than signal.
 
 ## 3. Why it happens
 
@@ -91,12 +98,12 @@ more useful:
 > all, and they fail in the unsafe direction.
 
 For a deployment gate this is the worst possible failure mode. A gate needs to
-separate a good session from a bad one. An estimator with r = 0.008 cannot do that
-at any threshold: sweeping τ moves the operate/withhold split essentially at
-random with respect to the true session quality. This is why the gate operating
-characteristic (Fig 10) is reported alongside MAE — MAE alone would understate how
-bad this is, because a well-chosen constant can have a modest MAE while being
-useless as a decision rule.
+separate a good session from a bad one. An estimator with r ≈ 0 cannot do that at
+any threshold: sweeping τ moves the operate/withhold split essentially at random
+with respect to true session quality. This is why the gate operating characteristic
+(Fig 10) is reported alongside MAE — MAE alone would understate how bad this is,
+because a well-chosen constant can have a modest MAE while being useless as a
+decision rule.
 
 ## 5. Smallest valid alternative (§12 requires one)
 
@@ -104,23 +111,21 @@ The ladder is **not** bypassed. What changes:
 
 1. **Report correlation and estimate-variance alongside MAE everywhere.** MAE
    cannot distinguish "biased but informative" from "constant". `pearson_r`,
-   `std_estimate` and `std_actual` are already emitted in
-   `results/tables/aggregate_metrics.parquet`.
+   `std_estimate` and `std_actual` are emitted in
+   `results/tables/aggregate_metrics.parquet` and now appear in the Phase 1 report.
 2. **Keep COT and nuclear norm prominent.** They retain the most session-level
-   signal on arm D (r = 0.42 and 0.38). That is a genuine comparative result and
-   it was not predictable in advance.
+   signal on arm D (r = 0.43 and 0.27). That is a genuine comparative result and it
+   was not predictable in advance.
 3. **Do not tune anything to rescue ATC.** §7's anti-confirmation rule is binding:
    the protocol was fixed before the results were seen, and a clear falsification
    is a good result.
-4. **Treat the capture-day diagnostic as a primary result**, not a supplementary
-   one. Three real acquisition days with a 33-point true accuracy spread is a far
-   more convincing demonstration than bootstrap resampling, because the sessions
-   are real outings rather than constructed subsets.
-5. **Record that day 3 falls below chance.** At 0.306 on a three-class problem the
-   classifier is worse than random on that day. Per §12 the "target accuracy < 0.40"
-   condition is *not* tripped for arm D pooled (0.50), but it **is** breached for
-   that day considered alone. Any per-day analysis must carry that caveat, since
-   accuracy estimates for a below-chance session are not meaningfully interpretable.
+4. **Treat the capture-day diagnostic as a primary result.** Three real acquisition
+   days with a 31-point true accuracy spread is a far more convincing demonstration
+   than bootstrap resampling, because the sessions are real outings.
+5. **Carry the near-chance caveat.** Day 3 sits at 0.345 against a 0.333 chance
+   level. The §12 condition "target accuracy < 0.40" is *not* tripped for arm D
+   pooled (0.51) but the hardest day is close to uninformative on its own terms,
+   and any per-day claim must say so.
 
 ## 6. Status
 
