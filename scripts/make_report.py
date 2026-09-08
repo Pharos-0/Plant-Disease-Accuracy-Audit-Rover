@@ -561,17 +561,86 @@ def main() -> int:
         "*confidence-based estimators under lab-to-field shift* rests on one lab dataset, "
         "and would be stronger with a second.")
     add("")
-    add("## 9. What would change the conclusion")
+    # ---- temperature-scaling ablation, if it has been run ---------------
+    tpath = paths.TABLES_DIR / "temperature_ablation.csv"
+    if tpath.exists():
+        t = pd.read_csv(tpath)
+        add("## 9. Does calibrating the source model rescue the estimators? **No.**")
+        add("")
+        add("The obvious objection to everything above is that the source model is simply "
+            "miscalibrated. It is testable, so we tested it: a single temperature fitted "
+            "on the **source validation set** (source labels only — the target stays "
+            "unlabeled, so this remains label-free at deployment), applied to source and "
+            "target logits alike, with the whole estimator suite re-run.")
+        add("")
+        fitted_p = paths.TABLES_DIR / "temperature_fitted.csv"
+        if fitted_p.exists():
+            f = pd.read_csv(fitted_p)
+            g = f.groupby("backbone")[
+                ["temperature", "source_ece_before", "source_ece_after"]
+            ].mean()
+            add("Calibration on the source side works exactly as intended:")
+            add("")
+            add("| backbone | fitted temperature | source ECE before | source ECE after |")
+            add("|---|---:|---:|---:|")
+            for bb, r in g.iterrows():
+                add(f"| `{bb}` | {r.temperature:.3f} | {r.source_ece_before:.4f} | "
+                    f"{r.source_ece_after:.4f} |")
+            add("")
+        add("And it does not transfer. Change in MAE from calibrating "
+            "(negative = better):")
+        add("")
+        piv = t.pivot_table(index="estimator", columns=["arm", "calibrated"], values="mae")
+        arms_t = sorted({a for a, _ in piv.columns})
+        add("| estimator | " + " | ".join(f"Δ MAE arm {a}" for a in arms_t) + " |")
+        add("|---|" + "---:|" * len(arms_t))
+        for est in piv.index:
+            cells = []
+            for a in arms_t:
+                try:
+                    cells.append(f"{piv.loc[est, (a, True)] - piv.loc[est, (a, False)]:+.4f}")
+                except KeyError:
+                    cells.append("—")
+            add(f"| `{est}` | " + " | ".join(cells) + " |")
+        add("")
+        shifted_t = t[t.arm != "A"]
+        wors = shifted_t.pivot_table(index=["arm", "estimator"], columns="calibrated", values="mae")
+        n_worse = int((wors[True] > wors[False]).sum())
+        add(f"On arm A calibration helps, as it should — every estimator improves and "
+            f"entropy improves sharply. **Under shift it hurts: {n_worse} of {len(wors)} "
+            f"(arm, estimator) pairs get worse.** Correlation with true session accuracy "
+            "does not recover either.")
+        add("")
+        add("The reason is structural. The temperature is fitted on **source** data, so it "
+            "corrects the source confidence distribution. Under shift the target's "
+            "confidence distribution has moved somewhere else, and a source-fitted "
+            "correction is then simply the wrong correction — applied confidently. "
+            "**The problem is not that the source model is miscalibrated. It is that "
+            "confidence stops tracking correctness once the distribution moves**, and no "
+            "amount of source-side calibration can fix a coupling that has broken on the "
+            "target side.")
+        add("")
+        add("This closes off the most obvious remedy, which makes the negative result "
+            "considerably harder to dismiss.")
+        add("")
+
+    add("## 10. What would change the conclusion")
     add("")
     add("The negative result is specific, which makes it testable:")
     add("")
-    add("- **A better-calibrated source model.** Every failing estimator reads the "
-        "confidence distribution. Temperature scaling on source validation is label-free "
-        "with respect to the target and is the obvious next ablation — the official ATC "
-        "release specifies it and then no-ops it (see `docs/estimator_reproducibility.md`).")
+    if tpath.exists():
+        add("- ~~A better-calibrated source model~~ — **tested and ruled out** (§9).")
+    else:
+        add("- **A better-calibrated source model.** Temperature scaling on source "
+            "validation is label-free with respect to the target and is the obvious next "
+            "ablation.")
     add("- **Marginal-based rather than confidence-based estimators.** COT is the only "
         "method here that uses the class marginal, and it is the only one retaining lift "
         "over the base rate. That points at a family worth extending, not abandoning.")
+    add("- **A small labelled field sample.** If confidence cannot be trusted under shift, "
+        "the alternative is to spend a few labels. Even 20–50 labelled field images per "
+        "session would permit direct estimation with a known confidence interval — worse "
+        "than free, but honest. Quantifying that trade-off is the natural sequel.")
     add("- **A source domain closer to the field.** The collapse is driven by the model "
         "staying confident while wrong. Anything narrowing the lab-to-field gap should "
         "restore the coupling between confidence and correctness that these estimators "
