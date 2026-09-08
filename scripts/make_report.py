@@ -24,7 +24,7 @@ from evaluation.metrics import minimum_session_size
 
 ARM_DESC = {
     "A": "PlantVillage held-out (leaf-grouped) — **no shift, control**",
-    "B": "PlantDoc, SHARED_8 — web / in-the-wild",
+    "B": "PlantDoc, SHARED_7 — web / in-the-wild (wide label space)",
     "C": "PlantDoc, SHARED_3 — web (label-space control vs B)",
     "D": "Tomato-Village, SHARED_3 — **real Indian field**",
 }
@@ -336,6 +336,36 @@ def main() -> int:
             "measured. PlantDoc SHARED_3 (262 images) cannot supply N=400 at all, and "
             "those sessions are flagged rather than silently truncated.")
     add("")
+
+    # ------------------------------------------------------------------ 5b
+    if agg.backbone.nunique() > 1:
+        add("## 5b. Is any of this architecture-dependent? (V9)")
+        add("")
+        add("Four backbones, all trained under the leaf-grouped protocol on `SHARED_3`, "
+            "five seeds each. If the failure under shift were an artefact of one "
+            "architecture it would show up here.")
+        add("")
+        src = train[train.label_set == "SHARED_3"].groupby("backbone").agg(
+            n=("seed", "size"), source_acc=("source_test_acc", "mean"),
+            sd=("source_test_acc", "std"),
+        )
+        d100b = agg[(agg.arm == "D") & (agg.n_requested == 100)]
+        mae_b = d100b.groupby("backbone").mae.mean()
+        bias_b = d100b.groupby("backbone").bias.mean()
+        r_b = d100b.groupby("backbone").pearson_r.mean()
+        add("| backbone | runs | source test acc | arm-D MAE | arm-D bias | arm-D r |")
+        add("|---|---:|---:|---:|---:|---:|")
+        for bb in sorted(set(src.index) & set(mae_b.index)):
+            add(f"| `{bb}` | {int(src.loc[bb, 'n'])} | {src.loc[bb, 'source_acc']:.4f} | "
+                f"{mae_b[bb]:.3f} | {bias_b[bb]:+.3f} | {r_b[bb]:.3f} |")
+        add("")
+        add(f"Source accuracy spans {src.source_acc.min():.3f}–{src.source_acc.max():.3f} "
+            f"across architectures, yet arm-D bias stays positive for every one of them "
+            f"({bias_b.min():+.3f} to {bias_b.max():+.3f}) and the correlation with true "
+            f"session accuracy stays low ({r_b.min():.3f} to {r_b.max():.3f}). "
+            "**The failure is a property of the estimators under shift, not of a "
+            "particular backbone.**")
+        add("")
 
     # ------------------------------------------------------------------ 6b
     gate_path = paths.TABLES_DIR / "gate_operating_characteristic.parquet"

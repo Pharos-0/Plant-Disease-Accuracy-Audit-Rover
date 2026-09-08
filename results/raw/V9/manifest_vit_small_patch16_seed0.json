@@ -1,0 +1,174 @@
+{
+  "version": "V9",
+  "written_at": "2026-09-08T03:57:41.798989+00:00",
+  "seed": 0,
+  "config": {
+    "version": "V9",
+    "protocol": "v2_leaf",
+    "backbone": "vit_small_patch16",
+    "label_set": "SHARED_3",
+    "seed": 0,
+    "epochs": 12,
+    "batch_size": 64,
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "label_smoothing": 0.05,
+    "num_workers": 8,
+    "warmup_epochs": 1
+  },
+  "config_hash": "5c3104951bb68506",
+  "git_commit": "1cc013ff4e313250386b03fa4a8e657faf76f07f",
+  "git_dirty": true,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "metrics": {
+    "best_val_acc": 0.9931506849315068,
+    "best_epoch": 10,
+    "source_test_acc": 0.9977064220183486,
+    "source_test_loss": 0.04512104412557882,
+    "train_seconds": 120.20217394828796,
+    "n_train": 2044,
+    "n_val": 438,
+    "n_test": 436,
+    "leakage": {
+      "straddling_groups": 0,
+      "affected_images": 0
+    },
+    "confusion_matrix": [
+      [
+        148,
+        0,
+        0
+      ],
+      [
+        0,
+        148,
+        0
+      ],
+      [
+        0,
+        1,
+        139
+      ]
+    ],
+    "history": [
+      {
+        "epoch": 0,
+        "train_loss": 0.5361279551880234,
+        "val_acc": 0.9383561643835616,
+        "val_loss": 0.16186398020243808,
+        "lr": 0.00029999402591961757
+      },
+      {
+        "epoch": 1,
+        "train_loss": 0.21428129485208694,
+        "val_acc": 0.9908675799086758,
+        "val_loss": 0.06083376121337283,
+        "lr": 0.00029354107619562986
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.19553350524543084,
+        "val_acc": 0.9885844748858448,
+        "val_loss": 0.07120888414856506,
+        "lr": 0.0002754593307583541
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.19460695282120527,
+        "val_acc": 0.9611872146118722,
+        "val_loss": 0.13443796186958817,
+        "lr": 0.0002472136650868378
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.1805380810263572,
+        "val_acc": 0.9817351598173516,
+        "val_loss": 0.0737095835648443,
+        "lr": 0.00021109237503034523
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.17309110339023828,
+        "val_acc": 0.9726027397260274,
+        "val_loss": 0.10032929007185104,
+        "lr": 0.00017002179268766983
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.17221601561090952,
+        "val_acc": 0.9863013698630136,
+        "val_loss": 0.0687343301634266,
+        "lr": 0.0001273292123840571
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.17219924859688007,
+        "val_acc": 0.9657534246575342,
+        "val_loss": 0.12648316840194676,
+        "lr": 8.647333307315434e-05
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.173601832875067,
+        "val_acc": 0.9840182648401826,
+        "val_loss": 0.0709417680933323,
+        "lr": 5.076405511746071e-05
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.17142407881886992,
+        "val_acc": 0.9817351598173516,
+        "val_loss": 0.0804471578193854,
+        "lr": 2.3094331845693393e-05
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.17111750888964436,
+        "val_acc": 0.9931506849315068,
+        "val_loss": 0.05762990317456254,
+        "lr": 5.705799679150375e-06
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.16995535105641807,
+        "val_acc": 0.9931506849315068,
+        "val_loss": 0.05654503117617407,
+        "lr": 7.174080382371524e-09
+      }
+    ]
+  },
+  "labels": [
+    "healthy",
+    "early_blight",
+    "late_blight"
+  ],
+  "checkpoint": "D:\\Final Project M.Tech\\results\\raw\\V9\\vit_small_patch16_seed0.pt",
+  "split_file": "D:\\Final Project M.Tech\\results\\raw\\V9\\split_v2_leaf_seed0.parquet",
+  "n_excluded_images": 18
+}

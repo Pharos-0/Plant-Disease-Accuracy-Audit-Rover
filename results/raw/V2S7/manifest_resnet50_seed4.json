@@ -1,0 +1,226 @@
+{
+  "version": "V2S7",
+  "written_at": "2026-09-08T06:05:27.264991+00:00",
+  "seed": 4,
+  "config": {
+    "version": "V2S7",
+    "protocol": "v2_leaf",
+    "backbone": "resnet50",
+    "label_set": "SHARED_7",
+    "seed": 4,
+    "epochs": 12,
+    "batch_size": 64,
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "label_smoothing": 0.05,
+    "num_workers": 8,
+    "warmup_epochs": 1
+  },
+  "config_hash": "30259d3f394cec6e",
+  "git_commit": "1cc013ff4e313250386b03fa4a8e657faf76f07f",
+  "git_dirty": true,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "metrics": {
+    "best_val_acc": 0.9924965893587995,
+    "best_epoch": 10,
+    "source_test_acc": 0.9869415807560138,
+    "source_test_loss": 0.07710620579645806,
+    "train_seconds": 1429.4739966392517,
+    "n_train": 6814,
+    "n_val": 1466,
+    "n_test": 1455,
+    "leakage": {
+      "straddling_groups": 0,
+      "affected_images": 0
+    },
+    "confusion_matrix": [
+      [
+        147,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        134,
+        4,
+        1,
+        3,
+        4,
+        0
+      ],
+      [
+        2,
+        1,
+        137,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        319,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        140,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        147,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        412
+      ]
+    ],
+    "history": [
+      {
+        "epoch": 0,
+        "train_loss": 1.604553714853807,
+        "val_acc": 0.8165075034106412,
+        "val_loss": 0.6676981446077846,
+        "lr": 0.0002999994656742696
+      },
+      {
+        "epoch": 1,
+        "train_loss": 0.4594498610947886,
+        "val_acc": 0.9713506139154161,
+        "val_loss": 0.14207184759424785,
+        "lr": 0.0002938106601701866
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.31865951738156006,
+        "val_acc": 0.9740791268758526,
+        "val_loss": 0.12213177186161239,
+        "lr": 0.0002759712188624747
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.293296222204612,
+        "val_acc": 0.9863574351978172,
+        "val_loss": 0.0911709627779493,
+        "lr": 0.0002479263871906421
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.2812529975957873,
+        "val_acc": 0.9788540245566166,
+        "val_loss": 0.1020044948534702,
+        "lr": 0.0002119481906277046
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.27300828344527317,
+        "val_acc": 0.9897680763983628,
+        "val_loss": 0.07684561401849554,
+        "lr": 0.00017095136868861756
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.27255584432087165,
+        "val_acc": 0.9884038199181446,
+        "val_loss": 0.07745410251401944,
+        "lr": 0.0001282572400693978
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.2687711390383194,
+        "val_acc": 0.9911323328785812,
+        "val_loss": 0.07268990466490612,
+        "lr": 8.732462915901474e-05
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.26753088532741165,
+        "val_acc": 0.9897680763983628,
+        "val_loss": 0.07154304949925021,
+        "lr": 5.146965265781722e-05
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.2633076858268583,
+        "val_acc": 0.9890859481582538,
+        "val_loss": 0.07490659248475164,
+        "lr": 2.3597067524176498e-05
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.26532751676936217,
+        "val_acc": 0.9924965893587995,
+        "val_loss": 0.07007491935202077,
+        "lr": 5.96494484097361e-06
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.26615368774079284,
+        "val_acc": 0.9924965893587995,
+        "val_loss": 0.06992226369465519,
+        "lr": 1.734325730373565e-09
+      }
+    ]
+  },
+  "labels": [
+    "healthy",
+    "early_blight",
+    "late_blight",
+    "bacterial_spot",
+    "leaf_mold",
+    "septoria_leaf_spot",
+    "yellow_leaf_curl_virus"
+  ],
+  "checkpoint": "D:\\Final Project M.Tech\\results\\raw\\V2S7\\resnet50_seed4.pt",
+  "split_file": "D:\\Final Project M.Tech\\results\\raw\\V2S7\\split_v2_leaf_seed4.parquet",
+  "n_excluded_images": 18
+}
