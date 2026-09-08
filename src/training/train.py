@@ -158,7 +158,7 @@ def run(cfg: TrainConfig) -> dict:
             }
         )
         print(f"  epoch {epoch:2d}  train_loss {run_loss / max(seen, 1):.4f}  "
-              f"val_acc {val_acc:.4f}")
+              f"val_acc {val_acc:.4f}", flush=True)
         if val_acc > best_val:
             best_val, best_epoch = val_acc, epoch
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
@@ -215,7 +215,7 @@ def run(cfg: TrainConfig) -> dict:
         },
         filename=f"manifest_{cfg.backbone}_seed{cfg.seed}.json",
     )
-    print(f"  source test acc {test_acc:.4f}  ({train_time:.0f}s)")
+    print(f"  source test acc {test_acc:.4f}  ({train_time:.0f}s)", flush=True)
     return metrics
 
 

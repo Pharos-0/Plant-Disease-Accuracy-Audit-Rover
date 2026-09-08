@@ -151,17 +151,47 @@ def fig_bias_by_shift(agg: pd.DataFrame, shift: pd.DataFrame | None, n: int = 10
 
 
 def fig_gate_oc(gate: pd.DataFrame, arm: str = "D", n: int = 100) -> Path:
-    """Deployment gate operating characteristic - the framing contribution."""
+    """Deployment gate: the operating characteristic and whether it beats chance.
+
+    The right panel is the one that matters. Gate *accuracy* is misleading when
+    almost no session is truly good - always withholding scores highly while
+    being useless. Lift (precision of operate / base rate) asks the honest
+    question: were the sessions it authorised any better than a random pick?
+    """
     d = gate[(gate.arm == arm) & (gate.n_requested == n)]
-    fig, ax = plt.subplots(figsize=(5.2, 4.4))
+    fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.4))
+
     for est, g in d.groupby("estimator"):
-        g = g.groupby("tau")[["unsafe_operate_rate", "wasted_withhold_rate"]].mean().reset_index()
-        ax.plot(g.wasted_withhold_rate, g.unsafe_operate_rate, marker=".", ms=3,
-                lw=1.2, label=est)
-    ax.set_xlabel("wasted withhold rate")
-    ax.set_ylabel("unsafe operate rate  (the costly error)")
-    ax.set_title(f"Deployment gate operating characteristic\narm {arm}, N={n}, tau swept 0.50-0.95")
-    ax.legend(fontsize=7.5)
+        gg = g.groupby("tau")[
+            ["unsafe_operate_rate", "wasted_withhold_rate",
+             "precision_of_operate", "base_rate_good", "operate_rate"]
+        ].mean().reset_index()
+        axes[0].plot(gg.wasted_withhold_rate, gg.unsafe_operate_rate,
+                     marker=".", ms=3, lw=1.2, label=est)
+        lift = gg.precision_of_operate / gg.base_rate_good.replace(0, np.nan)
+        # Lift is meaningless where the gate never operates, and unstable once
+        # almost no session is truly good - a base rate of 0.6% turns a couple of
+        # lucky sessions into a spurious 5x. Require support on both sides.
+        lift = lift.where((gg.operate_rate > 0.02) & (gg.base_rate_good > 0.02))
+        axes[1].plot(gg.tau, lift, marker=".", ms=3, lw=1.2, label=est)
+
+    axes[0].set_xlabel("wasted withhold rate")
+    axes[0].set_ylabel("unsafe operate rate  (the costly error)")
+    axes[0].set_title("Operating characteristic")
+
+    axes[1].axhline(1.0, color="k", ls="--", lw=1.2)
+    axes[1].annotate("1.0 = no better than random", xy=(0.52, 1.0),
+                     xytext=(0.52, 1.06), fontsize=7.5)
+    axes[1].set_xlabel("threshold tau")
+    axes[1].set_ylabel("lift  (precision of operate / base rate)")
+    axes[1].set_title(
+        "Does the gate beat chance?\n(shown only where >2% of sessions are truly good)",
+        fontsize=9,
+    )
+    axes[1].legend(fontsize=7.5, ncol=2)
+
+    fig.suptitle(f"Deployment gate — arm {arm}, N={n}, tau swept 0.50–0.95", y=1.02)
+    fig.tight_layout()
     return _save(fig, f"fig10_gate_oc_arm{arm}_N{n}.png")
 
 

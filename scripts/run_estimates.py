@@ -58,7 +58,7 @@ def arm_name(cache_arm: str, label_set: str) -> str:
     if cache_arm == "source_test":
         return "A"
     if cache_arm == "plantdoc":
-        return "B" if label_set == "SHARED_8" else "C"
+        return "C" if label_set == "SHARED_3" else "B"
     if cache_arm == "tomatovillage":
         return "D"
     return cache_arm

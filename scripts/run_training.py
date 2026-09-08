@@ -26,14 +26,16 @@ def build_jobs(stage: str) -> list[TrainConfig]:
             jobs.append(TrainConfig(version="V1", protocol="v1_image", seed=seed, epochs=12))
             jobs.append(TrainConfig(version="V2", protocol="v2_leaf", seed=seed, epochs=12))
     if stage in ("shared8", "all"):
-        # Arm B evaluates PlantDoc over SHARED_8, which needs an 8-class source
-        # model; the SHARED_3 models physically cannot produce those logits.
+        # Arm B evaluates PlantDoc over the wide label space, which needs a
+        # multi-class source model; the SHARED_3 models cannot produce those
+        # logits. SHARED_7 rather than SHARED_8 because PlantVillage ships no
+        # leafmap for mosaic_virus - see data.mapping.SHARED_7.
         for seed in SEEDS:
             jobs.append(
                 TrainConfig(
-                    version="V2S8",
+                    version="V2S7",
                     protocol="v2_leaf",
-                    label_set="SHARED_8",
+                    label_set="SHARED_7",
                     seed=seed,
                     epochs=12,
                 )
