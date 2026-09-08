@@ -1,0 +1,116 @@
+{
+  "experiment_id": "rq4",
+  "written_at": "2026-09-08T16:55:43.277390+00:00",
+  "git_commit": "6b73daf243879d82e134690f842a228d272b5e3f",
+  "git_dirty": true,
+  "estimator_suite_version": "1.0.0",
+  "params": {
+    "diagnostics": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+    ],
+    "versions_used": [
+      "V2",
+      "V9"
+    ],
+    "label_set": "SHARED_3",
+    "arms": [
+      "A",
+      "C",
+      "D"
+    ],
+    "arm_B_excluded_reason": "SHARED_7 exists for resnet50 only",
+    "backbones": [
+      "efficientnet_b0",
+      "mobilenetv3_large",
+      "resnet50",
+      "vit_small_patch16"
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "n_models": 20,
+    "session_sampling_rule": "reused logged sessions.npz (group-level sampling)",
+    "n_focus_for_session_signals": 100,
+    "bootstrap": {
+      "n_boot": 1000,
+      "scheme": "cluster bootstrap over photographs",
+      "seed": 12345
+    },
+    "independent_units": {
+      "A_B_F": "image (CI clustered by photograph)",
+      "C_I": "session",
+      "D_E": "session",
+      "G": "capture day",
+      "H": "seed"
+    }
+  },
+  "params_hash": "cfc81e971d258bdc",
+  "inputs": {
+    "feature_cache": {
+      "n_files": 240,
+      "total_bytes": 318330888,
+      "digest": "510657b914908e76"
+    },
+    "per_session": "results/tables/per_session.parquet",
+    "sessions": "results/raw/estimates/sessions.npz"
+  },
+  "outputs": [
+    "results\\rq4\\diagA_B_confidence_calibration.csv",
+    "results\\rq4\\diagC_session_sensitivity.csv",
+    "results\\rq4\\diagD_E_session_signals.csv",
+    "results\\rq4\\diagF_class_conditional.csv",
+    "results\\rq4\\diagG_capture_day.csv",
+    "results\\rq4\\diagI_bias_variance_vs_N.csv"
+  ],
+  "metrics": {
+    "n_rows": {
+      "diagA_B_confidence_calibration.csv": 60,
+      "diagC_session_sensitivity.csv": 480,
+      "diagD_E_session_signals.csv": 12000,
+      "diagF_class_conditional.csv": 180,
+      "diagG_capture_day.csv": 60,
+      "diagI_bias_variance_vs_N.csv": 96
+    }
+  },
+  "runtime_seconds": 18972.773628234863,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "notes": "RQ4 diagnostics. Pre-registered in docs/rq4_diagnostic_plan.md. No training, no estimator rerun, no existing table overwritten."
+}
