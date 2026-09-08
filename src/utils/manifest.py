@@ -147,3 +147,80 @@ def write_manifest(
 def load_manifest(version: str, filename: str = "manifest.json") -> dict[str, Any]:
     path = paths.RAW_RESULTS / version / filename
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+# ---------------------------------------------------------------------------
+# Experiment manifests for non-training stages (added for RQ4 diagnostics).
+#
+# The Phase-1 audit found that only training wrote manifests: the estimator
+# grid, N-sweep, capture-day diagnostic and temperature ablation produced
+# tables with no record of estimator version, sampling rule or git state.
+# This closes that gap for every experiment written from here on. Historical
+# results are deliberately NOT regenerated.
+# ---------------------------------------------------------------------------
+
+#: bump when an estimator's numerical behaviour changes, so old results stay
+#: distinguishable from new ones.
+ESTIMATOR_SUITE_VERSION = "1.0.0"
+
+
+def cache_fingerprint(paths_list: list[Path]) -> dict[str, Any]:
+    """Identify the cached inputs an experiment consumed.
+
+    Hashing 300 MB of feature caches per run is wasteful, so this records the
+    file count, total size and a digest over (name, size, mtime) triples --
+    enough to detect a changed or regenerated cache.
+    """
+    files = sorted(p for p in paths_list if p.exists())
+    h = hashlib.sha256()
+    total = 0
+    for p in files:
+        st = p.stat()
+        total += st.st_size
+        h.update(f"{p.name}:{st.st_size}:{int(st.st_mtime)}".encode())
+    return {
+        "n_files": len(files),
+        "total_bytes": total,
+        "digest": h.hexdigest()[:16],
+    }
+
+
+def write_experiment_manifest(
+    experiment_id: str,
+    *,
+    params: dict[str, Any],
+    inputs: dict[str, Any] | None = None,
+    outputs: list[str] | None = None,
+    metrics: dict[str, Any] | None = None,
+    runtime_seconds: float | None = None,
+    notes: str | None = None,
+    out_dir: Path | None = None,
+) -> Path:
+    """Record everything section 27 of the thesis brief requires.
+
+    ``params`` should carry the experiment-specific settings: backbones, seeds,
+    target arms, session sampling rule, N values, bootstrap count, and so on.
+    """
+    directory = out_dir or (paths.RESULTS_DIR / experiment_id)
+    directory.mkdir(parents=True, exist_ok=True)
+
+    manifest = {
+        "experiment_id": experiment_id,
+        "written_at": datetime.now(timezone.utc).isoformat(),
+        "git_commit": git_commit(),
+        "git_dirty": git_dirty(),
+        "estimator_suite_version": ESTIMATOR_SUITE_VERSION,
+        "params": params,
+        "params_hash": config_hash(params),
+        "inputs": inputs or {},
+        "outputs": outputs or [],
+        "metrics": metrics or {},
+        "runtime_seconds": runtime_seconds,
+        "packages": package_versions(),
+        "hardware": hardware(),
+        "dataset_checksums": dataset_checksums(),
+        "notes": notes,
+    }
+    path = directory / "manifest.json"
+    path.write_text(json.dumps(manifest, indent=2, default=str), encoding="utf-8")
+    return path
