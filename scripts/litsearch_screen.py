@@ -99,10 +99,27 @@ SHIFT = rx(
 
 
 def screen_one(title: str, abstract: str) -> tuple[str, str]:
-    """Return (decision, reason). Decisions: include | adjacent | exclude."""
+    """Return (decision, reason). Decisions: include | adjacent | exclude.
+
+    Crossref deposits abstracts only sparsely - about 73% of the retrieved
+    corpus arrives with none. Dropping those unread would silently discard the
+    majority of the search, so a record with no abstract is screened on its
+    **title alone** and the weaker basis is recorded in the reason. Title-only
+    screening has lower recall than title-and-abstract, which matters for a null
+    claim, and that limitation is reported rather than hidden.
+    """
     text = f"{title} . {abstract}"
-    if len(abstract or "") < 40:
-        return "exclude", "no_abstract_to_screen"
+    title_only = len(abstract or "") < 40
+    if title_only:
+        text = title or ""
+        if len(text) < 8:
+            return "exclude", "no_title_or_abstract_to_screen"
+        task = bool(TASK.search(text)) or bool(METHODS.search(text))
+        if not task:
+            return "exclude", "not_performance_estimation_title_only"
+        if AGRI.search(text):
+            return "include", "task_and_agriculture_title_only"
+        return "include", "task_general_ml_title_only"
 
     task = bool(TASK.search(text)) or bool(METHODS.search(text))
     agri = bool(AGRI.search(text))
@@ -170,13 +187,14 @@ def main() -> int:
     adj.sort_values(["year"], ascending=False).to_csv(OUT / "adjacent.csv", index=False)
 
     # the decision-critical subset: task AND agriculture
-    key = inc[inc.reason == "task_and_agriculture"]
+    key = inc[inc.reason.isin(["task_and_agriculture",
+                               "task_and_agriculture_title_only"])]
     key.sort_values("year", ascending=False).to_csv(OUT / "included_agricultural.csv",
                                                     index=False)
     print(f"\n=== Q2 decision set: label-free performance estimation IN agriculture ===")
     print(f"{len(key)} record(s)")
     for _, r in key.sort_values("year", ascending=False).iterrows():
-        print(f"  {r.year} | {str(r.venue)[:34]:<34} | {str(r.title)[:88]}")
+        print(f"  {r.year} | {str(r.reason)[:31]:<31} | {str(r.title)[:80]}")
 
     prisma = pd.DataFrame([
         {"stage": "identified (all databases, with duplicates)", "n": int(len(raw))},
