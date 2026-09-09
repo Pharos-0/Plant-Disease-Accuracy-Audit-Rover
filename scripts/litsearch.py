@@ -14,6 +14,7 @@ credentials, so a null result here means "none found by this search".
 """
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 import time
@@ -76,18 +77,58 @@ BLOCK_C = [
 ]
 
 
-def _get(url: str, params: dict | None = None, tries: int = 4) -> requests.Response | None:
-    """One polite GET with backoff. Returns None rather than raising."""
+class BudgetExhausted(RuntimeError):
+    """A daily API quota ran out. Abort - never degrade into recording zeros."""
+
+
+#: OpenAlex allows 1,000 requests/day and resets at midnight UTC. Retrying a 429
+#: spends budget that does not exist and gets us nothing, so a quota refusal
+#: aborts the run instead of being retried.
+_REQUESTS_USED = {"openalex": 0, "crossref": 0, "arxiv": 0}
+OPENALEX_DAILY_LIMIT = 1000
+OPENALEX_SAFETY_MARGIN = 40
+
+
+def _get(url: str, params: dict | None = None, *, api: str,
+         tries: int = 3) -> tuple[requests.Response | None, str]:
+    """One polite GET. Returns (response, status) - NEVER silently a zero.
+
+    ``status`` is "ok" or a description of the failure, and is recorded per query
+    so that a zero count in the results is always distinguishable from a request
+    that never succeeded. Conflating the two is how a search fabricates a null
+    result, which is exactly what this function exists to prevent.
+    """
+    if api == "openalex" and _REQUESTS_USED["openalex"] >= (
+            OPENALEX_DAILY_LIMIT - OPENALEX_SAFETY_MARGIN):
+        raise BudgetExhausted(
+            f"OpenAlex: {_REQUESTS_USED['openalex']} requests used, at the "
+            f"{OPENALEX_DAILY_LIMIT}/day limit. Resume after midnight UTC.")
+
+    last = "no attempt"
     for attempt in range(tries):
         try:
+            _REQUESTS_USED[api] += 1
             r = requests.get(url, params=params, headers=UA, timeout=45)
-            if r.status_code in (429, 500, 502, 503):
-                time.sleep(3 * (attempt + 1))
+            if r.status_code == 429:
+                retry_after = int(r.headers.get("retry-after", 0) or 0)
+                if retry_after > 300 or "Insufficient budget" in r.text:
+                    raise BudgetExhausted(
+                        f"{api}: quota exhausted, resets in {retry_after}s "
+                        f"({retry_after/3600:.1f} h). {r.text[:160]}")
+                time.sleep(min(30, 5 * (attempt + 1)))
+                last = "rate_limited"
                 continue
-            return r if r.ok else None
-        except requests.RequestException:
+            if r.status_code in (500, 502, 503):
+                time.sleep(3 * (attempt + 1))
+                last = f"http_{r.status_code}"
+                continue
+            if not r.ok:
+                return None, f"http_{r.status_code}"
+            return r, "ok"
+        except requests.RequestException as e:
+            last = f"{type(e).__name__}"
             time.sleep(2 * (attempt + 1))
-    return None
+    return None, last
 
 
 # ---------------------------------------------------------------- OpenAlex
@@ -101,39 +142,44 @@ def _openalex_abstract(inv: dict | None) -> str:
     return " ".join(w for _, w in sorted(order))
 
 
-def search_openalex(query: str) -> tuple[list[dict], int]:
-    """Title-and-abstract search. Returns (records, total_count_reported)."""
-    rows, cursor, total = [], "*", 0
-    while cursor and len(rows) < MAX_PER_QUERY:
-        r = _get("https://api.openalex.org/works", {
-            "filter": f"title_and_abstract.search:{query}",
-            "per-page": PER_PAGE, "cursor": cursor, "mailto": MAILTO,
-            "select": "id,doi,title,publication_year,abstract_inverted_index,"
-                      "primary_location,type,cited_by_count,authorships",
+def search_openalex(query: str) -> tuple[list[dict], int | None, str]:
+    """Title-and-abstract search. Returns (records, total_count_or_None, status).
+
+    One request per query: `per-page=200` returns both the true `meta.count` and
+    up to 200 records, which is ample for title/abstract screening. Deep
+    pagination is what exhausted the daily quota on the first attempt.
+
+    A failed request returns count ``None``, never ``0``.
+    """
+    rows: list[dict] = []
+    r, status = _get("https://api.openalex.org/works", {
+        "filter": f"title_and_abstract.search:{query}",
+        "per-page": PER_PAGE, "mailto": MAILTO,
+        "select": "id,doi,title,publication_year,abstract_inverted_index,"
+                  "primary_location,type,cited_by_count,authorships",
+    }, api="openalex")
+    if r is None:
+        return [], None, status
+    js = r.json()
+    total = js.get("meta", {}).get("count")
+    for w in js.get("results", []):
+        loc = (w.get("primary_location") or {}).get("source") or {}
+        auth = [a.get("author", {}).get("display_name", "")
+                for a in (w.get("authorships") or [])[:6]]
+        rows.append({
+            "database": "openalex",
+            "id": w.get("id"),
+            "doi": (w.get("doi") or "").replace("https://doi.org/", "").lower(),
+            "title": w.get("title") or "",
+            "year": w.get("publication_year"),
+            "venue": loc.get("display_name") or "",
+            "type": w.get("type") or "",
+            "cited_by": w.get("cited_by_count"),
+            "authors": "; ".join(a for a in auth if a),
+            "abstract": _openalex_abstract(w.get("abstract_inverted_index")),
         })
-        if r is None:
-            break
-        js = r.json()
-        total = js.get("meta", {}).get("count", total)
-        for w in js.get("results", []):
-            loc = (w.get("primary_location") or {}).get("source") or {}
-            auth = [a.get("author", {}).get("display_name", "")
-                    for a in (w.get("authorships") or [])[:6]]
-            rows.append({
-                "database": "openalex",
-                "id": w.get("id"),
-                "doi": (w.get("doi") or "").replace("https://doi.org/", "").lower(),
-                "title": w.get("title") or "",
-                "year": w.get("publication_year"),
-                "venue": loc.get("display_name") or "",
-                "type": w.get("type") or "",
-                "cited_by": w.get("cited_by_count"),
-                "authors": "; ".join(a for a in auth if a),
-                "abstract": _openalex_abstract(w.get("abstract_inverted_index")),
-            })
-        cursor = js.get("meta", {}).get("next_cursor")
-        time.sleep(0.15)
-    return rows, total
+    time.sleep(0.15)
+    return rows, total, status
 
 
 # ---------------------------------------------------------------- Crossref
@@ -145,13 +191,13 @@ def search_openalex(query: str) -> tuple[list[dict], int]:
 # the protocol is followed as written; the effect is simply that Crossref
 # contributes many records that screening then excludes. Reported in the PRISMA
 # flow instead of being hidden by re-tuning the query after seeing results.
-def search_crossref(query: str, rows_wanted: int = 200) -> tuple[list[dict], int]:
-    r = _get("https://api.crossref.org/works", {
+def search_crossref(query: str, rows_wanted: int = 200) -> tuple[list[dict], int | None, str]:
+    r, status = _get("https://api.crossref.org/works", {
         "query.bibliographic": query, "rows": min(rows_wanted, 100),
         "mailto": MAILTO, "select": "DOI,title,abstract,issued,container-title,type,author",
-    })
+    }, api="crossref")
     if r is None:
-        return [], 0
+        return [], None, status
     msg = r.json().get("message", {})
     out = []
     for it in msg.get("items", []):
@@ -171,25 +217,25 @@ def search_crossref(query: str, rows_wanted: int = 200) -> tuple[list[dict], int
             "abstract": re.sub(r"<[^>]+>", " ", it.get("abstract") or ""),
         })
     time.sleep(0.2)
-    return out, msg.get("total-results", 0)
+    return out, msg.get("total-results"), status
 
 
 # ---------------------------------------------------------------- arXiv
 ARXIV_NS = {"a": "http://www.w3.org/2005/Atom"}
 
 
-def search_arxiv(query: str, max_results: int = 100) -> tuple[list[dict], int]:
+def search_arxiv(query: str, max_results: int = 100) -> tuple[list[dict], int | None, str]:
     terms = " AND ".join(f'abs:"{t}"' for t in query.split(" AND "))
-    r = _get("http://export.arxiv.org/api/query", {
+    r, status = _get("http://export.arxiv.org/api/query", {
         "search_query": terms, "max_results": max_results,
         "sortBy": "relevance", "sortOrder": "descending",
-    })
+    }, api="arxiv")
     if r is None:
-        return [], 0
+        return [], None, status
     try:
         root = ET.fromstring(r.text)
     except ET.ParseError:
-        return [], 0
+        return [], None, "xml_parse_error"
     total_el = root.find("{http://a9.com/-/spec/opensearch/1.1/}totalResults")
     total = int(total_el.text) if total_el is not None and total_el.text else 0
     out = []
@@ -213,7 +259,7 @@ def search_arxiv(query: str, max_results: int = 100) -> tuple[list[dict], int]:
             "abstract": re.sub(r"\s+", " ", txt("summary")),
         })
     time.sleep(3.1)          # arXiv asks for one request per 3 s
-    return out, total
+    return out, total, status
 
 
 # ---------------------------------------------------------------- driver
@@ -244,85 +290,148 @@ def build_queries() -> list[dict]:
     return q
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    """Retrieval only.
+
+    Deduplication and screening live in ``litsearch_screen.py``, which reads every
+    ``raw_*.csv`` present - so retrieval can be run in stages (one database today,
+    another when its quota resets) and the stages merge naturally.
+    """
+    ap = argparse.ArgumentParser(description="systematic literature search retrieval")
+    ap.add_argument("--databases", default="openalex,crossref,arxiv",
+                    help="comma-separated subset to query in this run")
+    args = ap.parse_args(argv)
+    want = {d.strip() for d in args.databases.split(",") if d.strip()}
+    unknown = want - {"openalex", "crossref", "arxiv"}
+    if unknown:
+        print(f"unknown database(s): {sorted(unknown)}")
+        return 2
+
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
     queries = build_queries()
-    print(f"pre-registered queries: {len(queries)}", flush=True)
+    tag = "_".join(sorted(want))
+    print(f"pre-registered queries: {len(queries)} | databases this run: {sorted(want)}",
+          flush=True)
 
-    all_rows: list[dict] = []
+    rows_by_db: dict[str, list[dict]] = {d: [] for d in want}
     log: list[dict] = []
+    aborted = None
     for i, spec in enumerate(queries, 1):
         q = spec["query"]
-        oa, oa_n = search_openalex(q)
-        cr, cr_n = search_crossref(q)
-        # arXiv is rate-limited to ~1 req/3 s, so it is used for the searches
-        # where preprints matter most rather than for the S4 context sweep.
-        if spec["search"] in ("S1", "S2", "S3", "S5", "S6"):
-            ax, ax_n = search_arxiv(q)
-        else:
-            ax, ax_n = [], 0
-        for r in oa + cr + ax:
-            r["found_by_search"] = spec["search"]
-            r["found_by_query"] = q
-            r["question"] = spec["question"]
-        all_rows.extend(oa + cr + ax)
-        log.append({**spec, "openalex_total": oa_n, "openalex_retrieved": len(oa),
-                    "crossref_total": cr_n, "crossref_retrieved": len(cr),
-                    "arxiv_total": ax_n, "arxiv_retrieved": len(ax)})
-        print(f"  [{i}/{len(queries)}] {spec['search']} {q[:62]:<62} "
-              f"oa={oa_n:>7} cr={cr_n:>7} ax={ax_n:>5}", flush=True)
+        entry = dict(spec)
+        try:
+            for db in ("openalex", "crossref", "arxiv"):
+                if db not in want:
+                    entry[f"{db}_total"] = None
+                    entry[f"{db}_retrieved"] = 0
+                    entry[f"{db}_status"] = "not_requested"
+                    continue
+                # arXiv is 1 request per 3 s and indexes preprints, so it is not
+                # used for the S4 agricultural-context sweep.
+                if db == "arxiv" and spec["search"] == "S4":
+                    entry["arxiv_total"] = None
+                    entry["arxiv_retrieved"] = 0
+                    entry["arxiv_status"] = "not_run_by_design"
+                    continue
+                fn = {"openalex": search_openalex, "crossref": search_crossref,
+                      "arxiv": search_arxiv}[db]
+                recs, total, status = fn(q)
+                for r in recs:
+                    r["found_by_search"] = spec["search"]
+                    r["found_by_query"] = q
+                    r["question"] = spec["question"]
+                rows_by_db[db].extend(recs)
+                entry[f"{db}_total"] = total
+                entry[f"{db}_retrieved"] = len(recs)
+                entry[f"{db}_status"] = status
+        except BudgetExhausted as e:
+            aborted = f"query {i}/{len(queries)}: {e}"
+            print(f"\n*** ABORTED: {e}", flush=True)
+            print(f"*** {i-1} queries completed. Whatever succeeded is written and "
+                  f"marked; nothing that failed is recorded as a zero.", flush=True)
+            break
 
-    raw = pd.DataFrame(all_rows)
-    raw.to_csv(OUT / "raw_all.csv", index=False)
-    for db, g in raw.groupby("database"):
-        g.to_csv(OUT / f"raw_{db}.csv", index=False)
+        log.append(entry)
+
+        def cell(db: str) -> str:
+            status, total = entry[f"{db}_status"], entry[f"{db}_total"]
+            if status in ("not_requested", "not_run_by_design"):
+                return "   -   "
+            return "  FAIL " if total is None else f"{total:>7}"
+
+        print(f"  [{i}/{len(queries)}] {spec['search']} {q[:56]:<56} "
+              f"oa={cell('openalex')} cr={cell('crossref')} ax={cell('arxiv')}",
+              flush=True)
+
+    if not log:
+        print("\nNo query completed, so there is nothing to write and nothing to "
+              "conclude. Existing results are left untouched.")
+        if aborted:
+            print(f"Reason: {aborted}")
+        return 3
+
     qlog = pd.DataFrame(log)
-    qlog.to_csv(OUT / "query_log.csv", index=False)
+    qlog.to_csv(OUT / f"query_log_{tag}.csv", index=False)
+    total_rows = 0
+    for db, rows in rows_by_db.items():
+        if rows:
+            pd.DataFrame(rows).to_csv(OUT / f"raw_{db}.csv", index=False)
+            total_rows += len(rows)
+            print(f"\n  raw_{db}.csv: {len(rows):,} records")
 
-    # ---- deduplicate: DOI first, then normalised title -----------------
-    raw["norm_title"] = raw.title.map(norm_title)
-    raw = raw[raw.norm_title.str.len() > 8]
-    raw["dedup_key"] = raw.doi.where(raw.doi.str.len() > 0, raw.norm_title)
-    # keep the richest record per work: prefer one that has an abstract
-    raw["_has_abs"] = (raw.abstract.fillna("").str.len() > 40).astype(int)
-    dedup = (raw.sort_values(["_has_abs", "cited_by"], ascending=False)
-                .groupby("dedup_key", as_index=False).first())
-    hits = (raw.groupby("dedup_key")
-               .agg(n_queries=("found_by_query", "nunique"),
-                    searches=("found_by_search", lambda s: ",".join(sorted(set(s)))),
-                    databases=("database", lambda s: ",".join(sorted(set(s))))))
-    dedup = dedup.merge(hits, on="dedup_key", how="left").drop(columns=["_has_abs"])
-    dedup.to_csv(OUT / "deduplicated.csv", index=False)
-
-    print(f"\nidentified   : {len(raw):,} records")
-    print(f"deduplicated : {len(dedup):,} unique works")
-    print(f"with abstract: {(dedup.abstract.fillna('').str.len() > 40).sum():,}")
-    print("\nper search:")
-    print(raw.groupby("found_by_search").dedup_key.nunique().to_string())
+    # ---- integrity report: a zero must never be a disguised failure ------
+    ok_states = ("ok", "not_run_by_design", "not_requested")
+    n_fail: dict[str, int] = {}
+    print("\n=== query status (a FAILED query is NOT a zero result) ===")
+    for db in ("openalex", "crossref", "arxiv"):
+        col = f"{db}_status"
+        n_fail[db] = int((~qlog[col].fillna("").isin(ok_states)).sum())
+        vc = qlog[col].value_counts()
+        print(f"  {db:<10} " + ", ".join(f"{k}={v}" for k, v in vc.items()))
+    if aborted:
+        print(f"\n  *** RUN INCOMPLETE: {aborted}")
+        print(f"  *** {len(qlog)}/{len(queries)} queries executed. Re-run to resume.")
+    else:
+        print(f"\n  run complete: {len(qlog)}/{len(queries)} queries")
 
     write_experiment_manifest(
-        "litsearch",
-        params={"protocol": "docs/litsearch_protocol.md",
-                "executed": "2026-09-09",
-                "databases_searched": ["openalex", "crossref", "arxiv"],
-                "databases_unavailable": ["scopus", "web_of_science",
-                                          "ieee_xplore_api", "acm_dl", "dblp",
-                                          "semantic_scholar"],
-                "unavailable_reason": "institutional credentials / bot challenge / "
-                                      "rate limit; probed 2026-09-09",
-                "n_queries": len(queries), "max_per_query": MAX_PER_QUERY},
+        f"litsearch_{tag}",
+        params={
+            "protocol": "docs/litsearch_protocol.md",
+            "executed": time.strftime("%Y-%m-%d"),
+            "databases_this_run": sorted(want),
+            "databases_unavailable": ["scopus", "web_of_science", "ieee_xplore_api",
+                                      "acm_dl", "dblp", "semantic_scholar"],
+            "unavailable_reason": "institutional credentials / bot challenge / rate "
+                                  "limit; probed 2026-09-09",
+            "n_queries_planned": len(queries),
+            "deviation_openalex_boolean":
+                "OpenAlex title_and_abstract.search ANDs the terms but does not "
+                "enforce the quoted phrase, so each query is a SUPERSET of the "
+                "phrase search written in the protocol. Recall is higher, precision "
+                "lower; screening restores precision. A null result under the "
+                "broader search is therefore stronger, not weaker, evidence.",
+        },
         inputs={"query_blocks": {"T": len(BLOCK_T), "D": len(BLOCK_D),
                                  "S": len(BLOCK_S), "M": len(BLOCK_M),
                                  "C": len(BLOCK_C)}},
         outputs=[str(p.relative_to(ROOT)) for p in sorted(OUT.glob("*.csv"))],
-        metrics={"records_identified": int(len(raw)),
-                 "unique_works": int(len(dedup))},
+        metrics={"records_retrieved": int(total_rows),
+                 "queries_executed": int(len(qlog)),
+                 "queries_planned": int(len(queries)),
+                 "run_complete": aborted is None,
+                 "aborted_reason": aborted,
+                 "failed_queries_by_db": n_fail,
+                 "requests_used": dict(_REQUESTS_USED)},
         runtime_seconds=time.time() - t0,
-        notes="Retrieval only. Screening is a separate script so retrieval can be "
-              "re-run without re-deciding anything. Coverage is NOT exhaustive - see "
-              "protocol section 3.",
+        notes="Retrieval only; dedup and screening are in litsearch_screen.py, which "
+              "merges every raw_*.csv so retrieval can run in stages. Coverage is NOT "
+              "exhaustive - see protocol section 3. A failed request records a null "
+              "count and a status string, never a zero: conflating the two would "
+              "fabricate a null result. Check `run_complete` before quoting a count.",
         out_dir=OUT,
+        filename=f"manifest_retrieval_{tag}.json",
     )
     print(f"\ndone in {(time.time()-t0)/60:.1f} min")
     return 0

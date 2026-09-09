@@ -19,6 +19,7 @@ from __future__ import annotations
 import re
 import sys
 import time
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -30,6 +31,11 @@ from data import paths
 from utils.manifest import write_experiment_manifest
 
 OUT = paths.RESULTS_DIR / "litsearch"
+
+
+def norm_title(t: str) -> str:
+    t = unicodedata.normalize("NFKD", (t or "").lower())
+    return re.sub(r"[^a-z0-9]+", "", t)
 
 
 def rx(*alts: str) -> re.Pattern:
@@ -121,11 +127,32 @@ def screen_one(title: str, abstract: str) -> tuple[str, str]:
 
 def main() -> int:
     t0 = time.time()
-    src = OUT / "deduplicated.csv"
-    if not src.exists():
-        print("run scripts/litsearch.py first"); return 2
-    df = pd.read_csv(src).fillna({"title": "", "abstract": "", "venue": ""})
-    print(f"screening {len(df):,} unique works\n", flush=True)
+    # Merge every retrieval stage present, so a staged search - one database
+    # today, another when its daily quota resets - assembles into one corpus.
+    raws = sorted(OUT.glob("raw_*.csv"))
+    if not raws:
+        print("no raw_*.csv found - run scripts/litsearch.py first")
+        return 2
+    raw = pd.concat([pd.read_csv(f) for f in raws], ignore_index=True)
+    print(f"retrieval stages merged: {[f.name for f in raws]}")
+    print(f"records identified     : {len(raw):,}")
+
+    raw["norm_title"] = raw.title.fillna("").map(norm_title)
+    raw = raw[raw.norm_title.str.len() > 8].copy()
+    raw["doi"] = raw.doi.fillna("").astype(str).str.lower()
+    raw["dedup_key"] = raw.doi.where(raw.doi.str.len() > 0, raw.norm_title)
+    # keep the richest copy of each work: prefer one that carries an abstract
+    raw["_has_abs"] = (raw.abstract.fillna("").str.len() > 40).astype(int)
+    df = (raw.sort_values(["_has_abs", "cited_by"], ascending=False)
+             .groupby("dedup_key", as_index=False).first())
+    hits = (raw.groupby("dedup_key")
+               .agg(n_queries=("found_by_query", "nunique"),
+                    searches=("found_by_search", lambda s: ",".join(sorted(set(s)))),
+                    databases=("database", lambda s: ",".join(sorted(set(s))))))
+    df = df.merge(hits, on="dedup_key", how="left").drop(columns=["_has_abs"])
+    df.to_csv(OUT / "deduplicated.csv", index=False)
+    df = df.fillna({"title": "", "abstract": "", "venue": ""})
+    print(f"unique works           : {len(df):,}\n", flush=True)
 
     dec = df.apply(lambda r: screen_one(r.title, r.abstract), axis=1)
     df["decision"] = [d for d, _ in dec]
@@ -152,8 +179,7 @@ def main() -> int:
         print(f"  {r.year} | {str(r.venue)[:34]:<34} | {str(r.title)[:88]}")
 
     prisma = pd.DataFrame([
-        {"stage": "identified (all databases, with duplicates)",
-         "n": int(pd.read_csv(OUT / "raw_all.csv").shape[0])},
+        {"stage": "identified (all databases, with duplicates)", "n": int(len(raw))},
         {"stage": "unique works after deduplication", "n": int(len(df))},
         {"stage": "screened on title and abstract", "n": int(len(df))},
         {"stage": "excluded", "n": int((df.decision == "exclude").sum())},
