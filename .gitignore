@@ -7,3 +7,6 @@ results/raw/**/*.npz
 .ipynb_checkpoints/
 *.pt
 *.pth
+
+# hardware-probe evidence frames, written by rover/hardware_tests on every run
+rover_camera_sample_*.jpg
