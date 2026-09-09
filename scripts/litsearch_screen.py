@@ -121,21 +121,33 @@ def screen_one(title: str, abstract: str) -> tuple[str, str]:
             return "include", "task_and_agriculture_title_only"
         return "include", "task_general_ml_title_only"
 
-    task = bool(TASK.search(text)) or bool(METHODS.search(text))
+    task_hit = bool(TASK.search(text))
+    methods_hit = bool(METHODS.search(text))
     agri = bool(AGRI.search(text))
 
-    if not task:
+    if not (task_hit or methods_hit):
         if agri and SHIFT.search(text):
             return "adjacent", "agricultural_shift_no_estimation"
         return "exclude", "not_performance_estimation"
 
-    # task signal present - now the false-positive filters
-    if WRONG_SENSE.search(text) and not TASK.search(text):
-        return "exclude", "wrong_sense_of_accuracy"
-    if SELECTIVE.search(text) and not TASK.search(text):
-        return "adjacent", "per_sample_selective_prediction"
-    if ADAPTATION.search(text) and not TASK.search(text):
-        return "adjacent", "adaptation_not_estimation"
+    # False-positive filters apply only when the *loose* TASK regex fired on its
+    # own. A named method (METHODS) is the strongest positive signal there is, so
+    # it is never overridden by them.
+    #
+    # This was a bug, found by the protocol's own excluded-set audit: the guards
+    # read `and not TASK.search(text)`, which is True exactly when only METHODS
+    # matched - so a named-estimator hit was *excluded* by the very filters meant
+    # to remove noise. It threw out prediction-powered-inference papers
+    # ("Prediction-Powered Semi-Supervised Learning with Online Power Tuning",
+    # "Cross-Prediction-Powered Inference for Wireless Systems") because their
+    # abstracts also contain phrases like "state estimation".
+    if not methods_hit:
+        if WRONG_SENSE.search(text):
+            return "exclude", "wrong_sense_of_accuracy"
+        if SELECTIVE.search(text):
+            return "adjacent", "per_sample_selective_prediction"
+        if ADAPTATION.search(text):
+            return "adjacent", "adaptation_not_estimation"
 
     if agri:
         return "include", "task_and_agriculture"

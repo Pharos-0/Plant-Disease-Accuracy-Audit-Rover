@@ -1,104 +1,120 @@
 # Systematic Literature Search — Interim Results
 
-**Status: INCOMPLETE. Do not cite the verdict yet.**
+**Status: INCOMPLETE. Do not freeze the title or any novelty claim on this.**
 
 Stage 1 (arXiv + Crossref) executed 2026-09-09, all 222 pre-registered queries, zero
-failed requests. Stage 2 (OpenAlex) is **pending a daily quota reset** and is the
-best-coverage database of the three. Protocol: `docs/litsearch_protocol.md`.
+failed requests. Stage 2 (OpenAlex) is **blocked until midnight UTC** by a daily quota and
+is the best-coverage database of the three. Protocol: `docs/litsearch_protocol.md`.
 
 ---
 
-## 1. First, a bug that would have fabricated the headline finding
+## 1. Two bugs found, both of which flattered the thesis
 
-The first attempt at this search produced, in its log, exactly the result the thesis
-wanted:
+### 1a. A retrieval bug that fabricated the headline finding
+
+The first attempt produced, in its log, exactly the result the thesis wanted:
 
 ```
 [68/222] S2 unsupervised model evaluation AND plant disease    oa=0
-[69/222] S2 unsupervised model evaluation AND crop disease     oa=0
 ... 112 of 163 queries reporting oa=0
 ```
 
 Read literally: *no published work applies label-free accuracy estimation to plant
-disease*. That is the load-bearing claim of the whole thesis direction.
+disease* — the load-bearing claim of the entire direction.
 
-**It was false.** Those were not zero results — they were HTTP 429s. OpenAlex allows
-1,000 requests/day, and `search_openalex()` returned a count of `0` whenever the request
-failed. Worse, the retry logic hit each 429 four more times, so once the quota ran out
-every remaining query burned four further requests against a budget of zero.
+**It was false.** Those were HTTP 429s. OpenAlex allows 1,000 requests/day, and
+`search_openalex()` returned a count of `0` whenever a request failed; the retry logic then
+hit each 429 four more times, burning the remaining budget. Caught because
+`plant disease AND domain shift` also returned zero, which is not credible — this search
+has since found 147 examples.
 
-It was caught because `plant disease AND domain shift` also returned zero, which is not
-credible — there is a large agricultural domain-shift literature, and this search has now
-found 147 examples of it.
+Fixed in `c8c9313`: a failed request returns `None` and a status string, never `0`; a
+quota refusal aborts instead of retrying; per-query status is recorded and summarised; and
+if nothing succeeds the script writes nothing rather than an empty "result". No results
+from the bad run were ever written.
 
-Fixed in `c8c9313`: every backend returns `(records, count_or_None, status)`; a failed
-request yields `None` and a status string, never `0`; a quota refusal aborts the run
-rather than being retried; per-query status is recorded and summarised; and if nothing
-succeeds the script writes nothing at all rather than an empty "result". **No results from
-the bad run were ever written** — it was killed before its write phase.
+### 1b. A screening bug found by the protocol's own audit
 
-Recorded here because it is the most dangerous class of error this project can make, and
-because the fix is what makes the eventual null claim trustworthy: every zero in the
-corpus below is now verifiably a real zero.
+Protocol section 8 requires hand-sampling the excluded set. Doing so revealed that
+`wrong_sense_of_accuracy` was excluding **prediction-powered-inference papers**:
+
+- *Semi-Supervised Learning via Cross-Prediction-Powered Inference for Wireless Systems*
+- *Prediction-Powered Semi-Supervised Learning with Online Power Tuning*
+- *Debiased Inference for AI-Generated Data without Gold-Standard Labels*
+
+The false-positive guards read `and not TASK.search(text)`, which is True exactly when
+only the **named-method** regex matched — so a named-estimator hit was thrown out by the
+filters meant to remove noise, because its abstract also contained a phrase like "state
+estimation". A named method is the strongest positive signal there is and must never be
+overridden. Fixed; 8 records recovered; included went 329 → 346.
+
+Both bugs pushed in the same direction: **towards a cleaner-looking gap.** That is the
+direction to be most suspicious of, and it is why the audit steps are worth running.
 
 ## 2. What has been searched
 
-| database | status | queries | failures |
+| database | status | queries | failed |
 |---|---|---:|---:|
 | **arXiv** | complete | 174 (48 not run by design) | **0** |
 | **Crossref** | complete | 222 | **0** |
-| **OpenAlex** | **pending quota reset** | 0 of 222 | — |
-| Scopus, Web of Science, IEEE Xplore, ACM DL | **no access** | — | — |
+| **OpenAlex** | **blocked, resets midnight UTC** | 0 of 222 | — |
+| Scopus, Web of Science, IEEE Xplore, ACM DL | **no institutional access** | — | — |
 | DBLP, Semantic Scholar | refused automated access | — | — |
 
-Corpus so far: **22,340 records identified → 8,617 unique works → 329 included, 162
-adjacent, 8,126 excluded.**
+**22,340 records identified → 8,617 unique works → 346 included, 153 adjacent, 8,118
+excluded.**
 
-Two caveats that bound everything below:
+Bounding caveats:
 
 - **Crossref's `query.bibliographic` is a relevance ranking, not a boolean filter.** It
-  ignores the `AND` and reports totals in the millions. Its totals are never quoted as
-  counts. Its records are screened like any other, which is why it contributes many
-  records and almost no included ones.
-- **73% of retrieved records arrive with no abstract** (Crossref deposits them sparsely).
-  Those are screened on **title alone**, which has lower recall. OpenAlex has far better
-  abstract coverage, so stage 2 will materially improve this.
-
-**arXiv counts, by contrast, are genuine boolean phrase searches over abstracts**, and are
-the most trustworthy numbers here.
+  ignores the `AND` and reports totals in the millions; its totals are never quoted as
+  counts.
+- **73% of records arrive with no abstract** and are screened on **title alone**, which
+  has lower recall. OpenAlex has far better abstract coverage.
+- **arXiv counts are genuine boolean phrase searches over abstracts** and are the most
+  trustworthy numbers here.
 
 ## 3. Q2 — the load-bearing question
 
 > Has any prior work applied label-free accuracy estimation to plant-disease or
 > agricultural imagery?
 
-**Nothing found so far.**
+**No such work found. But the surrounding space is more occupied than assumed.**
 
 | search | queries | arXiv hits |
 |---|---:|---:|
 | **S2** task × agriculture | 88 | **1** |
 | **S3** task × agriculture × shift | 60 | **0** |
 
-The single S2 hit was read in full: *"Automatic Detection of Rice Disease in Images of
-Various Leaf Sizes"* (Kiratiratanapruk et al., 2022). It estimates **rice leaf width** to
-size image tiles. Not accuracy estimation. **Rejected.**
+Every flagged candidate was read in full:
 
-Screening flagged two records as "task AND agriculture". Both were read and both are
-regex false positives:
+| record | verdict |
+|---|---|
+| *Automatic Detection of Rice Disease in Images of Various Leaf Sizes* (2022) | estimates **rice leaf width** to size image tiles. **Rejected.** |
+| *A double copy from twisted (co)homology at genus one* (2023) | string theory; "leaf" is foliation theory, `MaNo` matched by accident. **Rejected.** |
+| *Design-Based Prediction-Powered Inference for Spatial Data* (2026) | statistical methodology, not plant disease — **but highly relevant, section 5** |
+| **Scalable Vision-Guided Crop Yield Estimation (2025)** | **genuine. See below.** |
 
-| record | why it matched | verdict |
-|---|---|---|
-| *Design-Based Prediction-Powered Inference for Spatial Data* (2026) | "prediction-powered inference" + spatial/crop vocabulary | statistical methodology, not plant disease — **but see section 5** |
-| *A double copy from twisted (co)homology at genus one* (2023) | `MaNo` matched, and "leaf" in the **foliation-theory** sense | string-theory paper. **Rejected.** |
+### The find that narrows the gap
 
-**Provisional and not yet quotable:** on arXiv and Crossref, no work applies dataset-level
-label-free accuracy estimation to plant disease or agricultural imagery. This must be
-re-checked once OpenAlex runs.
+*Scalable Vision-Guided Crop Yield Estimation* (2025) applies **PPI in agriculture**: it
+supplements slow gold-standard crop cuts with fast field **photographs**, trains a vision
+model to predict yield from the photos, learns a spatially-indexed control function to
+recalibrate them, and uses ~20,000 real crop cuts and photos of rice and maize in
+sub-Saharan Africa.
 
-## 4. Q3 — is the agricultural lab-to-field setting itself occupied?
+That is agriculture + a vision model + a small gold-standard sample + field photographs —
+structurally very close to this thesis's setting. **The claim "labelled-sample-assisted
+estimation has not been done in agriculture" is false and must not be made.**
 
-**Yes, heavily — but always *with* labels.** 147 records were classified `adjacent:
-agricultural_shift_no_estimation`, including:
+What it does *not* do: estimate a **classifier's accuracy** on unlabelled field images.
+Its estimand is average crop yield, a regression quantity measured with a designed survey,
+not the accuracy of a fixed deployed classifier. That distinction is the surviving gap,
+and it is narrower than the one assumed at the start of this search.
+
+## 4. Q3 — is the agricultural lab-to-field setting occupied?
+
+**Yes, heavily — but always *with* labels.** 147 records are `agricultural_shift_no_estimation`:
 
 - *From Benchmark Accuracy to Field Performance: Hybrid Deep Learning-Based Plant Disease
   Classification* (2026)
@@ -109,107 +125,126 @@ agricultural_shift_no_estimation`, including:
 - *A multi-scale supervised contrastive framework for cross-domain soybean disease
   classification* (2026)
 
-This is the distinction the thesis rests on, and the corpus supports it: the agricultural
-community studies lab→field shift constantly, by **measuring accuracy with labels** or by
-**adapting the model**. None of the 147 estimates a fixed model's field accuracy without
-labels.
+None estimates a fixed model's field accuracy without labels. The gap is real — but
+Related Work must engage this set rather than claim the setting is unstudied.
 
-That is a real gap — but it also means Related Work must engage this set seriously rather
-than claim the setting is unstudied.
+## 5. The PPI family — read, not just counted
 
-## 5. The substantive finding: an entire adjacent family was missed
+102 records in the corpus. Four read in full:
 
-**Prediction-powered inference (PPI)** — 86 arXiv hits, 87 records in the corpus, and an
-active 2024–2026 literature.
+**Power Analysis for Prediction-Powered Inference (2026).** Derives closed-form formulas
+for *how many labelled samples are needed* — literally the RQ5 question. Its rule of
+thumb: the reduction in required labels **scales roughly with the R² between predictions
+and ground truth.**
 
-PPI combines a **small gold-standard labelled sample** with **model predictions on
-unlabelled data** to produce estimates and confidence intervals that are valid regardless
-of how good the model is. That is a formal, published treatment of *precisely* the RQ5
-setting, and RQ5's ratio estimator over photograph clusters is a hand-rolled special case
-of it.
+> This is the single most useful sentence the search has produced. Our estimators have
+> R² = 0.026 (GdScore) and calibration r ≈ 0. Under this rule, PPI theory predicts
+> **essentially no labelling saving** from them — which is exactly what RQ5 measured
+> empirically. The RQ5 result stops being an isolated observation and becomes consistent
+> with established theory, with the R² we measured as the reason.
 
-Directly relevant titles already in the corpus:
+**Statistical Optimality of PPI (2026).** PPI attains the semiparametric efficiency bound
+when the predictor is **score-calibrated**. Our Phase-7b finding is precisely that the
+predictor is *not* calibrated — so the condition under which PPI is optimal is the
+condition our estimators fail.
 
-- *Power Analysis for Prediction-Powered Inference* (2026) — **this is the RQ5 question**:
-  how many labels do you need.
-- *Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful
-  Distribution Shifts* (2026)
-- *Design-Based Prediction-Powered Inference for Spatial Data* (2026) — handles labels
-  arriving through a **survey design** rather than i.i.d., which is exactly the
-  photograph-cluster problem.
-- *Statistical Optimality of Prediction-Powered Inference* (2026)
+**Design-Based PPI for Spatial Data (2026).** Recasts PPI when labels arrive by **survey
+design rather than i.i.d.**, with correlated errors, stratified sampling and exact design
+variances — the photograph-cluster problem. Notes coverage can deteriorate as labels
+accumulate, which is directly relevant to the 63–75% coverage we measured for naive
+crop-level intervals.
 
-**Consequence for the thesis, stated plainly:** RQ5's crossover result cannot be presented
-as a novel discovery. There is an established statistical framework for combining a small
-labelled sample with model predictions, and the honest position is to cite PPI, situate
-RQ5 within it, and be explicit that RQ5 measures the crossover empirically in an
-agricultural deployment setting rather than deriving it.
+**Prediction-Powered Risk Monitoring (2026).** Anytime-valid lower bounds on running risk
+from synthetic labels plus a few true ones, to detect harmful shift in deployment. This is
+the closest published competitor to a deployment-gate framing and must be cited.
 
-This also sharpens the earlier objection — *"isn't that universal, smaller labelled will
-give better results, how is this novel"*. The answer is now evidenced: correct, it is not
-novel on its own, and there is a literature that formalises it.
+**Consequence:** RQ5's crossover cannot be presented as a novel discovery, and RQ5's ratio
+estimator is a hand-rolled special case of an established framework. Position RQ5 as a
+practical, agricultural, photograph-level measurement *within* PPI's frame — not as the
+novelty. This also settles the earlier objection (*"isn't that universal… how is this
+novel"*): correct, it is not, and there is now a citation for why.
 
 ## 6. Q4 — is the calibration-anchor pathology known?
 
-**Nothing found.** All four S6 queries returned 0 on arXiv, and no included record was
-found by S6.
+**Nothing found.** All four S6 queries returned 0 on arXiv; no included record came from
+S6.
 
-This is **weak** evidence: four queries, one database, and the phrasing of a pathology is
-hard to guess in advance. It is consistent with Phase 7b being a genuine contribution, and
-is not sufficient to claim priority. Re-check after OpenAlex, and this is one of the
-questions most in need of the subscription databases.
+This is **weak** evidence — four queries, one database, and a pathology is hard to name in
+advance. It is consistent with Phase 7b being a genuine contribution and is **not**
+sufficient to claim priority. This is the question most in need of the subscription
+databases.
 
 ## 7. Q1 — are the nine estimators representative?
 
-The named-method sweep (S5) found the expected canon, and no unrepresented major
-*accuracy-estimation* family:
-
 | method | arXiv hits | in our nine |
 |---|---:|---|
-| prediction-powered inference | 86 | **no — see section 5** |
-| projection norm | 36 | no |
-| agreement-on-the-line | 31 | no |
+| prediction-powered inference | 86 | **no — adjacent family** |
+| projection norm | 36 | **no** |
+| agreement-on-the-line | 31 | **no** |
 | difference of confidences | 25 | yes (DoC) |
-| AutoEval | 15 | no |
+| AutoEval | 15 | **no** |
 | average thresholded confidence | 4 | yes (ATC) |
 | confidence optimal transport | 2 | yes (COT) |
 | GdScore | 1 | yes |
 | MaNo | 134 → **3 genuine** | yes |
 
-Two screening artefacts worth recording: `MaNo` matches the **MANO parametric hand model**
-(ubiquitous in 3D vision) and Spanish *"la mano"*; only 3 of 134 hits are the estimator.
+Read, to judge whether the omissions matter:
 
-So the nine cover the confidence/matrix-norm/optimal-transport families, and the notable
-absences are **projection norm**, **agreement-on-the-line**, and **AutoEval** — all
-label-free accuracy estimators we did not evaluate. That is a limitation to state, not
-necessarily a gap to fill: per the current decision, no estimator #10 is being added.
+- **Projection Norm** (Yu et al., 2022) — pseudo-labels the test set, **trains a new
+  model**, and measures parameter divergence. Genuinely label-free, but it requires
+  retraining per test set, so it does not fit the "expensive once, cheap millions of
+  times" caching design. A defensible omission, and one to state.
+- **Agreement-on-the-line** (Baek et al., 2022; Miller et al., 2021) — estimates OOD
+  performance from ID/OOD **agreement across a collection of models**. We have 20 models
+  across 4 architectures, so this is *applicable to our setup* and is the most notable
+  omission. It is also known to break on some shifts, which is itself relevant.
+- **AutoEval** — the term is overloaded: the arXiv hits are *AutoEval-Video*, an unrelated
+  LLM benchmark. The original (Deng & Zheng, CVPR 2021) did not surface in an arXiv
+  abstract search and needs to be retrieved by name.
 
-## 8. Provisional verdict — A or B?
+Screening artefacts recorded: `MaNo` matches the **MANO parametric hand model** and
+Spanish *"la mano"*; only 3 of 134 hits are the estimator.
 
-**Leaning A, with the contribution narrower than hoped, and not yet final.**
+## 8. Draft literature-gap table
 
-- The *application* gap looks real: no label-free accuracy estimation in agriculture found
-  so far, in either database, across 148 task × domain queries.
-- The *setting* is well populated (147 agricultural lab→field works), so novelty cannot
-  rest on "nobody studies lab-to-field in agriculture".
-- The *labelled-budget* result is **not** novel as a phenomenon — PPI formalises it.
-- The *calibration-anchor* finding has no match so far, and is currently the most
-  defensible specific contribution.
+Provisional — the `?` rows are exactly what stage 2 and the subscription databases must
+settle.
 
-**No title or novelty claim is frozen.** Section 9 must complete first.
+| Area | Existing work? | What it does | What is missing |
+|---|---|---|---|
+| Plant disease lab→field | **Yes** (147 found) | Measures the gap with labels, or adapts the model to close it | Assessing it **without** field labels |
+| Label-free accuracy estimation | **Yes** (large, active) | Estimates target accuracy on unlabelled data; validated on corruption/OOD benchmarks | Validation in an **agricultural deployment** with real field imagery |
+| GdScore (2024/25) | **Yes** | Gradient-norm label-free estimation | **Transferability to agricultural shift**; behaviour on BatchNorm backbones |
+| PPI | **Yes**, incl. **in agriculture** (crop yield, 2025) | Small gold-standard sample + model predictions → valid intervals | Applied to **classifier accuracy** rather than a regression estimand |
+| PPI power analysis | **Yes** (2026) | Labels needed scales with R² of predictions | Empirical check where R² ≈ 0, i.e. our regime |
+| Cluster/design-based sampling | **Yes** (design-based PPI, 2026) | Exact design variances for non-i.i.d. labelling | Applied to photograph-level agricultural sampling |
+| Architecture dependence of estimators | **?** | Not yet verified | Potential gap — **stage 2 must check** |
+| Calibration-anchor pathology | **None found** | — | **Currently the most defensible specific contribution** |
 
-## 9. Outstanding before any claim is made
+## 9. Provisional verdict
 
-1. **Run stage 2** once the OpenAlex quota resets (midnight UTC):
+**Leaning A, with a materially narrower contribution than assumed at the start.**
+
+- The *application* gap survives: no label-free **classifier-accuracy** estimation in
+  agriculture found, across 148 task × domain queries in two databases.
+- The *setting* is well populated (147 works), so novelty cannot rest on studying
+  lab→field in agriculture.
+- The *labelled-budget* result is **not** novel — PPI formalises it, PPI power analysis
+  answers the sample-size question in closed form, and PPI has **already been applied in
+  agriculture**.
+- The *calibration-anchor* finding has no match so far and is currently the strongest
+  specific contribution.
+
+## 10. Outstanding
+
+1. **Stage 2**, once the quota resets:
    ```
    python scripts/litsearch.py --databases openalex
    python scripts/litsearch_screen.py
    ```
-   Screening merges the stages automatically.
-2. **Read the PPI cluster properly**, especially *Power Analysis for Prediction-Powered
-   Inference* and *Design-Based PPI for Spatial Data*, and position RQ5 against them.
-3. **Scopus / Web of Science / IEEE Xplore / ACM DL** with these same Boolean strings.
-   Requires institutional access; cannot be done from here. Until then, every null is
-   "none found by this search", never "none exists".
-4. **Sample the excluded set by hand** to confirm the screening rules are not discarding
-   relevant work — required by protocol section 8 and not yet done.
+2. **Retrieve AutoEval (Deng & Zheng, CVPR 2021) by name** — missed by abstract search.
+3. **Check whether estimator architecture-dependence is already documented** — the one `?`
+   row that could remove a claimed contribution.
+4. **Scopus / Web of Science / IEEE Xplore / ACM DL.** Requires institutional access.
+   Until then every null is "none found by this search", never "none exists".
+5. Re-run the excluded-set audit after stage 2; it has already caught one bug.
