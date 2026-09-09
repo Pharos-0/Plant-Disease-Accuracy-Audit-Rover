@@ -189,6 +189,39 @@ Two honest limits: OpenAlex S5/S6 have not run, and a negative result from figur
 full-text search cannot exclude an unlabelled plot. This row is **provisionally open as a
 secondary contribution**, to be confirmed after the remaining 123 OpenAlex queries.
 
+## 8b. Measured search recall — the audit now quantifies its own reliability
+
+`scripts/litsearch_audit.py` runs two checks: a **recall test** against a known-answer set
+of 18 label-free accuracy-estimation papers confirmed by reading them during this search,
+and the protocol's seeded excluded-set sample.
+
+| check | result |
+|---|---|
+| known-relevant papers **retrieved** by the pre-registered 222 | **14 / 18 (78%)** |
+| retrieved papers the screener **kept** | **14 / 14 (100%)** |
+| screener misses | **0** |
+
+**The four not retrieved** — Distance-Matters, Mandoline, ALSA, IW-GAE — were found only by
+the supplementary pass with correctly-constructed conjunction queries. So the
+pre-registered search has a **measured recall of roughly 78%** on a known-answer set.
+
+Two things follow, and both belong in the thesis:
+
+1. The screening rules are now trustworthy: nothing known-relevant that was retrieved got
+   thrown away. The two bugs that did throw things away are fixed and this test would catch
+   a recurrence.
+2. **Retrieval, not screening, is the weak link.** A null result from a search with ~78%
+   recall is real evidence but not proof — which is exactly why the supported wording is
+   "insufficiently characterised", not "never studied".
+
+One classification imperfection, recorded rather than fixed: **AETTA** and **DAPPER** are
+label-free estimation papers but were filed `adjacent: adaptation_not_estimation`, because
+their abstracts describe test-time adaptation and mobile-sensing domain adaptation. They
+were retained and read, so nothing was lost, but the category is wrong.
+
+The excluded-set sample (15 per reason, seed 20260909) was read and found clean:
+agronomy, remote sensing, pose/depth estimation and peer-review comments. No new bug.
+
 ## 9. Literature-gap table
 
 | Area | Existing work? | What it does | What is missing |
