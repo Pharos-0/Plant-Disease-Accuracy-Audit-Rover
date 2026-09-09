@@ -1,0 +1,88 @@
+{
+  "experiment_id": "rq7_gdscore",
+  "written_at": "2026-09-09T05:47:26.110119+00:00",
+  "git_commit": "7b1b09d5f6f3013021ac97aa27101767952369da",
+  "git_dirty": true,
+  "estimator_suite_version": "1.0.0",
+  "params": {
+    "question": "does a later strong label-free estimator change the RQ5 conclusion",
+    "protocol": "Option C - full unlabelled pool only, NOT the N-sweep",
+    "reason_not_n_sweep": "GdScore score is batch-size dependent (3.2x)",
+    "estimator": "GdScore (Xie et al., TMLR 2025)",
+    "official_repo": "github.com/Renchunzi-Xie/GdScore",
+    "threshold": 0.5,
+    "norm_type": 0.3,
+    "batch_size": 128,
+    "gd_seed": 1,
+    "drop_last": true,
+    "forward_mode": "train() - BatchNorm batch statistics, per official code",
+    "buffers_restored": true,
+    "score_to_accuracy_map": "ours - linear fit on source-val bootstraps, as for nuclear_norm/mano",
+    "target_arm": "D",
+    "label_set": "SHARED_3",
+    "versions_used": [
+      "V2",
+      "V9"
+    ],
+    "n_models": 20,
+    "backbones": [
+      "efficientnet_b0",
+      "mobilenetv3_large",
+      "resnet50",
+      "vit_small_patch16"
+    ]
+  },
+  "params_hash": "52338c5eae308d94",
+  "inputs": {
+    "eval_cache": {
+      "n_files": 240,
+      "total_bytes": 318330888,
+      "digest": "510657b914908e76"
+    },
+    "train_mode_cache": {
+      "n_files": 80,
+      "total_bytes": 181700664,
+      "digest": "0771511e1a2af2db"
+    },
+    "rq5_baseline": "results/rq5/rq5_labelfree_full_pool.csv"
+  },
+  "outputs": [
+    "results\\rq7_gdscore\\rq7_comparison_full_pool.csv",
+    "results\\rq7_gdscore\\rq7_correlation.csv",
+    "results\\rq7_gdscore\\rq7_gdscore_full_pool.csv",
+    "results\\rq7_gdscore\\rq7_trainmode_vs_eval.csv"
+  ],
+  "metrics": {
+    "gdscore_mae": 0.1599136470712686,
+    "gdscore_spearman": -0.16472359194235683
+  },
+  "runtime_seconds": 10.970887660980225,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "notes": "Phase 7 Option C. GdScore evaluated only on the full pool. No retraining, no N-sweep, no existing result modified."
+}

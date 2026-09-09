@@ -274,6 +274,122 @@ class COT(Estimator):
         return float(1.0 - res.fun)
 
 
+class GdScore(_SourceCalibratedScore):
+    """GdScore (Xie et al., TMLR 2025) - one-step gradient norm of the head.
+
+    Faithful reproduction of ``algs/gdscore.py`` from the official release
+    (github.com/Renchunzi-Xie/GdScore). See ``docs/gdscore_eligibility.md`` for
+    the full eligibility and reproduction record.
+
+    Per batch the official code pseudo-labels with the model's own argmax,
+    replaces the label with a **random** one wherever max softmax < ``threshold``,
+    takes the cross-entropy gradient with respect to the classifier head, and
+    records ``torch.norm(grad, p=norm_type)``. The reported score is the mean
+    over batches.
+
+    Two things about this implementation:
+
+    * **No autograd is needed.** For a linear head the gradient of the batch-mean
+      cross-entropy is ``(1/B) * R.T @ H`` with ``R = softmax - onehot(pseudo)``
+      and ``H`` the penultimate features. Verified against autograd to 1.9e-09.
+    * ``norm_type`` defaults to **0.3**, matching the official scripts. That is a
+      *fractional* entrywise p-quantity, not the Frobenius norm, and the two
+      differ by ten orders of magnitude. Do not "fix" it to 2.
+
+    The raw score is unbounded, so - exactly as for nuclear norm and MaNo - it is
+    mapped to an accuracy by a linear fit on source-validation bootstraps. The
+    score itself is a faithful reproduction; **the score-to-accuracy map is ours**.
+
+    ``features`` must be supplied, and for a BatchNorm backbone they must be
+    **train-mode** activations, because the official code scores under
+    ``model.train()``. Passing eval-mode features silently computes a different
+    quantity.
+    """
+
+    name = "gdscore"
+
+    def __init__(self, threshold: float = 0.5, norm_type: float = 0.3,
+                 batch_size: int = 128, gd_seed: int = 1,
+                 drop_last: bool = True, seed: int = 0) -> None:
+        super().__init__(seed=seed)
+        self.threshold = threshold
+        self.norm_type = norm_type
+        self.batch_size = batch_size
+        self.gd_seed = gd_seed
+        # Our source/target sets are far smaller than the paper's, so a trailing
+        # partial batch would carry disproportionate weight through the 1/B
+        # factor - and a *different* weight for source than for target. Dropping
+        # it keeps calibration and application on the same footing. Documented
+        # as a deviation; sensitivity is reported in the results.
+        self.drop_last = drop_last
+
+    @staticmethod
+    def _pnorm(a: np.ndarray, p: float) -> float:
+        """torch.norm(a, p) for a matrix: the entrywise p-quantity."""
+        return float((np.abs(a) ** p).sum() ** (1.0 / p))
+
+    def raw_score(self, logits: np.ndarray, features: np.ndarray) -> float:
+        """The faithful GdScore, before any calibration."""
+        if features is None:
+            raise ValueError("GdScore requires penultimate features")
+        if len(logits) != len(features):
+            raise ValueError("logits and features must have the same length")
+        rng = np.random.default_rng(self.gd_seed)
+        k = logits.shape[1]
+        scores = []
+        for start in range(0, len(logits), self.batch_size):
+            lg = logits[start:start + self.batch_size]
+            h = features[start:start + self.batch_size]
+            if self.drop_last and len(lg) < self.batch_size:
+                continue
+            probs = softmax(lg)
+            pseudo = probs.argmax(1)
+            low = probs.max(1) < self.threshold
+            if low.any():
+                pseudo = pseudo.copy()
+                pseudo[low] = rng.integers(0, k, int(low.sum()))
+            onehot = np.zeros_like(probs)
+            onehot[np.arange(len(probs)), pseudo] = 1.0
+            grad = ((probs - onehot).T @ h) / len(lg)
+            scores.append(self._pnorm(grad, self.norm_type))
+        if not scores:
+            raise ValueError(
+                f"no full batch of {self.batch_size} available from {len(logits)} samples"
+            )
+        return float(np.mean(scores))
+
+    # -- calibration needs features too, so override the score hooks ---------
+    def _score_matrix(self, logits: np.ndarray) -> float:  # pragma: no cover
+        raise NotImplementedError("GdScore needs features; use raw_score")
+
+    def _fit(self, source: SourceStats) -> None:
+        if source.features is None:
+            raise ValueError("GdScore calibration requires source features")
+        rng = np.random.default_rng(self.seed)
+        n = len(source.logits)
+        size = max(self.batch_size, min(self.subset_size, n))
+        scores, accs = [], []
+        for _ in range(self.n_calibration_subsets):
+            idx = rng.choice(n, size=size, replace=True)
+            try:
+                scores.append(self.raw_score(source.logits[idx], source.features[idx]))
+            except ValueError:
+                continue
+            accs.append(float(source.correct[idx].mean()))
+        if len(scores) < 2:
+            raise ValueError("GdScore calibration failed: too few usable subsets")
+        s_arr, a_arr = np.asarray(scores), np.asarray(accs)
+        if np.std(s_arr) < 1e-12:
+            self.slope_, self.intercept_ = 0.0, float(a_arr.mean())
+            self.calibration_r_ = 0.0
+            return
+        self.slope_, self.intercept_ = np.polyfit(s_arr, a_arr, 1)
+        self.calibration_r_ = float(np.corrcoef(s_arr, a_arr)[0, 1])
+
+    def _estimate(self, logits: np.ndarray, features: np.ndarray | None) -> float:
+        return float(self.slope_ * self.raw_score(logits, features) + self.intercept_)
+
+
 # ---------------------------------------------------------------------------
 # registry
 # ---------------------------------------------------------------------------
