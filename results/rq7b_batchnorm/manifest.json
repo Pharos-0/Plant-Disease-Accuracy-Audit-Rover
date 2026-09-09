@@ -1,23 +1,30 @@
 {
-  "experiment_id": "rq7b_batchnorm_mechanism",
-  "written_at": "2026-09-09T06:04:08.720550+00:00",
-  "git_commit": "0c0bebee38fac26fb10589bcac43c00ffc7e8186",
+  "experiment_id": "rq7b_batchnorm",
+  "written_at": "2026-09-09T06:07:43.244363+00:00",
+  "git_commit": "0e8411a752739b20db291bcce80b65e86811068d",
   "git_dirty": true,
   "estimator_suite_version": "1.0.0",
   "params": {
-    "status": "POST-HOC - not pre-registered; exploratory, run after the confirmatory Phase 7b comparison",
-    "question": "the target raw score is unchanged between modes, so what moves the estimate by 0.41?",
+    "hypothesis": "H-BN: GdScore's advantage on BatchNorm backbones depends on train()-mode batch statistics",
+    "controlled_change": "eval-mode activations instead of train-mode; all else identical",
+    "control": "ViT-S/16 has no BatchNorm and must be unchanged",
     "threshold": 0.5,
     "norm_type": 0.3,
     "batch_size": 128,
     "gd_seed": 1,
     "n_models": 20,
     "target_arm": "D",
-    "label_set": "SHARED_3"
+    "label_set": "SHARED_3",
+    "preregistered": "docs/rq7b_batchnorm_plan.md"
   },
-  "params_hash": "23714d3998e38a4e",
+  "params_hash": "800647226314c37c",
   "inputs": {
-    "confirmatory": "results/rq7b_batchnorm/rq7b_train_vs_eval.csv"
+    "eval_cache": {
+      "n_files": 240,
+      "total_bytes": 318330888,
+      "digest": "510657b914908e76"
+    },
+    "phase7_trainmode": "results/rq7_gdscore/rq7_gdscore_full_pool.csv"
   },
   "outputs": [
     "results\\rq7b_batchnorm\\rq7b_anchor_accuracy.csv",
@@ -29,12 +36,10 @@
     "results\\rq7b_batchnorm\\rq7b_train_vs_eval.csv"
   ],
   "metrics": {
-    "gdscore_estimate_vs_source_accuracy_r": 0.999149970937392,
-    "gdscore_mean_data_share": 0.029553233853886772,
-    "nuclear_norm_mean_data_share": 0.8914906947669493,
-    "mano_mean_data_share": 0.36238924157466984
+    "control_max_mae_diff": 0.001096337429781491,
+    "control_passed": true
   },
-  "runtime_seconds": 8.966356754302979,
+  "runtime_seconds": 2.0290777683258057,
   "packages": {
     "torch": "2.11.0+cu128",
     "torchvision": "0.26.0+cu128",
@@ -62,5 +67,5 @@
   "dataset_checksums": {
     "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
   },
-  "notes": "Post-hoc mechanism analysis for Phase 7b. Measurement only, no causal claim. Reported separately from the pre-registered result."
+  "notes": "Phase 7b. Single controlled change. Consistency with H-BN only - not a causal claim about BatchNorm."
 }

@@ -245,8 +245,11 @@ def main() -> int:
         notes="Post-hoc mechanism analysis for Phase 7b. Measurement only, no "
               "causal claim. Reported separately from the pre-registered result.",
         out_dir=OUT,
+        # the confirmatory run owns manifest.json in this directory
+        filename="manifest_mechanism.json",
     )
-    print(f"\nwrote {len(outputs)} tables + manifest in {time.time()-t0:.1f} s")
+    print(f"\nwrote {len(outputs)} tables + manifest_mechanism.json "
+          f"in {time.time()-t0:.1f} s")
     return 0
 
 

@@ -195,11 +195,16 @@ def write_experiment_manifest(
     runtime_seconds: float | None = None,
     notes: str | None = None,
     out_dir: Path | None = None,
+    filename: str = "manifest.json",
 ) -> Path:
     """Record everything section 27 of the thesis brief requires.
 
     ``params`` should carry the experiment-specific settings: backbones, seeds,
     target arms, session sampling rule, N values, bootstrap count, and so on.
+
+    ``filename`` exists so that two runs which legitimately share an output
+    directory - a confirmatory experiment and a post-hoc analysis of it, say -
+    do not silently overwrite each other's provenance.
     """
     directory = out_dir or (paths.RESULTS_DIR / experiment_id)
     directory.mkdir(parents=True, exist_ok=True)
@@ -221,6 +226,6 @@ def write_experiment_manifest(
         "dataset_checksums": dataset_checksums(),
         "notes": notes,
     }
-    path = directory / "manifest.json"
+    path = directory / filename
     path.write_text(json.dumps(manifest, indent=2, default=str), encoding="utf-8")
     return path
