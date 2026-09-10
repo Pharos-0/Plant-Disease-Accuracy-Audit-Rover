@@ -1,14 +1,15 @@
 # Systematic Literature Search — Results
 
-**Status: substantially complete. One block (S4) outstanding. Title still not frozen.**
+**Status: COMPLETE for the databases reachable from here. Title still not frozen —
+Scopus / Web of Science / IEEE Xplore / ACM DL remain unsearched and need institutional
+access.**
 
-- Stage 1 (arXiv + Crossref): **complete**, 222/222 queries, zero failures.
-- Stage 2 (OpenAlex): **174/222** — S1, S2, S3, S5, S6 complete. Only **S4** (agricultural
-  context, 48 queries) remains, the least decision-critical block.
+- arXiv + Crossref: **222/222 queries, zero failures.**
+- OpenAlex: **222/222 queries, zero failures**, gathered over three budget days with resume.
 - Supplementary targeted pass: complete, reported separately.
 
-Protocol: `docs/litsearch_protocol.md`. Corpus: **31,906 records → 15,980 unique works →
-253 included, 275 adjacent.**
+Protocol: `docs/litsearch_protocol.md`. Corpus: **39,982 records → 21,853 unique works →
+253 included, 987 adjacent, 20,613 excluded.**
 
 ---
 
@@ -88,7 +89,7 @@ estimation has not been done in agriculture" is false and must not be claimed.**
 
 ## 4. Q3 — the agricultural lab-to-field setting
 
-**Heavily occupied, always with labels.** 260 adjacent records, including *From Benchmark
+**Heavily occupied, always with labels.** **972** adjacent records, including *From Benchmark
 Accuracy to Field Performance* (2026) and *Explainable Transfer Learning for Multi-Crop
 Plant Disease Identification Under Real-Field Conditions* (2026). None estimates a fixed
 model's field accuracy without labels. Related Work must engage this set.
@@ -191,7 +192,7 @@ ODP-Bench's "capability boundary" analyses have not been read and could contain 
 
 | Area | Existing work? | What it does | What is missing |
 |---|---|---|---|
-| Plant disease lab→field | **Yes** (260) | Measures with labels, or adapts | Assessing it **without** field labels |
+| Plant disease lab→field | **Yes** (972) | Measures with labels, or adapts | Assessing it **without** field labels |
 | Label-free accuracy estimation | **Yes** (≥20 methods, 3 communities, since 2016) | Estimates target accuracy on unlabelled data | Validation in an **agricultural deployment** |
 | General benchmark of these estimators | **Yes** — ODP-Bench (2025) | Standardised OOD benchmark + testbench models | **Agricultural lab→field on real field imagery** |
 | Label-free estimation in an applied domain | **Yes ×5** | Same genre move | Agriculture specifically |
@@ -223,13 +224,7 @@ Supported wording: **"remain insufficiently characterised."**
 
 ## 11. Outstanding
 
-1. **S4 on OpenAlex** (48 queries, next budget day) — agricultural context; 260 adjacent
-   records already held, so this is confirmatory:
-   ```
-   python scripts/litsearch.py --databases openalex --searches S4
-   python scripts/litsearch_screen.py && python scripts/litsearch_audit.py
-   ```
-2. **Read ODP-Bench's "capability boundary" analyses** — the one place architecture
+1. **Read ODP-Bench's "capability boundary" analyses** — the one place architecture
    dependence could already be documented.
-3. **Scopus / Web of Science / IEEE Xplore / ACM DL** — requires institutional access.
+2. **Scopus / Web of Science / IEEE Xplore / ACM DL** — requires institutional access.
    Until then every null is "none found by this search".
