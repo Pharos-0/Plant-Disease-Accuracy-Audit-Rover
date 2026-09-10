@@ -79,6 +79,11 @@ def clean_models() -> list[dict]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n-boot", type=int, default=100)
+    ap.add_argument("--arms", default="tomatovillage",
+                    help="comma-separated target arms. source_test is a ZERO-SHIFT "
+                         "control: the anchor is then almost exactly right, which is "
+                         "the condition under which anchor-dominated estimators should "
+                         "do well.")
     args = ap.parse_args()
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -88,10 +93,15 @@ def main() -> int:
     print(f"models: {len(models)} | estimators: {len(facs)} | "
           f"bootstraps: {args.n_boot} (cluster-level)", flush=True)
 
+    arms = [a.strip() for a in args.arms.split(",") if a.strip()]
+    print(f"target arms: {arms}", flush=True)
+
     rows, removal_rows = [], []
-    for i, c in enumerate(models, 1):
+    for i, (c, arm) in enumerate([(c, a) for c in models for a in arms], 1):
         sk = CacheKey(c["version"], c["backbone"], c["seed"], "source_val", c["label_set"])
-        tk = CacheKey(c["version"], c["backbone"], c["seed"], "tomatovillage", c["label_set"])
+        tk = CacheKey(c["version"], c["backbone"], c["seed"], arm, c["label_set"])
+        if not tk.features_path.exists():
+            continue
         s, t = load_features(sk), load_features(tk)
         src = SourceStats(logits=s["logits"], labels=load_labels(sk), features=s["features"])
         s_groups, t_groups = s["group_ids"], t["group_ids"]
@@ -108,6 +118,7 @@ def main() -> int:
             ti = float(v_t / (v_t + v_a)) if (v_t + v_a) > 0 else np.nan
             point = float(fac().fit(src).estimate(t["logits"], t["features"]))
             rows.append({
+                "arm": arm,
                 "backbone": c["backbone"], "seed": c["seed"], "estimator": name,
                 "target_sd": t_sd, "anchor_sd": a_sd,
                 "target_var": v_t, "anchor_var": v_a, "ti": ti,
@@ -125,11 +136,13 @@ def main() -> int:
                 except (ValueError, RuntimeError):
                     v = np.nan
                 removal_rows.append({
+                    "arm": arm,
                     "backbone": c["backbone"], "seed": c["seed"], "estimator": name,
                     "surrogate": label, "estimate": v, "real_estimate": point,
                     "shift_from_real": abs(v - point) if np.isfinite(v) else np.nan,
                 })
-        print(f"  [{i}/{len(models)}] {c['backbone']}/seed{c['seed']}", flush=True)
+        print(f"  [{i}/{len(models)*len(arms)}] {arm}/{c['backbone']}/seed{c['seed']}",
+              flush=True)
 
     df = pd.DataFrame(rows)
     df.to_csv(OUT / "ti_per_model.csv", index=False)
@@ -137,6 +150,30 @@ def main() -> int:
     rem.to_csv(OUT / "ti_removal.csv", index=False)
 
     pd.set_option("display.width", 220)
+    if len(arms) > 1:
+        print("\n=== TI and MAE by ARM (the shift ladder) ===")
+        lad = df.pivot_table(index="estimator", columns="arm", values=["ti", "abs_error"])
+        print(lad.round(4).to_string())
+        lad.to_csv(OUT / "ti_by_arm.csv")
+
+        print("\n=== Q4 per arm: Spearman(TI, MAE) across estimators ===")
+        print("    (source_test is the ZERO-SHIFT control: the anchor is nearly correct there)")
+        qa = []
+        for a, g in df.groupby("arm"):
+            pe = g.groupby("estimator").agg(TI=("ti", "mean"), MAE=("abs_error", "mean"))
+            rr = sps.spearmanr(pe.TI, pe.MAE)
+            anch = pe.drop(index=[e for e in ("confidence", "entropy") if e in pe.index])
+            ra = sps.spearmanr(anch.TI, anch.MAE)
+            gap = float((g.groupby("estimator").true_accuracy.mean().iloc[0]))
+            qa.append({"arm": a, "true_accuracy": gap, "n_estimators": int(len(pe)),
+                       "spearman_all": float(rr.statistic), "p_all": float(rr.pvalue),
+                       "spearman_anchored": float(ra.statistic),
+                       "p_anchored": float(ra.pvalue)})
+            print(f"  {a:<15} truth={gap:.3f}  all9 rho={rr.statistic:+.3f} "
+                  f"(p={rr.pvalue:.3f})   anchored7 rho={ra.statistic:+.3f} "
+                  f"(p={ra.pvalue:.3f})")
+        pd.DataFrame(qa).to_csv(OUT / "ti_q4_by_arm.csv", index=False)
+
     print("\n=== Table E: target vs anchor sensitivity, per estimator ===")
     summ = (df.groupby("estimator")
               .agg(target_sd=("target_sd", "mean"), anchor_sd=("anchor_sd", "mean"),
@@ -175,7 +212,7 @@ def main() -> int:
                 "resampling": "cluster bootstrap - photographs on target, leaves on source",
                 "n_boot": args.n_boot, "n_models": len(models),
                 "estimators": sorted(facs), "gdscore_mode": "eval (consistent with the rest)",
-                "target_arm": "D", "label_set": "SHARED_3",
+                "target_arms": arms, "label_set": "SHARED_3",
                 "status": "NEW ESTIMATOR EXPERIMENT - no historical result read or modified"},
         inputs={"eval_cache": cache_fingerprint(sorted(paths.CACHE_DIR.glob("*.npz")))},
         outputs=[str(p.relative_to(ROOT)) for p in sorted(OUT.glob("*.csv"))],

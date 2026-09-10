@@ -1,7 +1,7 @@
 {
   "experiment_id": "ti_audit",
-  "written_at": "2026-09-10T15:21:08.145948+00:00",
-  "git_commit": "268f001a475f69386831b5b20a34f982dfd9aba1",
+  "written_at": "2026-09-10T16:20:31.587934+00:00",
+  "git_commit": "5a52eb5dd6c9435fed1a83648e4bc1adb3259302",
   "git_dirty": true,
   "estimator_suite_version": "1.0.0",
   "params": {
@@ -21,11 +21,15 @@
       "nuclear_norm"
     ],
     "gdscore_mode": "eval (consistent with the rest)",
-    "target_arm": "D",
+    "target_arms": [
+      "source_test",
+      "plantdoc",
+      "tomatovillage"
+    ],
     "label_set": "SHARED_3",
     "status": "NEW ESTIMATOR EXPERIMENT - no historical result read or modified"
   },
-  "params_hash": "df782bd4eab74814",
+  "params_hash": "b6d1e609daf6eaec",
   "inputs": {
     "eval_cache": {
       "n_files": 240,
@@ -34,17 +38,19 @@
     }
   },
   "outputs": [
+    "results\\ti_audit\\ti_by_arm.csv",
     "results\\ti_audit\\ti_per_model.csv",
+    "results\\ti_audit\\ti_q4_by_arm.csv",
     "results\\ti_audit\\ti_removal.csv",
     "results\\ti_audit\\ti_removal_summary.csv",
     "results\\ti_audit\\ti_summary.csv",
     "results\\ti_audit\\ti_vs_error.csv"
   ],
   "metrics": {
-    "spearman_TI_vs_MAE_across_estimators": -0.4686233489032049,
-    "p_value": 0.203235520467271
+    "spearman_TI_vs_MAE_across_estimators": -0.4518868007280905,
+    "p_value": 0.22203877371139547
   },
-  "runtime_seconds": 467.19038796424866,
+  "runtime_seconds": 880.7414035797119,
   "packages": {
     "torch": "2.11.0+cu128",
     "torchvision": "0.26.0+cu128",
