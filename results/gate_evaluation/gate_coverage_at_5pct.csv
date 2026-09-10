@@ -1,0 +1,13 @@
+signal,plantdoc,source_test,tomatovillage
+atc_mc,0.0296875,1.0,0.0346875
+atc_ne,0.0309375,1.0,0.0184375
+confidence,0.0134375,1.0,0.008125
+cot,0.0490625,1.0,0.0228125
+doc,0.0421875,1.0,0.036875
+entropy,0.01625,1.0,0.0334375
+gdscore,0.0,1.0,0.04918032786885246
+mano,0.0,1.0,0.0
+nuclear_norm,0.0,1.0,0.0
+always_operate,1.0,1.0,1.0
+never_operate,0.0,0.0,0.0
+oracle,0.0015625,1.0,0.0009375
