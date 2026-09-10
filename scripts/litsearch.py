@@ -85,8 +85,12 @@ class BudgetExhausted(RuntimeError):
 #: spends budget that does not exist and gets us nothing, so a quota refusal
 #: aborts the run instead of being retried.
 _REQUESTS_USED = {"openalex": 0, "crossref": 0, "arxiv": 0}
-OPENALEX_DAILY_LIMIT = 1000
-OPENALEX_SAFETY_MARGIN = 40
+# MEASURED, not the documented figure. The `x-ratelimit-limit: 1000` header is
+# misleading: the binding constraint is a monetary budget, reported by the API as
+# "this request costs $0.001 but you only have $0 remaining", which works out to
+# roughly 100 requests per UTC day. Two runs stopped at exactly query 100.
+OPENALEX_DAILY_LIMIT = 100
+OPENALEX_SAFETY_MARGIN = 2
 
 
 def _get(url: str, params: dict | None = None, *, api: str,
@@ -300,6 +304,12 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="systematic literature search retrieval")
     ap.add_argument("--databases", default="openalex,crossref,arxiv",
                     help="comma-separated subset to query in this run")
+    ap.add_argument("--searches", default="",
+                    help="comma-separated search blocks to run (e.g. S5,S6). "
+                         "The query SET is fixed by the protocol; this only "
+                         "changes which part of it a budget-limited run spends on.")
+    ap.add_argument("--no-resume", action="store_true",
+                    help="re-run queries already recorded as ok (default: skip them)")
     args = ap.parse_args(argv)
     want = {d.strip() for d in args.databases.split(",") if d.strip()}
     unknown = want - {"openalex", "crossref", "arxiv"}
@@ -311,8 +321,34 @@ def main(argv: list[str] | None = None) -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     queries = build_queries()
     tag = "_".join(sorted(want))
-    print(f"pre-registered queries: {len(queries)} | databases this run: {sorted(want)}",
-          flush=True)
+
+    if args.searches:
+        keep = {s.strip() for s in args.searches.split(",") if s.strip()}
+        queries = [q for q in queries if q["search"] in keep]
+        print(f"restricted to search blocks {sorted(keep)}", flush=True)
+
+    # ---- resume ---------------------------------------------------------
+    # OpenAlex allows only ~100 requests/day, so a naive re-run spends the whole
+    # budget repeating queries that already succeeded and never reaches the rest.
+    # Skip any query already recorded ok for every requested database.
+    prior_log = OUT / f"query_log_{tag}.csv"
+    done: set[str] = set()
+    if prior_log.exists() and not args.no_resume:
+        pl = pd.read_csv(prior_log)
+        ok_cols = [f"{db}_status" for db in sorted(want) if f"{db}_status" in pl.columns]
+        if ok_cols:
+            mask = pl[ok_cols].apply(lambda c: c.eq("ok")).all(axis=1)
+            done = set(pl.loc[mask, "query"].astype(str))
+    remaining = [q for q in queries if q["query"] not in done]
+    if done:
+        print(f"resuming: {len(done)} queries already recorded ok, "
+              f"{len(remaining)} to run", flush=True)
+    queries = remaining
+    if not queries:
+        print("nothing left to run for these databases and blocks.")
+        return 0
+
+    print(f"queries this run: {len(queries)} | databases: {sorted(want)}", flush=True)
 
     rows_by_db: dict[str, list[dict]] = {d: [] for d in want}
     log: list[dict] = []
@@ -371,14 +407,29 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Reason: {aborted}")
         return 3
 
+    # Accumulate across resumed runs rather than overwriting: a budget-limited
+    # database is gathered over several days, and each day must add to what is
+    # already on disk instead of replacing it.
     qlog = pd.DataFrame(log)
+    if prior_log.exists() and not args.no_resume:
+        qlog = (pd.concat([pd.read_csv(prior_log), qlog], ignore_index=True)
+                  .drop_duplicates(subset="query", keep="last"))
     qlog.to_csv(OUT / f"query_log_{tag}.csv", index=False)
+
     total_rows = 0
     for db, rows in rows_by_db.items():
-        if rows:
-            pd.DataFrame(rows).to_csv(OUT / f"raw_{db}.csv", index=False)
-            total_rows += len(rows)
-            print(f"\n  raw_{db}.csv: {len(rows):,} records")
+        if not rows:
+            continue
+        new = pd.DataFrame(rows)
+        raw_path = OUT / f"raw_{db}.csv"
+        if raw_path.exists() and not args.no_resume:
+            new = pd.concat([pd.read_csv(raw_path), new], ignore_index=True)
+            if {"id", "found_by_query"}.issubset(new.columns):
+                new = new.drop_duplicates(subset=["id", "found_by_query"])
+        new.to_csv(raw_path, index=False)
+        total_rows += len(new)
+        print(f"\n  raw_{db}.csv: {len(new):,} records "
+              f"(+{len(rows):,} this run)")
 
     # ---- integrity report: a zero must never be a disguised failure ------
     ok_states = ("ok", "not_run_by_design", "not_requested")
