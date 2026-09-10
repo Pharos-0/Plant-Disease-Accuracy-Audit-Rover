@@ -1,186 +1,136 @@
-# Label-Free Accuracy Estimation for Plant Disease under Lab-to-Field Shift
+# Label-Free Accuracy Estimation under Agricultural Laboratory-to-Field Shift
 
-Plant-disease classifiers report >99% on laboratory datasets and collapse in the
-field. Everyone who has measured that collapse used **labeled** field test sets —
-which a deployed machine never has. This project asks whether the collapse can be
-**estimated from unlabeled field images alone**, benchmarks six label-free accuracy
-estimators across target domains representing different kinds and magnitudes of real
-distribution shift, asks **how many unlabeled observations are needed before the
-estimate is trustworthy**, and demonstrates the estimate as a session-level gate on a
-sprayer rover.
-
-**Contribution type: empirical benchmark. Not a new method.** Every estimator here is
-imported, not invented.
+M.Tech research project. **Status: research complete, ready for thesis writing.**
 
 ---
 
-## The one constraint that shapes everything
+## What this asks
 
-ATC, DoC, MaNo and COT estimate accuracy over a **dataset or session**. They do not
-produce a per-image correctness probability.
+A plant-disease classifier trained on laboratory imagery is ~96% accurate there and ~50%
+accurate on real field photographs. You cannot measure that drop without field labels, which
+is exactly what deployment lacks. **Label-free accuracy estimation** claims to estimate a
+fixed model's accuracy on unlabelled data. Does it work under real agricultural shift — and
+how much of such an estimate actually depends on the field data at all?
 
+## Why it matters
+
+An autonomous rover deciding whether to spray needs to know whether to trust its classifier.
+If the estimate is really an echo of laboratory calibration, trusting it is unsafe.
+
+## Datasets
+
+| arm | role | photographs | crops | classifier accuracy |
+|---|---|---:|---:|---:|
+| PlantVillage (source) | training / calibration | — | — | — |
+| `source_test` | zero-shift control | 109 | 435 | **0.962** |
+| PlantDoc | severe shift (web imagery) | 262 | 262 | **0.503** |
+| Tomato-Village | severe shift (real Indian field) | 391 | 1,616 | **0.500** |
+
+Label set `SHARED_3`. Sampling is **always at photograph level** — 1,616 crops come from
+only 391 photographs, and treating crops as independent would inflate everything downstream.
+
+## Models
+
+20 frozen classifiers: **4 architectures × 5 seeds** — ResNet-50, EfficientNet-B0,
+MobileNetV3-Large, ViT-S/16. They are not 20 independent datasets.
+
+## Estimators
+
+Nine: `confidence`, `entropy`, `atc_mc`, `atc_ne`, `doc`, `cot`, `nuclear_norm`, `mano`,
+`gdscore`. This is a **sample** of the field, not the state of the art — at least twenty
+methods exist. Selection is justified in `docs/estimator_selection.md`, which separates
+principled exclusions from ignorance.
+
+## Key findings
+
+1. **They do not work well here.** Best MAE **0.1337** (entropy); none beats an oracle
+   constant at **0.0610**.
+2. **Most are not listening to the field.** Six of nine move **4–14× more** under source
+   resampling than target resampling; four change by only 0.06–0.11 when the target is
+   replaced by random logits.
+3. **The relationship between target responsiveness and error reverses with shift
+   severity** — +0.40/+0.44/+0.45 on the zero-shift arm versus −0.28 to −0.51 on both field
+   arms, at every feasible sample size (paired *p* = 1e-4 to 1e-6).
+4. **More unlabelled data does not help under shift** — Tomato-Village +0.0137 MAE going
+   from 25 to 200 photographs, 2 of 9 estimators improved; under zero shift, 8 of 8 improved.
+5. **No signal ranks field sessions usefully** for a fixed model (best Spearman 0.22), so a
+   deployment gate cannot enable autonomy.
+6. **~10–50 labelled photographs beat every label-free estimator** in this setting.
+
+## The rover
+
+A **deployment case study**, not a contribution. Runtime perception monitoring is
+established in automotive and rail. Two modes:
+
+- **NORMAL** — classifier → downstream autonomous action; works with the research module off.
+- **RESEARCH** — session gate → OPERATE / REVIEW / WITHHOLD; refuses per-image queries by
+  construction.
+
+**Deployment recommendation: do not enable autonomous spraying under this shift.**
+
+## Reproduce
+
+**Fast validation** (~1 minute, no GPU) — verifies committed results and runs the test suite:
+
+```bash
+python scripts/run_all_validations.py
 ```
-session of N unlabeled images → classifier → logits/features
-    → dataset-level estimator → estimated session accuracy
-    → gate → operate / withhold / request human review
+
+**Rover demonstration** (~10 seconds, replays cached real data):
+
+```bash
+python scripts/run_rover_demo.py
 ```
 
-The existing green-region rule on the rover decides *where* to spray. The session
-estimate decides *whether the rover should be operating at all*. `SessionGate`
-raises `PerImageQueryError` if asked about a single image, because conflating the two
-is selective prediction — a different literature with different guarantees.
+**Regenerate figures and tables** (~1 minute):
 
----
+```bash
+python scripts/make_thesis_figures.py && python scripts/make_thesis_tables.py
+```
 
-## Headline findings
+**Full reproduction** (hours, GPU required) — training, caching, then the experiments:
 
-Based on **30 trained models** (4 backbones × 5 seeds, plus the V1/V2 leakage ablation)
-and **720,000 scored sessions** across four target arms.
+```bash
+python scripts/run_training.py --stage v1v2
+python scripts/run_caching.py
+python scripts/run_estimates.py && python scripts/run_evaluation.py
+python scripts/ti_audit.py --n-boot 100 --arms source_test,plantdoc,tomatovillage
+python scripts/ti_sample_size.py && python scripts/gate_evaluation.py
+```
 
-| | |
+Every experiment writes a manifest with git commit, seeds, package versions, hardware and
+cache fingerprints. **Cached results are never presented as freshly reproduced.**
+
+## Expected outputs
+
+`results/figures/` — 31 figures · `results/tables/thesis/` — 12 tables (CSV + Markdown) ·
+`results/<experiment>/manifest*.json` — provenance · **136 passing tests**.
+
+## Limitations
+
+One source dataset, one crop, three target arms, 20 models, 5 seeds per architecture.
+**N = 400 does not exist on any arm**; `source_test` has no N = 200; GdScore needs ≥128
+crops so some cells are absent. TI is a first-order Sobol index — **not a new metric** — and
+is **not comparable across sample sizes**. Scopus, Web of Science, IEEE Xplore and ACM DL
+were **not searched** (no institutional access). No validated disease→chemical mapping. No
+field trial; no demonstrated safe autonomous spraying. No new estimator — one was built and
+rejected on its own evidence.
+
+## Never claimed
+
+A new estimator · a new metric · "first" anything · per-image correctness · that label-free
+estimation fails in general · universal agricultural performance · validated treatment
+mapping · safe autonomous spraying.
+
+## Where to look
+
+| question | file |
 |---|---|
-| Lab→field drop is real | source 0.985 → Tomato-Village 0.503 (**48 pp**); Arm A control drops 0.9 pp |
-| Arm A control passes | ATC/DoC reach MAE ≈ 0.013 with no shift — the estimators are correctly implemented |
-| Estimators break under field shift | 6 of 8 over-estimate by >15 points; MaNo by +0.46 |
-| **They stop ranking sessions at all** | correlation with true session accuracy collapses from 0.53 (arm A) to ≈0.07 (arm D) |
-| **The gate carries no information** | precision-of-operate equals the base rate exactly (lift 1.00×) for every confidence-based estimator |
-| **N\* essentially does not exist** | only **1 of 96** shifted (arm, estimator, backbone) cells reaches MAE ≤ 0.05 at any N, against 41 of 48 with no shift |
-| Not architecture-dependent | source accuracy spans 0.923–0.997 across four backbones; arm-D bias stays +0.25 to +0.33 throughout |
-| A wider label space is worse | 3 → 7 classes degrades 6 of 8 estimators (nuclear norm by +0.374) |
-| The trivial baselines win | mean entropy and COT are far better calibrated than every sophisticated method |
-| Shift is not a severity ladder | arms C and D have near-identical covariate shift but very different label shift |
-| **H4 falsified** | leaf leakage changes nothing: source accuracy 0.9804 vs 0.9812 over 5 seeds, and 0/8 estimators shift significantly |
-
-**Verdict.** On this evidence, tomato field accuracy **cannot** be reliably estimated
-from unlabeled images with the current generation of confidence-based estimators. They
-are correctly implemented, they fail identically across architectures, and they fail in
-the unsafe direction. COT — the one method that uses the class marginal rather than the
-confidence distribution — is the only one retaining useful signal, and it is
-threshold-fragile.
-
-Full detail: [`reports/phase1_feasibility_report.md`](reports/phase1_feasibility_report.md),
-and [`docs/stop_condition_F_investigation.md`](docs/stop_condition_F_investigation.md)
-for why the estimators go constant.
-
----
-
-## Layout
-
-```
-src/
-  data/         index, canonical class mapping, verification, V1/V2 splits
-  models/       timm backbone factory
-  training/     dataset, transforms, AMP training loop
-  inference/    Stage 2 — cache logits + penultimate features
-  estimators/   the estimator suite. NEVER sees a target label.
-  sessions/     session construction and overlap accounting
-  evaluation/   scoring, shift magnitude, gate. The ONLY consumer of target labels.
-  visualization/figures, generated from logged tables only
-  rover/        session gate, leaf-crop proposal, hardware isolation tests
-scripts/        the pipeline drivers, in execution order
-docs/           protocol, class mapping, audits, reproducibility, verification
-results/        raw/ (manifests, checkpoints, caches, estimates) tables/ figures/
-tests/          leakage firewall, reference-implementation checks, gate behaviour
-```
-
-## The leakage firewall
-
-```
-src/estimators/   MAY see: source val labels, source+target logits/features. NEVER target labels.
-src/evaluation/   MAY see: target labels. Runs strictly AFTER estimates are written to disk.
-```
-
-Enforced three ways, not by discipline:
-
-1. An AST test rejects any import in `src/estimators/` that could reach a label store,
-   verified with a negative control (injecting `import pandas` fails the suite).
-2. `Estimator.estimate` takes only target logits and features — there is no parameter
-   through which a label could arrive.
-3. Labels are cached in a **separate** `.npz` from logits and features, so the split
-   is physical.
-
-## Running it
-
-```bash
-python src/data/verify.py                      # re-verify every dataset count
-python scripts/run_training.py --stage v1v2    # V1/V2 x 5 seeds
-python scripts/run_caching.py                  # Stage 2 — the load-bearing step
-python scripts/run_estimates.py                # phase 1: estimates, no target labels
-python scripts/run_evaluation.py               # phase 2: score against the truth
-python scripts/run_capture_day_diagnostic.py   # real acquisition days as sessions
-python src/visualization/figures.py
-python scripts/make_report.py
-```
-
-Run training **exclusively** — the 8 GB GPU will not hold a training run and a caching
-run at once, and the collision surfaces as a confusing `CUDNN_STATUS_EXECUTION_FAILED`
-followed by cascading OOMs.
-
-## Environment
-
-Python 3.12, torch 2.11.0+cu128 on an RTX 5060 Laptop (Blackwell, **sm_120**). A wheel
-without sm_120 kernels installs and imports cleanly and only fails when a CUDA kernel
-actually runs, so verify with a real operation:
-
-```bash
-python -c "import torch; x=torch.randn(4096,4096,device='cuda'); print((x@x).sum().item())"
-```
-
-Datasets live at `C:\ds\` — a short root, because class names like
-`Tomato___Spider_mites Two-spotted_spider_mite` nest deeply enough to hit `MAX_PATH`.
-
-**PlantDoc cannot be `git checkout`ed on Windows**: 20 of its tomato filenames are
-scraped web URLs containing `? & =`, which NTFS rejects, and git aborts the entire
-worktree. Use `scripts/fetch_plantdoc.py`, which pulls the zipball and sanitises names
-while recording a `filename_map.csv` for provenance.
-
-## Reproducibility
-
-Every run writes `results/raw/<version>/manifest_*.json` with the seed, full config,
-git commit, package versions, dataset checksums and metrics. **Figures and the report
-are generated from those tables only** — no number in either is typed by hand.
-
-Estimator reproduction levels are recorded honestly in
-[`docs/estimator_reproducibility.md`](docs/estimator_reproducibility.md): ATC, DoC and
-COT are verified against official implementations (L3); nuclear norm and MaNo are our
-implementations of the published scores (L2). AETTA and AutoEval are argued
-**ineligible** for a frozen classifier on unlabeled deployment data, and excluded.
-
-## Status
-
-**Arms A, B, C and D are complete** — 30 models, 5 seeds each, 720,000 scored sessions,
-with figures and the Phase 1 report generated from the logged tables.
-
-Arm B uses `SHARED_7` rather than `SHARED_8`: PlantVillage ships no leafmap for
-`Tomato_mosaic_virus`, so none of its 373 images can enter a leakage-free leaf-grouped
-split. Training `SHARED_8` on the grouped pool would leave that head with zero examples
-and make PlantDoc's 54 ToMV images guaranteed errors. We checked whether leaf identity
-could be recovered from filename numbering instead; the rule reproduces 100% of healthy
-leaves but only 19% of late blight, so it is not usable. See `data.mapping.SHARED_7`.
-
-**Arm E (rover): unblocked, not yet collected.** The frozen
-`rover/original/web_rover.py` baseline has now been supplied and is **SHA-256 verified
-against the audit** (`8801697b…`, 241 lines); `.gitattributes` marks it `-text` and
-`tests/test_frozen_baseline.py` is the tripwire against line-ending corruption. That
-test also re-verifies every claim in `docs/rover_code_audit.md` directly against the
-artefact — all ten defects confirmed, including **zero logging**, which settles that
-the delivered paper's Table I cannot have come from this code.
-
-Hardware is inventoried from photographs and the **camera height is measured at
-24–25 cm**, so Arm E is viable. What remains: one camera frame pointed at a real
-plant, the per-component isolation tests, and locating the motor driver — which does
-not appear in any photograph despite the code requiring an H-bridge. See
-`docs/rover_hardware_inventory.md`.
-
-The thesis is still designed to remain complete if the rover chapter is deleted.
-
-## Never claim
-
-- ✗ "First to apply label-free accuracy estimation to a new domain" — medical imaging
-  did it (arXiv:2507.22776, 2025).
-- ✗ "First robot that knows when to distrust itself" — introspective perception,
-  Daftry 2016.
-- ✗ "Novel accuracy estimation method" — these are imported.
-- ✗ Any per-image correctness claim.
-- ✗ Any number from the delivered third-party paper draft. The delivered code contains
-  no logging of any kind and could not have produced its Table I.
+| Thesis outline, abstract, RQ answers | `docs/thesis/THESIS_OUTLINE_AND_ABSTRACT.md` |
+| Every claim and its evidence | `docs/CLAIM_EVIDENCE_TABLE.md` |
+| What was tried and rejected | `docs/WHAT_WE_TRIED_AND_REJECTED.md` |
+| Final contribution statement | `docs/THESIS_CONTRIBUTION_FINAL.md` |
+| Rover evaluation | `docs/ROVER_RESEARCH_INTEGRATION.md` |
+| Literature search | `docs/litsearch_results.md` |
+| Viva preparation | `docs/VIVA_QUESTIONS_AND_ANSWERS.md` |
+| Project status | `docs/PROJECT_COMPLETION_STATUS.md` |

@@ -1,0 +1,13 @@
+**Table 12. The rejected TI-adaptive shrinkage estimator. 0 of 9 bases improved; 7 significantly harmed (paired Wilcoxon, Holm-corrected).**
+
+| base_estimator | base | ti | fixed_w | anchor_only | ti_minus_base |
+|---|---|---|---|---|---|
+| atc_mc | 0.3268 | 0.4552 | 0.3948 | 0.4629 | 0.1284 |
+| atc_ne | 0.3109 | 0.4486 | 0.3869 | 0.4629 | 0.1377 |
+| confidence | 0.3214 | 0.3214 | 0.3921 | 0.4629 | 0.0 |
+| cot | 0.1339 | 0.4438 | 0.2984 | 0.4629 | 0.3099 |
+| doc | 0.3407 | 0.4025 | 0.4018 | 0.4629 | 0.0618 |
+| entropy | 0.1337 | 0.1337 | 0.2758 | 0.4629 | 0.0 |
+| gdscore | 0.4543 | 0.4628 | 0.4586 | 0.4629 | 0.0085 |
+| mano | 0.4165 | 0.4625 | 0.4397 | 0.4629 | 0.046 |
+| nuclear_norm | 0.3089 | 0.4613 | 0.3859 | 0.4629 | 0.1524 |

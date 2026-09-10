@@ -87,12 +87,37 @@ def test_platform() -> dict:
 
 # ---------------------------------------------------------------- camera
 
+#: A frame whose spatial standard deviation is below this carries no image. A
+#: real sensor always produces some noise; measured blind-camera value: 0.0000.
+UNIFORM_FRAME_STD = 0.5
 
-def test_camera(index: int = 0, warmup: int = 5) -> dict:
-    """Open the camera, grab frames, record resolution and measured FPS.
 
-    Also saves one frame so the sample-frame question in section 16 can be
-    settled from real data.
+def frame_is_blank(frame, threshold: float = UNIFORM_FRAME_STD) -> bool:
+    """True when a frame has no spatial variation, i.e. carries no image.
+
+    Separated from ``test_camera`` so the rule can be tested without hardware.
+    """
+    import numpy as np
+
+    return bool(np.asarray(frame).std() < threshold)
+
+
+def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> dict:
+    """Open the camera, grab frames, and check they contain an actual image.
+
+    Two behaviours changed after a measured failure on 2026-09-10: the camera on
+    the development machine streamed 60 frames at 640x480 in which **every pixel
+    was the constant value 2** - per-frame standard deviation exactly 0.0000. The
+    old success rule was ``frames > 0``, so a completely blind camera reported
+    HEALTHY. For a rover whose safety rule is "sensor failure -> stop, spray off,
+    require attention", that is the wrong way to fail.
+
+    * A frame with no spatial variation is now a FAILURE, not a pass. A real
+      sensor - even capped, even in the dark - produces noise; a perfectly
+      uniform frame means no sensor data is arriving.
+    * ``save_frame`` is **opt-in**. Previously every run wrote a JPEG of whatever
+      the camera saw into the repository root, which is both clutter and, once
+      the camera works, a privacy problem.
     """
     try:
         import cv2
@@ -114,27 +139,42 @@ def test_camera(index: int = 0, warmup: int = 5) -> dict:
         last, frames = frame, frames + 1
 
     evidence: dict = {"frames_captured": frames}
+    blank = None
     if last is not None:
         h, w = last.shape[:2]
+        spatial_std = float(last.std())
+        blank = spatial_std < UNIFORM_FRAME_STD
         evidence.update(
             {
                 "width": int(w),
                 "height": int(h),
                 "measured_fps": round(frames / 3.0, 2),
                 "mean_brightness": round(float(last.mean()), 1),
+                "frame_std": round(spatial_std, 4),
+                "uniform_frame": blank,
             }
         )
-        path = f"rover_camera_sample_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
-        cv2.imwrite(path, last)
-        evidence["sample_frame"] = path
-        print(f"  saved sample frame -> {path}")
-        print("  NOTE: point the camera at a real plant and re-run; section 16 needs")
-        print("        this frame plus a MEASURED camera height to judge arm E.")
+        if save_frame:
+            path = f"rover_camera_sample_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
+            cv2.imwrite(path, last)
+            evidence["sample_frame"] = path
+            print(f"  saved sample frame -> {path}")
     cap.release()
 
-    ok = frames > 0
+    if frames == 0:
+        return _result("camera", False, "camera opened but delivered no frames", evidence)
+    if blank:
+        return _result(
+            "camera", False,
+            f"{frames} frames delivered but every pixel is identical "
+            f"(std={evidence['frame_std']}) - the camera is blind, not dark. "
+            "Check the privacy shutter and the OS camera permission.",
+            evidence,
+        )
     return _result(
-        "camera", ok, f"{frames} frames in 3 s at {evidence.get('width')}x{evidence.get('height')}",
+        "camera", True,
+        f"{frames} frames in 3 s at {evidence.get('width')}x{evidence.get('height')}, "
+        f"frame std {evidence['frame_std']}",
         evidence,
     )
 
