@@ -1,0 +1,67 @@
+{
+  "experiment_id": "ti_candidate",
+  "written_at": "2026-09-10T15:36:39.795494+00:00",
+  "git_commit": "268f001a475f69386831b5b20a34f982dfd9aba1",
+  "git_dirty": true,
+  "estimator_suite_version": "1.0.0",
+  "params": {
+    "candidate": "Family F - TI-adaptive shrinkage toward the source anchor",
+    "form": "w * base(T) + (1-w) * source_accuracy, w = measured TI",
+    "ablations": [
+      "fixed_w (w=0.5)",
+      "anchor_only (w=0)"
+    ],
+    "n_boot": 40,
+    "n_models": 20,
+    "anchor": "source validation accuracy - no target labels",
+    "status": "NEW ESTIMATOR EXPERIMENT - historical results read only"
+  },
+  "params_hash": "c819234eb8b0ec96",
+  "inputs": {
+    "eval_cache": {
+      "n_files": 240,
+      "total_bytes": 318330888,
+      "digest": "510657b914908e76"
+    }
+  },
+  "outputs": [
+    "results\\ti_candidate\\candidate_per_model.csv",
+    "results\\ti_candidate\\candidate_stats.csv",
+    "results\\ti_candidate\\candidate_summary.csv"
+  ],
+  "metrics": {
+    "best_base_mae": 0.13369162085180145,
+    "best_candidate_mae": 0.13369162085180145,
+    "n_bases_improved": 0,
+    "n_bases": 9
+  },
+  "runtime_seconds": 195.15542697906494,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "notes": "Family F implemented and benchmarked rather than rejected on paper. Paired Wilcoxon with Holm correction over the bases."
+}

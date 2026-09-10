@@ -1,0 +1,78 @@
+{
+  "experiment_id": "ti_synthetic",
+  "written_at": "2026-09-10T15:25:23.172286+00:00",
+  "git_commit": "268f001a475f69386831b5b20a34f982dfd9aba1",
+  "git_dirty": true,
+  "estimator_suite_version": "1.0.0",
+  "params": {
+    "purpose": "validate TI against known target dependence, and observe it under controlled shift with exact true accuracy",
+    "K": 3,
+    "D": 16,
+    "n_boot": 60,
+    "alphas": [
+      0.0,
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      0.9,
+      1.0
+    ],
+    "shifts": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "n_target": [
+      100,
+      400
+    ],
+    "label_shift": true,
+    "status": "NEW ESTIMATOR EXPERIMENT - synthetic, no repository data"
+  },
+  "params_hash": "85ff63fe5a40cfaa",
+  "inputs": {
+    "data": "generated in-process from a fixed seed"
+  },
+  "outputs": [
+    "results\\ti_synthetic\\v1_known_alpha.csv",
+    "results\\ti_synthetic\\v2_shift_and_size.csv"
+  ],
+  "metrics": {
+    "ti_alpha_monotonicity_spearman": 1.0,
+    "ti_at_alpha0": 4.768623706830433e-29,
+    "ti_at_alpha1": 1.0,
+    "synthetic_spearman_ti_vs_error": 0.4537627301405413
+  },
+  "runtime_seconds": 60.56125450134277,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "notes": "Synthetic ground truth. Labels exist here only to compute exact target accuracy for scoring; no estimator sees them."
+}

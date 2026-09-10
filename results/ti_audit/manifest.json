@@ -1,0 +1,76 @@
+{
+  "experiment_id": "ti_audit",
+  "written_at": "2026-09-10T15:21:08.145948+00:00",
+  "git_commit": "268f001a475f69386831b5b20a34f982dfd9aba1",
+  "git_dirty": true,
+  "estimator_suite_version": "1.0.0",
+  "params": {
+    "definition": "TI = Var_T / (Var_T + Var_S), a first-order Sobol' index over two input groups",
+    "resampling": "cluster bootstrap - photographs on target, leaves on source",
+    "n_boot": 100,
+    "n_models": 20,
+    "estimators": [
+      "atc_mc",
+      "atc_ne",
+      "confidence",
+      "cot",
+      "doc",
+      "entropy",
+      "gdscore",
+      "mano",
+      "nuclear_norm"
+    ],
+    "gdscore_mode": "eval (consistent with the rest)",
+    "target_arm": "D",
+    "label_set": "SHARED_3",
+    "status": "NEW ESTIMATOR EXPERIMENT - no historical result read or modified"
+  },
+  "params_hash": "df782bd4eab74814",
+  "inputs": {
+    "eval_cache": {
+      "n_files": 240,
+      "total_bytes": 318330888,
+      "digest": "510657b914908e76"
+    }
+  },
+  "outputs": [
+    "results\\ti_audit\\ti_per_model.csv",
+    "results\\ti_audit\\ti_removal.csv",
+    "results\\ti_audit\\ti_removal_summary.csv",
+    "results\\ti_audit\\ti_summary.csv",
+    "results\\ti_audit\\ti_vs_error.csv"
+  ],
+  "metrics": {
+    "spearman_TI_vs_MAE_across_estimators": -0.4686233489032049,
+    "p_value": 0.203235520467271
+  },
+  "runtime_seconds": 467.19038796424866,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "timm": "1.0.29",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "pillow": "12.3.0",
+    "opencv-python": "5.0.0.93"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_capability": [
+      12,
+      0
+    ],
+    "gpu_total_mem_mb": 8151
+  },
+  "dataset_checksums": {
+    "index.parquet": "9c8bcb346dcb213b7c4662c181ab164e302c1474091e7b5e1cedcf59bdac6a93"
+  },
+  "notes": "Phases 5-8. TI is a Sobol' index, established mathematics applied to a new object; it is not a new metric and is not claimed as one."
+}
