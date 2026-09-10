@@ -59,7 +59,14 @@ METHODS = rx(
     r"\bATC\b.{0,60}(confidence|accuracy)", r"average thresholded confidence",
     r"difference of confidences?\b", r"\bDoC\b.{0,40}(accuracy|shift)",
     r"confidence optimal transport", r"\bCOT\b.{0,40}(accuracy|estimation)",
-    r"\bMaNo\b", r"\bGdScore\b", r"agreement.on.the.line",
+    # "MaNo" is catastrophically polysemous - Mano River, Mano Dura, NFV MANO,
+    # mano-thermo-sonication, Spanish "mano", grinding stones, a hand exoskeleton,
+    # the MANO hand model. Bare \bMaNo\b pulled hundreds of them in, because a
+    # named-method match deliberately overrides the noise filters (see below).
+    # It must therefore carry its own context.
+    r"\bMaNo\b.{0,80}(matrix norm|accuracy estimation|distribution shift)",
+    r"(matrix norm|accuracy estimation|distribution shift).{0,80}\bMaNo\b",
+    r"\bGdScore\b", r"agreement.on.the.line",
     r"projection norm", r"confidence and dispersity", r"nuclear norm.{0,40}accuracy",
     r"prediction.powered inference",
 )
