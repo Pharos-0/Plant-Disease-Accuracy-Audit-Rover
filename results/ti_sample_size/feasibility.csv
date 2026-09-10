@@ -1,0 +1,16 @@
+arm,n_photographs_available,requested_N,feasible
+source_test,109,25,True
+source_test,109,50,True
+source_test,109,100,True
+source_test,109,200,False
+source_test,109,400,False
+plantdoc,262,25,True
+plantdoc,262,50,True
+plantdoc,262,100,True
+plantdoc,262,200,True
+plantdoc,262,400,False
+tomatovillage,391,25,True
+tomatovillage,391,50,True
+tomatovillage,391,100,True
+tomatovillage,391,200,True
+tomatovillage,391,400,False
