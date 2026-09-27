@@ -1,0 +1,64 @@
+# Rover-view tomato dataset - configuration
+#
+# Image bytes live OUTSIDE the git repository. The repo holds scripts, metadata,
+# documentation and split files only; raw/ and processed/ are on the dataset
+# volume, which is where the thesis datasets already live. Nothing here is
+# hardcoded into a script.
+
+paths:
+  # Where image bytes go. Never inside the git repo.
+  store: "C:/ds/rover_tomato"
+  raw: "C:/ds/rover_tomato/raw"
+  processed: "C:/ds/rover_tomato/processed"
+  # Text artefacts, tracked in git.
+  metadata: "dataset/metadata"
+  annotations: "dataset/annotations"
+  splits: "dataset/splits"
+  documentation: "dataset/documentation"
+  samples: "dataset/documentation/samples"
+
+# Datasets already on this machine, from the thesis work. Counted, not assumed.
+local_sources:
+  plantvillage:
+    root: "C:/ds/plantvillage/raw/color"
+    tomato_glob: "Tomato___*"
+    expected_image_type: REAL_LAB_OR_STUDIO
+  plantdoc:
+    root: "C:/ds/plantdoc_files"
+    tomato_glob: "*/Tomato*"
+    expected_image_type: REAL_FIELD_ROVER_RELEVANT
+  tomatovillage:
+    root: "C:/ds/tomatovillage/Variant-a(Multiclass Classification)"
+    tomato_glob: "*/*"
+    expected_image_type: REAL_ISOLATED_LEAF
+
+# Rover platform. UNKNOWN stays UNKNOWN - see documentation/ROVER_RELEVANCE_RUBRIC.md
+rover:
+  camera_resolution: [320, 240]
+  camera_height_m: UNKNOWN
+  camera_fov_deg: UNKNOWN
+  mounting_angle_deg: UNKNOWN
+  focal_length_mm: UNKNOWN
+  sensor: "USB camera, model UNKNOWN"
+
+# Rover-view proxy transformation, applied only to the processed/ copy.
+proxy:
+  target_size: [320, 240]
+  # Every transformation is recorded per image in processing_applied.
+  allowed_transforms:
+    - resize_320x240
+    - center_crop_4x3
+    - mild_motion_blur
+    - jpeg_compression_q70
+    - exposure_jitter
+
+# Duplicate detection thresholds.
+dedup:
+  phash_size: 8          # 8x8 DCT low-frequency block -> 64-bit hash
+  phash_hamming_max: 6   # <= this counts as a near-duplicate candidate
+  verify_near_dupes_visually: true
+
+# Pilot budget. Deliberately small; scale only after the pilot is reviewed.
+pilot:
+  max_images_per_source: 60
+  max_total_download_mb: 400

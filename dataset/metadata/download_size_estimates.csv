@@ -1,0 +1,6 @@
+source_id,n_files,total_mb,note
+SRC004,,,list failed: HTTPError
+SRC005,,,list failed: HTTPError
+SRC006,,,no automated lister
+SRC014,1.0,137.0,zenodo licence served: cc-by-4.0; 449 image members in archive
+SRC015,1.0,174.6,zenodo licence served: cc-by-4.0; 1474 image members in archive

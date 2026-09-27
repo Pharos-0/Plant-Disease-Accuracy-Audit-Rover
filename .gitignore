@@ -16,3 +16,9 @@ rover_camera_sample_*.jpg
 # literature/BUNDLE_README.md, so tracking it too would duplicate a 2.8 MB tree.
 # Kept on disk; see docs/CAMPUS_HANDOFF_INTEGRATION.md.
 PC-handoff/
+
+# Rover-view tomato dataset: image bytes and cached archives live on the dataset
+# volume (see dataset/config.yaml). Only scripts, metadata and documentation are
+# tracked. A sample grid under documentation/ is small and IS tracked.
+dataset/raw/
+dataset/processed/
