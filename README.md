@@ -1,4 +1,7 @@
-# Label-Free Accuracy Estimation under Agricultural Laboratory-to-Field Shift
+# Unsupervised Accuracy Estimation under Agricultural Laboratory-to-Field Shift
+
+*Also called label-free accuracy estimation. We lead with "unsupervised" because in
+agriculture "label-free" denotes dye-free biosensing — see `docs/litsearch_scopus.md`.*
 
 M.Tech research project. **Status: research complete, ready for thesis writing.**
 

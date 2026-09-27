@@ -10,3 +10,9 @@ results/raw/**/*.npz
 
 # hardware-probe evidence frames, written by rover/hardware_tests on every run
 rover_camera_sample_*.jpg
+
+# Transport bundle pasted in on 2026-09-28. Its whole content is committed in
+# literature/ (verified an identical tree) plus CAMPUS_SESSION_HANDOFF.md and
+# literature/BUNDLE_README.md, so tracking it too would duplicate a 2.8 MB tree.
+# Kept on disk; see docs/CAMPUS_HANDOFF_INTEGRATION.md.
+PC-handoff/

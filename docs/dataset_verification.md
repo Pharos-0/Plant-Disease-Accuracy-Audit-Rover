@@ -87,3 +87,64 @@ Per capture day:
 - tomatovillage/Magnesium Deficiency: documented 937, on disk 936 (-1)
 - tomatovillage total: documented 4526, on disk 4525 (-1)
 - 1 duplicate groups span different labels
+
+---
+
+## 6. Tomato-Village acquisition audit (added 2026-09-28)
+
+The campus-network literature audit attempted to verify Tomato-Village's acquisition
+conditions against the dataset's own source. The result changes what the manuscript is
+allowed to say. Recorded here because the cluster-sampling design depends on part of it.
+
+**The source paper is not open access.** Gehlot, Saxena & Gandhi, *Multimedia Systems*,
+published 2023-08-21, `10.1007/s00530-023-01158-y`, redirects to `idp.springer.com`.
+Crossref lists a text-and-data-mining licence only, no CC licence. **Full text NOT read.**
+Everything below is either from the repository README (which reproduces the paper's abstract)
+or from our own independent enumeration.
+
+### DOCUMENTED — attributable to the dataset authors
+
+| item | value |
+|---|---|
+| Locations | *"the Jodhpur and Jaipur districts of Rajasthan, India"* |
+| Setting | *"real-world environment"*; diseases predicted *"on the field"* |
+| Stated contrast with PlantVillage | *"created in a lab/controlled environment, and models trained on it do not perform well on real-world images"* |
+| Variants | multiclass classification, multilabel classification, object detection |
+
+### INDEPENDENTLY VERIFIED — our own enumeration
+
+Variant-a: 4,526 images across 8 classes; filename pattern `IMG<YYYYMMDD><HHMMSS>[_n].jpg`
+on 4,525 of 4,526; three capture dates only — 2022-03-23, 03-24, 03-25. Our own SHARED_3
+subset figures are in §3 above and agree with this structure.
+
+### NOT DOCUMENTED — and therefore not claimable
+
+| item | status |
+|---|---|
+| Camera or device model, sensor, resolution | **not documented** |
+| Weather, illumination, time of day | **not documented** (timestamps permit inference; inference is not documentation) |
+| Open field vs polyhouse or greenhouse | **not documented** beyond "real-world environment" |
+| Annotation procedure, annotator identity or expertise, inter-annotator agreement | **not documented** |
+| Whether the `_n` suffix denotes multiple crops from one photograph | **not documented — this is OUR INFERENCE** |
+| Whether the dataset's own splits control same-plant or same-photograph leakage | **not documented** |
+
+### Two consequences
+
+**One correction to the manuscript.** Both versions described the dataset as *"acquired in
+India with a handheld phone"*. The device is not documented anywhere in the available
+source; that phrase was inferred from the `IMG`-prefixed filename convention, which is
+suggestive but not evidence. Corrected in both versions to the documented locations and
+dates, with the device, illumination and annotation procedure explicitly marked undocumented.
+
+**One caveat on the sampling design, now stated in the limitations.** The entire
+photograph-level cluster bootstrap rests on reading `_n` as "crop *n* of one photograph". The
+reading is well supported — 4,525 of 4,526 filenames fit, the timestamps cluster, and 1,616
+crops map to 391 photographs at 4.13 crops each — but it is an inference from filename
+structure, not a documented property. If it were wrong, the clustering would be
+mis-specified. It would be mis-specified **conservatively**: treating crops as independent
+would only inflate the apparent sample size, so the cautious direction is the one we took.
+
+**One characterisation that stands.** The detached-leaf protocol finding (a single leaf on a
+plain paper or cloth backdrop, twelve randomly drawn photographs inspected) is our own direct
+observation of the images and is unaffected by the source paper being closed. It is what
+makes Tomato-Village a different *kind* of shift from PlantDoc, and the manuscript keeps it.

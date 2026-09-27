@@ -75,7 +75,8 @@ defect and, if anything, evidence of genuine imperfect dedup rather than fabrica
 | **Maize label-free pruning** (IEEE TAFE 2026) invites title confusion | pre-emptive | Cited and distinguished: it is network *pruning*, not accuracy estimation. |
 
 Also updated: every "IEEE Xplore was not searched" statement. IEEE **has** now been
-searched, at metadata scope; Scopus, Web of Science and the ACM Digital Library have not.
+searched, at metadata scope. Scopus has since been searched too (2026-09-18, counts for 14
+queries; see `litsearch_scopus.md`). Web of Science and the ACM Digital Library have not.
 
 New bibliography entries, all with Crossref-verified DOIs: `yu2025odpbench`, `peng2023came`,
 `hu2023aries`, `lopezgordo2025bci`, `welinder2013lazy`, `katariya2012active`,
@@ -113,6 +114,8 @@ see analysis sections. Full-text reading of the Class-A papers remains outstandi
 1. **Full-text reading of the 11 Class-A papers**, specifically to check whether any
    performs an anchor-versus-target decomposition. This is the one check that could still
    affect the lead contribution.
-2. **Scopus, Web of Science, ACM Digital Library** — not searched, access unavailable.
+2. **Web of Science and the ACM Digital Library** — not searched, access unavailable; the
+   WoS investigation concluded negatively for documented reasons. **Scopus has since been
+   searched** — see `litsearch_scopus.md`.
 3. The IEEE search is metadata-scope. Every zero means "no paper with this phrase in title,
    abstract or index terms", never "no such paper exists".

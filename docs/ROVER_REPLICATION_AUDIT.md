@@ -72,7 +72,8 @@ not "novel concept" — the concept is established elsewhere.
 
 ## 4. Limitation
 
-Scopus, Web of Science, IEEE Xplore and ACM Digital Library were **not searched** — no
+Web of Science and the ACM Digital Library were **not searched** (IEEE Xplore and Scopus have
+since been searched, 2026-09-11 and 2026-09-18) — no
 institutional access. IEEE in particular is where agricultural-robotics and safety
 engineering publish heavily, so this audit's coverage of exactly the relevant venues is its
 weakest point. Recorded, not glossed.

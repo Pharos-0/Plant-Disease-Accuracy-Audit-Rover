@@ -65,6 +65,7 @@ All nine satisfy C1–C5.
 | **AETTA** | 2024 | Needs dropout inference at test time; satisfies C1 for models with dropout. | Borderline-applicable. Not known at design time. |
 | **Aries** | 2023 | Unassessed — from the software-testing literature. | Not known at design time. |
 | **PPI family** | 2023– | **Fails C4 by construction** — PPI *requires* a small gold-standard labelled sample. | Not a competitor to the label-free estimators; it is the framework RQ5 sits inside. Cited, not benchmarked. |
+| **GBCE** (Matsuno) | 2025 | **Yes — C1.** Trains a dedicated *check model* under a new guided binary cross-entropy loss, for production data whose labels arrive with delay. | **Principled exclusion**, added 2026-09-28 after it surfaced in the Scopus core set. Two grounds: it intervenes at training time, and its setting is delayed labels rather than absent labels. Bibliographic record Crossref-verified; **full text closed access and NOT read**, so the classification rests on the abstract. See `docs/fulltext_checks.md`. |
 
 ## 5. The honest summary
 
