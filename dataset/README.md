@@ -4,8 +4,14 @@
 permitted repositories. Images have not been represented as rover-captured unless they
 actually were.**
 
-Status: **PILOT ONLY.** 120 images downloaded from 2 licence-verified sources. No bulk
-collection has been performed. See `documentation/PILOT_REPORT.md` before scaling.
+Status: **BUILT.** 2,469 images retained from 3 sources, 2,350 assigned to verified
+leakage-free splits, 10/10 quality gates passing. 1,628 are CC BY 4.0 and redistributable.
+The **rover-view core** — WIDE viewpoint and top relevance — is **180 images**, 139 of them
+genuinely rover-captured.
+
+Read `documentation/PILOT_REPORT.md` before using it: §11 records that the rover-captured
+source contains only **two capture sessions on one day in one greenhouse**, which is the
+binding limitation and is not fixable by adding frames.
 
 ## What this is
 
@@ -56,6 +62,10 @@ python dataset/scripts/download_pilot.py --dry-run
 python dataset/scripts/download_pilot.py --per-source 60
 python dataset/scripts/analyse_pilot.py
 python dataset/scripts/overlap_test.py         # known-answer dedup validation
+python dataset/scripts/build_dataset.py        # full ingest, score, dedup
+python dataset/scripts/create_splits.py        # grouped splits + leakage verification
+python dataset/scripts/dataset_stats.py        # statistics, plots, sample grids
+python dataset/scripts/validate_dataset.py     # the ten quality gates
 ```
 
 ## Licences

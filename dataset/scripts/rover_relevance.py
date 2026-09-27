@@ -57,8 +57,22 @@ FEATURES (all in [0, 1] unless noted)
   largest_green_blob       Largest vegetation component / frame area.
                            Near 1 => one leaf fills the frame.
   green_component_count    Recorded only. Not used in scoring.
+  half_detail_scale        Morphological granulometry: the smallest opening
+                           radius capturing half the image's residual detail,
+                           normalised. SMALL => fine repeated texture => a wide
+                           or distant view. LARGE => few coarse structures => a
+                           close-up. Consulted only where a scene is present.
   sharpness                log-scaled variance of the Laplacian.
   brightness, contrast     Mean and spread of intensity, normalised.
+
+WHY DISTANCE IS MEASURED SEPARATELY FROM SCENE
+----------------------------------------------
+`border_scene_frac` answers "is the subject embedded in surroundings?", which a
+macro shot inside a canopy satisfies as fully as a rover driving an inter-row.
+The pilot made this concrete: handheld close-ups outscored genuinely
+rover-captured wide views. Embedded-in-a-scene is necessary for rover-relevance
+but not sufficient, so scene and distance are two axes, and the top score
+requires both.
 """
 from __future__ import annotations
 
@@ -86,9 +100,14 @@ ACHROMATIC_SAT = 45
 #: A vegetation component must cover this fraction of the frame to be counted.
 MIN_BLOB_FRAC = 0.005
 
-#: Work at this long side, so a 4000px studio photograph and its 600px copy
-#: measure the same.
+#: Canonical working long side. Images are resized to this in BOTH directions,
+#: never only downwards: granulometry radii are in pixels, so a fixed frame size
+#: is what makes a radius mean the same fraction of the scene in every image.
 WORK_LONG_SIDE = 512
+
+#: Structuring-element radii probed by the granulometry, in pixels of the
+#: canonical frame.
+GRANULOMETRY_RADII = (1, 2, 3, 5, 8, 12, 18, 26, 36, 48)
 
 
 @dataclass(frozen=True)
@@ -102,6 +121,7 @@ class Features:
     soil_fraction: float
     largest_green_blob: float
     green_component_count: int
+    half_detail_scale: float
     sharpness: float
     brightness: float
     contrast: float
@@ -113,13 +133,39 @@ class Features:
 
 
 def _standardise(bgr: np.ndarray) -> np.ndarray:
+    """Resize to the canonical long side, up or down.
+
+    Downscaling only would leave the granulometry resolution-dependent: a
+    48-pixel structuring element covers most of a 256px image and a corner of a
+    4000px one. Resizing in both directions makes a radius mean the same
+    fraction of the frame everywhere.
+    """
     h, w = bgr.shape[:2]
-    long_side = max(h, w)
-    if long_side > WORK_LONG_SIDE:
-        s = WORK_LONG_SIDE / long_side
-        bgr = cv2.resize(bgr, (max(1, int(w * s)), max(1, int(h * s))),
-                         interpolation=cv2.INTER_AREA)
-    return bgr
+    s = WORK_LONG_SIDE / max(h, w)
+    if s == 1.0:
+        return bgr
+    interp = cv2.INTER_AREA if s < 1.0 else cv2.INTER_CUBIC
+    return cv2.resize(bgr, (max(1, int(w * s)), max(1, int(h * s))),
+                      interpolation=interp)
+
+
+def _half_detail_scale(gray: np.ndarray) -> float:
+    """Characteristic structure size, as a fraction of the largest radius probed.
+
+    r(k) = mean |g - opening(g, k)| is the detail removed by an opening of
+    radius k, and rises monotonically with k. The smallest k reaching half of
+    r(k_max) is the scale at which most of the image's structure lives.
+    """
+    g = gray.astype(np.float32)
+    residual = []
+    for k in GRANULOMETRY_RADII:
+        se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * k + 1, 2 * k + 1))
+        residual.append(float(np.abs(g - cv2.morphologyEx(g, cv2.MORPH_OPEN, se)).mean()))
+    residual = np.asarray(residual)
+    if residual[-1] <= 1e-6:                 # a flat image has no characteristic scale
+        return 1.0
+    idx = int(np.argmax(residual / residual[-1] >= 0.5))
+    return GRANULOMETRY_RADII[idx] / GRANULOMETRY_RADII[-1]
 
 
 def _border_mask(shape: tuple[int, int]) -> np.ndarray:
@@ -197,6 +243,7 @@ def extract(bgr: np.ndarray) -> Features:
         soil_fraction=round(float(soil.mean()), 4),
         largest_green_blob=round(float(kept.max() / frame_px) if kept.size else 0.0, 4),
         green_component_count=int(min(kept.size, 50)),
+        half_detail_scale=round(_half_detail_scale(gray), 4),
         sharpness=round(float(np.clip(np.log10(lap + 1.0) / 4.0, 0.0, 1.0)), 4),
         brightness=round(float(gray.mean() / 255.0), 4),
         contrast=round(float(gray.std() / 128.0), 4),
@@ -227,6 +274,29 @@ DOMINANT_BLOB = 0.55
 SOIL_PRESENT = 0.030
 CLUTTER_EDGE_DENSITY = 0.055
 
+#: Camera-distance bands, read off the measured separation between a
+#: rover-captured source (0.125) and a handheld in-canopy source (0.482).
+WIDE_MAX = 0.20        # fine repeated texture: a travelling-rover-like view
+MEDIUM_MAX = 0.35      # still several plants or many leaves in frame
+CLOSE_MAX = 0.60       # one plant or one leaf; beyond this, macro
+
+
+def camera_distance_estimate(f: "Features") -> str:
+    """Coarse viewpoint band from the structure scale.
+
+    This is a RELATIVE band inferred from image structure, not a metric
+    distance. No camera height, focal length or field of view is known for the
+    target platform, and none is invented here.
+    """
+    h = f.half_detail_scale
+    if h < WIDE_MAX:
+        return "WIDE"
+    if h < MEDIUM_MAX:
+        return "MEDIUM"
+    if h < CLOSE_MAX:
+        return "CLOSE"
+    return "MACRO"
+
 
 def classify(f: Features) -> tuple[int, str]:
     """Return (rover_relevance 0-3, one-sentence reason).
@@ -255,21 +325,31 @@ def classify(f: Features) -> tuple[int, str]:
                        f"border is mostly background ({scene:.0%} scene): close-up")
         return 1, f"only {scene:.0%} of the border is scene: marginal context"
 
+    band = camera_distance_estimate(f)
+
     if scene < SCENE_STRONG:
         extra = sum((soil, cluttered))
         if extra >= 1:
             got = ", ".join(n for n, c in (("soil", soil), ("clutter", cluttered)) if c)
             return 2, (f"scene continues past the subject ({scene:.0%} of the border), "
-                       f"with {got}")
-        return 2, f"scene continues past the subject ({scene:.0%} of the border)"
+                       f"with {got}; viewpoint {band}")
+        return 2, (f"scene continues past the subject ({scene:.0%} of the border); "
+                   f"viewpoint {band}")
+
+    # A strong scene is necessary but not sufficient. A macro shot deep inside a
+    # canopy has vegetation at every border and is still not what a rover sees.
+    if band in ("CLOSE", "MACRO"):
+        return 2, (f"surrounded by vegetation ({scene:.0%} of the border) but shot "
+                   f"{band.lower()} up: structure scale {f.half_detail_scale:.2f} is "
+                   "coarser than a travelling camera would give")
 
     if soil or cluttered:
         got = ", ".join(n for n, c in (("soil/straw visible", soil),
                                        ("foliage clutter", cluttered)) if c)
-        return 3, (f"plant embedded in its surroundings: {scene:.0%} of the frame "
-                   f"border is vegetation or earth, with {got}")
-    return 3, (f"plant embedded in its surroundings: {scene:.0%} of the frame border "
-               "is vegetation or earth")
+        return 3, (f"{band} view of a plant in its surroundings: {scene:.0%} of the "
+                   f"frame border is vegetation or earth, with {got}")
+    return 3, (f"{band} view of a plant in its surroundings: {scene:.0%} of the frame "
+               "border is vegetation or earth")
 
 
 def image_type_hint(f: Features, score: int) -> str:

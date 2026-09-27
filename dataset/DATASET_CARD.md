@@ -21,15 +21,29 @@ between specimen imagery and deployment imagery.
 **Not intended for:** any claim that a model validated here is safe to act on in a field. No
 autonomous action should be gated on this dataset.
 
-## Composition (pilot)
+## Composition (built 2026-09-28)
 
 | | |
-|---|---|
-| Images downloaded | 120 (60 per source) |
-| Sources downloaded | 2, both CC BY 4.0 |
-| Full archive size of those sources | 1,923 image members → **1,759 distinct** after dedup |
+|---|---:|
+| Images ingested | 2,669 |
+| Duplicates dropped (perceptual hash) | 200 |
+| **Retained** | **2,469** |
+| Guard-band frames (retained, excluded from splits) | 119 |
+| In train/val/test | 2,350 |
+| Redistributable (CC BY 4.0) | 1,628 |
+| Local-only (licence unverified) | 722 |
 | Synthetic images | **0** — none generated, none accepted |
-| Images represented as rover-captured | only SRC014, which genuinely is |
+| **Rover-view core** (WIDE viewpoint, relevance 3) | **180** |
+
+| source | images | share | WIDE | mean relevance |
+|---|---:|---:|---:|---:|
+| SRC015 handheld, greenhouse | 1,301 | 55.4% | 28 | 2.22 |
+| SRC002 PlantDoc (local only) | 722 | 30.7% | 25 | 1.89 |
+| **SRC014 rover-captured** | **327** | **13.9%** | **307** | **2.36** |
+
+The largest source is 55.4% of the dataset; the genuinely rover-captured source is 13.9%
+while supplying 307 of the 360 WIDE images. Size and value point in opposite directions, and
+no source is allowed to stand for the dataset on the strength of its size.
 
 ## Sources
 
@@ -45,11 +59,17 @@ No Indian imagery, which is where the rover will operate.
 
 **Environmental.** Greenhouse only. No rain, no strong sun, no dust, no dusk.
 
-**Viewpoint — the most important limitation.** The rubric measures whether a scene continues
-past the subject, which is necessary for rover-relevance but **not sufficient**. It cannot
-currently distinguish a camera travelling past a plant from a camera held 10 cm from a fruit.
-SRC015 scores higher than SRC014 despite SRC014 being the genuinely rover-captured source.
-Reported in full in `documentation/PILOT_REPORT.md` §5.2 rather than tuned away.
+**Viewpoint.** Addressed since the pilot. `half_detail_scale`, a granulometry-based structure
+scale, now separates a travelling camera from a close-up: SRC014 measures 0.125, SRC015 0.482.
+Folding it in moved SRC015's mean score from 2.75 to 2.02 while leaving SRC014 at 2.57, which
+is the error it was built to correct. It is consulted only where a scene is already present,
+because for a specimen on a backdrop the distance question is meaningless.
+
+**Capture sessions, not image count, is the binding constraint.** See the split section.
+
+**A person appears in at least one image** (TOM_000321, the robot's human operator). These are
+the source authors' own CC BY 4.0 release; no face-obscuring has been applied, and anyone
+redistributing should consider whether that is appropriate for their use.
 
 **Class balance.** Neither downloaded source is a leaf-disease dataset; both are fruit /
 ripeness oriented. The disease-relevant sources (SRC004, SRC005) are blocked by a bot wall.
@@ -84,9 +104,18 @@ recorded per image in `processing_applied`, with the link to the original preser
 
 ## Train/test methodology
 
-Not yet split. When split, grouping must be by capture session and source, not by individual
-image — SRC014 is video-derived, so consecutive frames are near-identical and random
-splitting would leak directly.
+Split by **789 leakage groups**, derived from what each source's filenames encode rather than
+assumed: contiguous 40-frame temporal blocks with a 5-frame guard band for the video-derived
+SRC014; consecutive-index chunks for SRC015, whose index order is a stated heuristic because
+no session metadata exists; one group per image for PlantDoc's unrelated web stills.
+
+**Verified, not assumed.** Every train×test, val×test and train×val pair was compared by
+perceptual hash: **0 violations**.
+
+**The limit this exposes.** SRC014 contains only **two capture sessions, both on 2020-08-06,
+in one greenhouse**. Its blocks are segments of two traverses, not independent samples. The
+split prevents frame-level leakage; it cannot manufacture independence. Any result on the
+rover-view core rests on effective n = 2 sessions.
 
 ## Ethical and legal
 

@@ -25,8 +25,11 @@ def main() -> int:
     def gate(n: int, name: str, status: str, detail: str) -> None:
         results.append((f"GATE {n:2d} {name}", status, detail))
 
-    pilot = pd.read_csv(META / "pilot_downloads.csv") if (
-        META / "pilot_downloads.csv").exists() else pd.DataFrame()
+    full = (pd.read_csv(META / "metadata_split.csv")
+            if (META / "metadata_split.csv").exists() else pd.DataFrame())
+    pilot = (full if not full.empty else
+             (pd.read_csv(META / "pilot_downloads.csv")
+              if (META / "pilot_downloads.csv").exists() else pd.DataFrame()))
     lic = pd.read_csv(META / "license_registry.csv")
     feats = pd.read_csv(META / "pilot_features.csv") if (
         META / "pilot_features.csv").exists() else pd.DataFrame()
@@ -38,8 +41,11 @@ def main() -> int:
          "no generation step exists anywhere in scripts/")
 
     # 2 - provenance
-    need = {"source_id", "original_filename", "source_url", "original_image_url",
-            "download_date", "sha256"}
+    need = ({"source_id", "original_filename", "source_url", "sha256", "image_id",
+             "leakage_group", "rover_relevance", "camera_distance_estimate"}
+            if not full.empty else
+            {"source_id", "original_filename", "source_url", "original_image_url",
+             "download_date", "sha256"})
     if pilot.empty:
         gate(2, "every image has provenance", NA, "no downloads yet")
     else:
@@ -53,10 +59,13 @@ def main() -> int:
     if pilot.empty:
         gate(3, "every image has licence status", NA, "no downloads yet")
     else:
-        bad = int(pilot.license.isna().sum())
+        m = pilot.merge(lic[["source_id", "license_name", "license_status"]],
+                        on="source_id", how="left")
+        bad = int(m.license_status.isna().sum())
+        ver = int((m.license_status == "VERIFIED").sum())
         gate(3, "every image has licence status", PASS if bad == 0 else FAIL,
-             f"{pilot.license.nunique()} distinct licence(s): "
-             f"{sorted(pilot.license.dropna().unique())}; {bad} missing")
+             f"{bad} images with no registry entry; {ver} of {len(m)} carry a "
+             f"VERIFIED licence and are redistributable, the rest are local-only")
 
     # 4 - no exact duplicates
     if pilot.empty:
@@ -68,10 +77,25 @@ def main() -> int:
              "store is keyed by sha256, so exact duplicates cannot accumulate")
 
     # 5 - no train/test leakage
-    splits = list((ROOT / "dataset" / "splits").glob("*.csv"))
-    gate(5, "no train/test leakage", NA,
-         "no splits created yet. WHEN CREATED: SRC014 is video-derived, so grouping "
-         "must be by capture session, not by image")
+    viol = META / "leakage_violations.csv"
+    splits = sorted((ROOT / "dataset" / "splits").glob("*.csv"))
+    if not splits:
+        gate(5, "no train/test leakage", NA, "no splits created yet")
+    elif viol.exists() and len(pd.read_csv(viol)):
+        gate(5, "no train/test leakage", FAIL,
+             f"{len(pd.read_csv(viol))} cross-split near-duplicate pairs")
+    else:
+        n_groups = int(full.leakage_group.nunique()) if not full.empty else 0
+        # metadata_split.csv is the POST-split pool, from which guard frames were
+        # already removed, so counting them there always yields zero. Recompute
+        # from the full retained table instead.
+        guard = int(len(pd.read_csv(META / "metadata.csv")) - len(full)) if (
+            META / "metadata.csv").exists() else 0
+        gate(5, "no train/test leakage", PASS,
+             f"split by {n_groups} leakage groups, {guard} guard-band frames "
+             "excluded; verified by pHash comparison across every split pair, "
+             "0 violations. NOTE: SRC014 has only 2 capture sessions, so its "
+             "blocks are segments of two traverses, not independent samples")
 
     # 6 - no synthetic images
     gate(6, "no synthetic images", PASS,
