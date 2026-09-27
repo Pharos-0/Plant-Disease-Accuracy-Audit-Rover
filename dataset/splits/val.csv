@@ -1,318 +1,569 @@
 image_id,source_id,stored_path,leakage_group,rover_relevance,camera_distance_estimate
-TOM_000392,SRC014,C:\ds\rover_tomato\raw\SRC014\674b37c8089e1550.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block004,3,WIDE
-TOM_000393,SRC014,C:\ds\rover_tomato\raw\SRC014\a8c9ab84b477abd0.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block004,3,WIDE
-TOM_000394,SRC014,C:\ds\rover_tomato\raw\SRC014\6981b4ef062c66c2.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block004,3,WIDE
-TOM_000395,SRC014,C:\ds\rover_tomato\raw\SRC014\b65c50440d297c42.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block004,1,CLOSE
-TOM_000396,SRC014,C:\ds\rover_tomato\raw\SRC014\5a502148db856bd4.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block004,2,WIDE
-TOM_000444,SRC014,C:\ds\rover_tomato\raw\SRC014\1d16516f01f6c00e.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block006,2,WIDE
-TOM_000445,SRC014,C:\ds\rover_tomato\raw\SRC014\7005e3a9d888cc3f.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block006,2,WIDE
-TOM_000446,SRC014,C:\ds\rover_tomato\raw\SRC014\7b31ddfca4398b9a.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block006,1,WIDE
-TOM_000447,SRC014,C:\ds\rover_tomato\raw\SRC014\8ab0463f01a38e73.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block006,2,WIDE
-TOM_000448,SRC014,C:\ds\rover_tomato\raw\SRC014\a1f36fd7f991da66.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block006,2,WIDE
-TOM_000449,SRC014,C:\ds\rover_tomato\raw\SRC014\851499f4bb7bc365.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block006,2,MEDIUM
-TOM_000452,SRC015,C:\ds\rover_tomato\raw\SRC015\e5443267cca966a3.jpg,SRC015:chunk0004,2,CLOSE
-TOM_000463,SRC015,C:\ds\rover_tomato\raw\SRC015\fef4a4db3e0ff554.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000474,SRC015,C:\ds\rover_tomato\raw\SRC015\837718f125ad9a7d.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000485,SRC015,C:\ds\rover_tomato\raw\SRC015\b472e3b36cf0cc6c.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000496,SRC015,C:\ds\rover_tomato\raw\SRC015\5d85c443229284e7.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000507,SRC015,C:\ds\rover_tomato\raw\SRC015\1beca878e774df51.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000518,SRC015,C:\ds\rover_tomato\raw\SRC015\94811ef5469ac3c3.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000529,SRC015,C:\ds\rover_tomato\raw\SRC015\0b91c1b7e456b08c.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000540,SRC015,C:\ds\rover_tomato\raw\SRC015\d74f01e44a1578fa.jpg,SRC015:chunk0004,2,CLOSE
-TOM_000551,SRC015,C:\ds\rover_tomato\raw\SRC015\3ff0ea6015735dda.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000563,SRC015,C:\ds\rover_tomato\raw\SRC015\6a2551a7ebd23138.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000574,SRC015,C:\ds\rover_tomato\raw\SRC015\ae89900750d8d8d9.jpg,SRC015:chunk0004,2,CLOSE
-TOM_000585,SRC015,C:\ds\rover_tomato\raw\SRC015\d20945481e257c4d.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000596,SRC015,C:\ds\rover_tomato\raw\SRC015\4be8ab5a4d998f06.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000607,SRC015,C:\ds\rover_tomato\raw\SRC015\53bf37ea97950d94.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000618,SRC015,C:\ds\rover_tomato\raw\SRC015\9fd385c997ed9da8.jpg,SRC015:chunk0004,2,CLOSE
-TOM_000619,SRC015,C:\ds\rover_tomato\raw\SRC015\aa44f347db373136.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000620,SRC015,C:\ds\rover_tomato\raw\SRC015\7cd9059391325d05.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000621,SRC015,C:\ds\rover_tomato\raw\SRC015\71909ccfc62a7b99.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000622,SRC015,C:\ds\rover_tomato\raw\SRC015\44aaed49b1ae6eb8.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000623,SRC015,C:\ds\rover_tomato\raw\SRC015\b88ad82d3c0d3542.jpg,SRC015:chunk0046,2,MACRO
-TOM_000624,SRC015,C:\ds\rover_tomato\raw\SRC015\eaad99eef2b3396a.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000625,SRC015,C:\ds\rover_tomato\raw\SRC015\054add29f36f11b4.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000626,SRC015,C:\ds\rover_tomato\raw\SRC015\ff638451d0b440a2.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000627,SRC015,C:\ds\rover_tomato\raw\SRC015\44bbfb915eb22bd5.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000628,SRC015,C:\ds\rover_tomato\raw\SRC015\e87c1674b71c1e0e.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000629,SRC015,C:\ds\rover_tomato\raw\SRC015\203c542f955038d1.jpg,SRC015:chunk0004,2,CLOSE
-TOM_000630,SRC015,C:\ds\rover_tomato\raw\SRC015\befe46f381096bdb.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000631,SRC015,C:\ds\rover_tomato\raw\SRC015\ad24d80a23d238ae.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000632,SRC015,C:\ds\rover_tomato\raw\SRC015\0ee617138f2c361d.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000633,SRC015,C:\ds\rover_tomato\raw\SRC015\d3943d4b29a2ef8f.jpg,SRC015:chunk0046,2,MACRO
-TOM_000634,SRC015,C:\ds\rover_tomato\raw\SRC015\5742eeb51a1b16fc.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000635,SRC015,C:\ds\rover_tomato\raw\SRC015\478ac30a5e32dcf0.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000636,SRC015,C:\ds\rover_tomato\raw\SRC015\5f2431a5485c857d.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000637,SRC015,C:\ds\rover_tomato\raw\SRC015\ab8a23453d7f0c3f.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000638,SRC015,C:\ds\rover_tomato\raw\SRC015\bbf329ab2645437b.jpg,SRC015:chunk0046,1,MACRO
-TOM_000639,SRC015,C:\ds\rover_tomato\raw\SRC015\0d32e606c46e3fac.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000640,SRC015,C:\ds\rover_tomato\raw\SRC015\37261f096fc28e47.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000641,SRC015,C:\ds\rover_tomato\raw\SRC015\7c437d367e099994.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000642,SRC015,C:\ds\rover_tomato\raw\SRC015\1f20747c02983a9d.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000643,SRC015,C:\ds\rover_tomato\raw\SRC015\b5fb1ec74d35d216.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000644,SRC015,C:\ds\rover_tomato\raw\SRC015\4af932d1bce2d7af.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000645,SRC015,C:\ds\rover_tomato\raw\SRC015\fd990b0c631f1fbe.jpg,SRC015:chunk0046,2,CLOSE
-TOM_000651,SRC015,C:\ds\rover_tomato\raw\SRC015\8214283cb7098bb0.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000662,SRC015,C:\ds\rover_tomato\raw\SRC015\ea34e476d98dd6e3.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000674,SRC015,C:\ds\rover_tomato\raw\SRC015\a3196d6325fdb783.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000685,SRC015,C:\ds\rover_tomato\raw\SRC015\fde0abd3b124a2ab.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000696,SRC015,C:\ds\rover_tomato\raw\SRC015\0bc3e3f4a8af8595.jpg,SRC015:chunk0004,2,CLOSE
-TOM_000707,SRC015,C:\ds\rover_tomato\raw\SRC015\b6b610143181a5bc.jpg,SRC015:chunk0004,3,MEDIUM
-TOM_000718,SRC015,C:\ds\rover_tomato\raw\SRC015\4761952573a578ca.jpg,SRC015:chunk0004,2,CLOSE
-TOM_000757,SRC015,C:\ds\rover_tomato\raw\SRC015\b7065cbf05d8ff4e.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000758,SRC015,C:\ds\rover_tomato\raw\SRC015\415cfb1341838a9d.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000759,SRC015,C:\ds\rover_tomato\raw\SRC015\93b7d2c3ea11f2c4.jpg,SRC015:chunk0051,0,MACRO
-TOM_000760,SRC015,C:\ds\rover_tomato\raw\SRC015\01b89aeec3e8a076.jpg,SRC015:chunk0051,3,MEDIUM
-TOM_000761,SRC015,C:\ds\rover_tomato\raw\SRC015\3433de6def738327.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000763,SRC015,C:\ds\rover_tomato\raw\SRC015\f24f6f1496377cc0.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000764,SRC015,C:\ds\rover_tomato\raw\SRC015\10006dfd585bbaa2.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000765,SRC015,C:\ds\rover_tomato\raw\SRC015\08eb2b746915f0d3.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000766,SRC015,C:\ds\rover_tomato\raw\SRC015\20d12d7bc942df22.jpg,SRC015:chunk0051,0,MACRO
-TOM_000767,SRC015,C:\ds\rover_tomato\raw\SRC015\aee4c7a10e387a30.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000768,SRC015,C:\ds\rover_tomato\raw\SRC015\fba786cd4d21feb4.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000769,SRC015,C:\ds\rover_tomato\raw\SRC015\b26a0d752411caba.jpg,SRC015:chunk0051,3,MEDIUM
-TOM_000770,SRC015,C:\ds\rover_tomato\raw\SRC015\f52a6d86ebee79b4.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000771,SRC015,C:\ds\rover_tomato\raw\SRC015\eba18764737bc7e6.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000772,SRC015,C:\ds\rover_tomato\raw\SRC015\a3beee82a7164cf3.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000774,SRC015,C:\ds\rover_tomato\raw\SRC015\c409dbc349bd6985.jpg,SRC015:chunk0051,3,MEDIUM
-TOM_000775,SRC015,C:\ds\rover_tomato\raw\SRC015\8433a378bc5ac8fd.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000778,SRC015,C:\ds\rover_tomato\raw\SRC015\22f8ba610cf847d7.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000779,SRC015,C:\ds\rover_tomato\raw\SRC015\8d95066d90a9f675.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000780,SRC015,C:\ds\rover_tomato\raw\SRC015\98a19214f125aba5.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000781,SRC015,C:\ds\rover_tomato\raw\SRC015\45f9fdcf5663cef4.jpg,SRC015:chunk0051,0,CLOSE
-TOM_000782,SRC015,C:\ds\rover_tomato\raw\SRC015\845409de169969fa.jpg,SRC015:chunk0051,2,CLOSE
-TOM_000783,SRC015,C:\ds\rover_tomato\raw\SRC015\70584e7d8dacb692.jpg,SRC015:chunk0051,2,CLOSE
-TOM_001204,SRC015,C:\ds\rover_tomato\raw\SRC015\d837ea8daecf8ef1.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001205,SRC015,C:\ds\rover_tomato\raw\SRC015\034e77057ab6ab7d.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001206,SRC015,C:\ds\rover_tomato\raw\SRC015\332dfd7a5e0b3afb.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001207,SRC015,C:\ds\rover_tomato\raw\SRC015\118e4147bec12901.jpg,SRC015:chunk0014,2,CLOSE
-TOM_001208,SRC015,C:\ds\rover_tomato\raw\SRC015\7789df890a9d0c87.jpg,SRC015:chunk0014,2,CLOSE
-TOM_001209,SRC015,C:\ds\rover_tomato\raw\SRC015\a5b9a8241572ee43.jpg,SRC015:chunk0014,3,WIDE
-TOM_001210,SRC015,C:\ds\rover_tomato\raw\SRC015\173ded5c52f4f61f.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001211,SRC015,C:\ds\rover_tomato\raw\SRC015\cd0c0d2135feb693.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001212,SRC015,C:\ds\rover_tomato\raw\SRC015\cb24bcd024ee3cbc.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001213,SRC015,C:\ds\rover_tomato\raw\SRC015\3f7ab2760188649d.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001215,SRC015,C:\ds\rover_tomato\raw\SRC015\3749764d90edc69a.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001216,SRC015,C:\ds\rover_tomato\raw\SRC015\31e3db6016057fa2.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001217,SRC015,C:\ds\rover_tomato\raw\SRC015\ee799b13370497b8.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001218,SRC015,C:\ds\rover_tomato\raw\SRC015\52fbd43266b560f2.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001219,SRC015,C:\ds\rover_tomato\raw\SRC015\70bfa71476b05766.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001220,SRC015,C:\ds\rover_tomato\raw\SRC015\7a6097f2f6370627.jpg,SRC015:chunk0014,3,WIDE
-TOM_001221,SRC015,C:\ds\rover_tomato\raw\SRC015\ee36eff566e19bdc.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001222,SRC015,C:\ds\rover_tomato\raw\SRC015\f437ddef0be49e2b.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001223,SRC015,C:\ds\rover_tomato\raw\SRC015\7398a589442e1a46.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001224,SRC015,C:\ds\rover_tomato\raw\SRC015\3ea8283146e4c152.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001226,SRC015,C:\ds\rover_tomato\raw\SRC015\92b0951ed17a937b.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001227,SRC015,C:\ds\rover_tomato\raw\SRC015\47a582acdaab4f13.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001228,SRC015,C:\ds\rover_tomato\raw\SRC015\e8c7fdbaaf98729e.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001229,SRC015,C:\ds\rover_tomato\raw\SRC015\d2d6421a62ffc3cc.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001230,SRC015,C:\ds\rover_tomato\raw\SRC015\57b817fce91b052e.jpg,SRC015:chunk0014,3,MEDIUM
-TOM_001453,SRC015,C:\ds\rover_tomato\raw\SRC015\7263e95869ac9264.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001454,SRC015,C:\ds\rover_tomato\raw\SRC015\c8e43c376e4003d1.jpg,SRC015:chunk0023,2,MACRO
-TOM_001455,SRC015,C:\ds\rover_tomato\raw\SRC015\0a6a9ac7e567cc72.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001456,SRC015,C:\ds\rover_tomato\raw\SRC015\47cbd3ba61d16db5.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001457,SRC015,C:\ds\rover_tomato\raw\SRC015\3ed6bd711dd04f12.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001459,SRC015,C:\ds\rover_tomato\raw\SRC015\ae94c75d2ff83eff.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001460,SRC015,C:\ds\rover_tomato\raw\SRC015\39bf4e26c9c79d0f.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001461,SRC015,C:\ds\rover_tomato\raw\SRC015\c4305032dd8e9a97.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001462,SRC015,C:\ds\rover_tomato\raw\SRC015\aed6b2f9b62e9bab.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001463,SRC015,C:\ds\rover_tomato\raw\SRC015\d34a5c821c60c750.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001464,SRC015,C:\ds\rover_tomato\raw\SRC015\339f10def1bfa5d6.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001465,SRC015,C:\ds\rover_tomato\raw\SRC015\69de33c043a09433.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001466,SRC015,C:\ds\rover_tomato\raw\SRC015\6adf06ea8f701abd.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001467,SRC015,C:\ds\rover_tomato\raw\SRC015\df584dbb998baa4b.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001468,SRC015,C:\ds\rover_tomato\raw\SRC015\158926f4f680de9c.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001470,SRC015,C:\ds\rover_tomato\raw\SRC015\b42ca2aca3897b9e.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001471,SRC015,C:\ds\rover_tomato\raw\SRC015\89c9a7a62e5e9c0f.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001472,SRC015,C:\ds\rover_tomato\raw\SRC015\6cbe63a244e8759c.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001473,SRC015,C:\ds\rover_tomato\raw\SRC015\550f05e441e74de5.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001474,SRC015,C:\ds\rover_tomato\raw\SRC015\87d0b5edc041a10e.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001475,SRC015,C:\ds\rover_tomato\raw\SRC015\aa0e6f7e3a37459e.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001476,SRC015,C:\ds\rover_tomato\raw\SRC015\27ebd398e90b2c28.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001477,SRC015,C:\ds\rover_tomato\raw\SRC015\43e740958b60cdad.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001478,SRC015,C:\ds\rover_tomato\raw\SRC015\09d7007ef4c4cdb5.jpg,SRC015:chunk0023,2,MACRO
-TOM_001479,SRC015,C:\ds\rover_tomato\raw\SRC015\89d0c8a02c8ae0a2.jpg,SRC015:chunk0023,2,CLOSE
-TOM_001537,SRC015,C:\ds\rover_tomato\raw\SRC015\c0824172f857be68.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001538,SRC015,C:\ds\rover_tomato\raw\SRC015\98941e35edc8cd42.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001539,SRC015,C:\ds\rover_tomato\raw\SRC015\1bfdc11722db4e0c.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001540,SRC015,C:\ds\rover_tomato\raw\SRC015\7f16a9fd26f31ad1.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001541,SRC015,C:\ds\rover_tomato\raw\SRC015\3051e6ce086a382f.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001542,SRC015,C:\ds\rover_tomato\raw\SRC015\fef3ffe459846d7d.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001543,SRC015,C:\ds\rover_tomato\raw\SRC015\0eb3fb6c7a839e56.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001544,SRC015,C:\ds\rover_tomato\raw\SRC015\e0863c13c126f2bc.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001545,SRC015,C:\ds\rover_tomato\raw\SRC015\b50c95637f3b8d06.jpg,SRC015:chunk0026,2,WIDE
-TOM_001546,SRC015,C:\ds\rover_tomato\raw\SRC015\d04cfca8eaae2c19.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001548,SRC015,C:\ds\rover_tomato\raw\SRC015\2875cf9acdf65a85.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001549,SRC015,C:\ds\rover_tomato\raw\SRC015\f844a2ae1c4ae311.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001550,SRC015,C:\ds\rover_tomato\raw\SRC015\e7e3f30bd1b829c9.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001551,SRC015,C:\ds\rover_tomato\raw\SRC015\91747a0e5ddd74a3.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001552,SRC015,C:\ds\rover_tomato\raw\SRC015\8e1996f592e1f694.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001553,SRC015,C:\ds\rover_tomato\raw\SRC015\1b37c69aa0d3e69d.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001554,SRC015,C:\ds\rover_tomato\raw\SRC015\f9b63b9ebddec7c4.jpg,SRC015:chunk0026,2,MACRO
-TOM_001555,SRC015,C:\ds\rover_tomato\raw\SRC015\8e733601d86a8038.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001556,SRC015,C:\ds\rover_tomato\raw\SRC015\facd3efc1fa999db.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001557,SRC015,C:\ds\rover_tomato\raw\SRC015\e6094b6b3785fa02.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001559,SRC015,C:\ds\rover_tomato\raw\SRC015\72dc68195322d268.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001560,SRC015,C:\ds\rover_tomato\raw\SRC015\83afd6a4a231de6d.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001561,SRC015,C:\ds\rover_tomato\raw\SRC015\12a7ed8c6d19c9f2.jpg,SRC015:chunk0026,2,MACRO
-TOM_001562,SRC015,C:\ds\rover_tomato\raw\SRC015\bc9b9b06524673ef.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001563,SRC015,C:\ds\rover_tomato\raw\SRC015\3419d7d1ded3795f.jpg,SRC015:chunk0026,2,CLOSE
-TOM_001704,SRC015,C:\ds\rover_tomato\raw\SRC015\9ae9a48c8aa2f32a.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001705,SRC015,C:\ds\rover_tomato\raw\SRC015\0e0fb4306f6fce1e.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001706,SRC015,C:\ds\rover_tomato\raw\SRC015\bdf86795aa2f6537.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001707,SRC015,C:\ds\rover_tomato\raw\SRC015\134814211fb8be62.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001708,SRC015,C:\ds\rover_tomato\raw\SRC015\715a5586e3aa2130.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001709,SRC015,C:\ds\rover_tomato\raw\SRC015\efe5d3a2f4be378b.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001710,SRC015,C:\ds\rover_tomato\raw\SRC015\f62ad4303aacbff5.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001711,SRC015,C:\ds\rover_tomato\raw\SRC015\aea832b64642c17c.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001712,SRC015,C:\ds\rover_tomato\raw\SRC015\3161f92150e37595.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001713,SRC015,C:\ds\rover_tomato\raw\SRC015\30344357e942221d.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001715,SRC015,C:\ds\rover_tomato\raw\SRC015\27f5dcdd6278e9a2.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001716,SRC015,C:\ds\rover_tomato\raw\SRC015\93166c9100548c94.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001717,SRC015,C:\ds\rover_tomato\raw\SRC015\34f46ab7da01ba2a.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001718,SRC015,C:\ds\rover_tomato\raw\SRC015\76fe35129e24d07b.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001719,SRC015,C:\ds\rover_tomato\raw\SRC015\5c365137a2099b01.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001720,SRC015,C:\ds\rover_tomato\raw\SRC015\dd1b60b216f9b73a.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001721,SRC015,C:\ds\rover_tomato\raw\SRC015\649d83b3050c772e.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001722,SRC015,C:\ds\rover_tomato\raw\SRC015\741ff94adf0797ca.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001723,SRC015,C:\ds\rover_tomato\raw\SRC015\71d16159b1c58d77.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001724,SRC015,C:\ds\rover_tomato\raw\SRC015\ced7666eb70e89c8.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001726,SRC015,C:\ds\rover_tomato\raw\SRC015\025a4bb853c18257.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001727,SRC015,C:\ds\rover_tomato\raw\SRC015\27785d4b5fccfc3c.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001728,SRC015,C:\ds\rover_tomato\raw\SRC015\9b91eec334f0b8c8.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001729,SRC015,C:\ds\rover_tomato\raw\SRC015\de50ed915c2099ba.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001730,SRC015,C:\ds\rover_tomato\raw\SRC015\a11b8f32f28b1a74.jpg,SRC015:chunk0032,2,CLOSE
-TOM_001897,SRC015,C:\ds\rover_tomato\raw\SRC015\85960e951128ec43.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001898,SRC015,C:\ds\rover_tomato\raw\SRC015\539a938a506a0f4f.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001899,SRC015,C:\ds\rover_tomato\raw\SRC015\e1ea4334064036ec.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001900,SRC015,C:\ds\rover_tomato\raw\SRC015\002a35e1845462f5.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001901,SRC015,C:\ds\rover_tomato\raw\SRC015\c0c642a65aa0166f.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001903,SRC015,C:\ds\rover_tomato\raw\SRC015\f49de882722bce42.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001904,SRC015,C:\ds\rover_tomato\raw\SRC015\28bbd8989f19eb84.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001905,SRC015,C:\ds\rover_tomato\raw\SRC015\a2776e0aec149ef4.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001906,SRC015,C:\ds\rover_tomato\raw\SRC015\98fe53a4d8a5c6c6.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001907,SRC015,C:\ds\rover_tomato\raw\SRC015\0e7987761f899cbe.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001908,SRC015,C:\ds\rover_tomato\raw\SRC015\62bce88576bb9828.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001909,SRC015,C:\ds\rover_tomato\raw\SRC015\56942556b2ce05de.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001910,SRC015,C:\ds\rover_tomato\raw\SRC015\29a84097b4e81414.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001911,SRC015,C:\ds\rover_tomato\raw\SRC015\584a92b31b2e34b4.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001912,SRC015,C:\ds\rover_tomato\raw\SRC015\e3b2ffc5beff787f.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001914,SRC015,C:\ds\rover_tomato\raw\SRC015\57302022f1519aeb.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001915,SRC015,C:\ds\rover_tomato\raw\SRC015\ec75dbc983546bd5.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001916,SRC015,C:\ds\rover_tomato\raw\SRC015\e032e4fb25bde26f.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001917,SRC015,C:\ds\rover_tomato\raw\SRC015\ac499ab21b7b51ec.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001918,SRC015,C:\ds\rover_tomato\raw\SRC015\b853373e5ccb56c8.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001919,SRC015,C:\ds\rover_tomato\raw\SRC015\de2cb8788791e8ff.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001920,SRC015,C:\ds\rover_tomato\raw\SRC015\43868d2875c79a82.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001921,SRC015,C:\ds\rover_tomato\raw\SRC015\a80be350ae7124e5.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001922,SRC015,C:\ds\rover_tomato\raw\SRC015\87f47a4cab4041b2.jpg,SRC015:chunk0039,2,MACRO
-TOM_001923,SRC015,C:\ds\rover_tomato\raw\SRC015\7adcb41744bc6743.jpg,SRC015:chunk0039,2,CLOSE
-TOM_001928,SRC002,C:\ds\plantdoc_files\test\Tomato Early blight leaf\bugs-and-blight-061.jpg,SRC002:bugs-and-blight-061.jpg,3,WIDE
-TOM_001929,SRC002,C:\ds\plantdoc_files\test\Tomato Early blight leaf\dscn3175.jpg,SRC002:dscn3175.jpg,2,CLOSE
-TOM_001936,SRC002,C:\ds\plantdoc_files\test\Tomato Septoria leaf spot\55830b60a7cf2.image.jpg,SRC002:55830b60a7cf2.image.jpg,2,CLOSE
-TOM_001950,SRC002,C:\ds\plantdoc_files\test\Tomato leaf bacterial spot\bact-spot-fig-1.jpg,SRC002:bact-spot-fig-1.jpg,2,CLOSE
-TOM_001958,SRC002,C:\ds\plantdoc_files\test\Tomato leaf late blight\IMG_5808.jpg,SRC002:IMG_5808.jpg,2,CLOSE
-TOM_001964,SRC002,C:\ds\plantdoc_files\test\Tomato leaf mosaic virus\D%29AlfMov.jpg,SRC002:D%29AlfMov.jpg,0,CLOSE
-TOM_001973,SRC002,C:\ds\plantdoc_files\test\Tomato leaf yellow virus\11-40580_5.jpg,SRC002:11-40580_5.jpg,3,MEDIUM
-TOM_001976,SRC002,C:\ds\plantdoc_files\test\Tomato leaf yellow virus\fwa2013313115151.jpg,SRC002:fwa2013313115151.jpg,3,MEDIUM
-TOM_001994,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\1058_0.jpeg_itok=OQkdtxgv.jpg,SRC002:1058_0.jpeg_itok=OQkdtxgv.jpg,2,CLOSE
-TOM_001996,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\12July_mwnews_3-C.jpg,SRC002:12July_mwnews_3-C.jpg,2,CLOSE
-TOM_001998,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\20020531-early%20blight%20%20starts%20on%20lower%20leaves.jpg,SRC002:20020531-early%20blight%20%20starts%20on%20lower%20leaves.jpg,3,MEDIUM
-TOM_002000,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\2373320.jpg,SRC002:2373320.jpg,3,MEDIUM
-TOM_002004,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\8%20mistakes%204.jpg,SRC002:8%20mistakes%204.jpg,2,CLOSE
-TOM_002006,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\BCH%20medium%20thumbnail%20for%20upload%20%2836%29.jpg,SRC002:BCH%20medium%20thumbnail%20for%20upload%20%2836%29.jpg,2,CLOSE
-TOM_002008,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\EBTomato.jpg,SRC002:EBTomato.jpg,2,CLOSE
-TOM_002013,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Early_Blight_of_Tomato1687.jpg,SRC002:Early_Blight_of_Tomato1687.jpg,2,CLOSE
-TOM_002014,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Early_blight_1.jpg_1376579808.jpg,SRC002:Early_blight_1.jpg_1376579808.jpg,2,CLOSE
-TOM_002020,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Tomato%20early%20blight%20target%20like%20leaf%20spot.jpg,SRC002:Tomato%20early%20blight%20target%20like%20leaf%20spot.jpg,2,CLOSE
-TOM_002025,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Tomato-Early-Blight.jpg,SRC002:Tomato-Early-Blight.jpg,2,CLOSE
-TOM_002030,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\b54d0e40027ff5e90e8ba7e1e9abf9bd--garden-guide-garden-ideas.jpg,SRC002:b54d0e40027ff5e90e8ba7e1e9abf9bd--garden-guide-garden-ideas.jpg,2,CLOSE
-TOM_002031,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\blog_early_blight_628.jpg,SRC002:blog_early_blight_628.jpg,2,CLOSE
-TOM_002036,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\early%20blight%20%283%29.jpg_itok=UMYWI0xr.jpg,SRC002:early%20blight%20%283%29.jpg_itok=UMYWI0xr.jpg,2,CLOSE
-TOM_002040,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\early-blight-in-high-tunnel-tomatoes-19tm74h.jpg,SRC002:early-blight-in-high-tunnel-tomatoes-19tm74h.jpg,2,CLOSE
-TOM_002050,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\earlyblight.jpg,SRC002:earlyblight.jpg,2,CLOSE
-TOM_002055,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\eblight5.jpg,SRC002:eblight5.jpg,2,CLOSE
-TOM_002061,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\tomato-blight-phytophthora-infestans-early-stages-on-tomato-plant-b5n952.jpg,SRC002:tomato-blight-phytophthora-infestans-early-stages-on-tomato-plant-b5n952.jpg,2,CLOSE
-TOM_002070,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\tomatoearlyblight.jpg,SRC002:tomatoearlyblight.jpg,3,MEDIUM
-TOM_002073,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\140714+%2811%29.JPG.jpg,SRC002:140714+%2811%29.JPG.jpg,2,CLOSE
-TOM_002075,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\1c421500ddd390c90596ad2cf12d5429.jpg,SRC002:1c421500ddd390c90596ad2cf12d5429.jpg,2,CLOSE
-TOM_002077,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\20100824septoria.jpg,SRC002:20100824septoria.jpg,2,CLOSE
-TOM_002097,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\5866245865865216.jpeg.jpg,SRC002:5866245865865216.jpeg.jpg,2,CLOSE
-TOM_002109,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\IMG_0312_original.jpg,SRC002:IMG_0312_original.jpg,3,MEDIUM
-TOM_002113,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Leaf%20spot.jpg,SRC002:Leaf%20spot.jpg,2,CLOSE
-TOM_002126,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Septoria_Leaf_Spot.jpg,SRC002:Septoria_Leaf_Spot.jpg,0,CLOSE
-TOM_002127,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Septoria_Leaf_Spot_of_Tomato186.jpg,SRC002:Septoria_Leaf_Spot_of_Tomato186.jpg,2,CLOSE
-TOM_002128,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Septoria_Leaf_Spot_of_Tomato187.jpg,SRC002:Septoria_Leaf_Spot_of_Tomato187.jpg,2,MEDIUM
-TOM_002133,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Tom_Sept4.jpg,SRC002:Tom_Sept4.jpg,0,MEDIUM
-TOM_002136,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Tomato+leaf+spot2.jpg,SRC002:Tomato+leaf+spot2.jpg,3,MEDIUM
-TOM_002141,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\bd0b83af4c5e4b739ccc6c36fa66f141.jpg,SRC002:bd0b83af4c5e4b739ccc6c36fa66f141.jpg,2,CLOSE
-TOM_002149,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\early+blight+on+leaf+yel+halo+IMG_2313.JPG.jpg,SRC002:early+blight+on+leaf+yel+halo+IMG_2313.JPG.jpg,2,CLOSE
-TOM_002152,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\gray-leaf-spot.jpg,SRC002:gray-leaf-spot.jpg,2,WIDE
-TOM_002154,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\leafspot-5aba8283642dca003687f6fa.jpg,SRC002:leafspot-5aba8283642dca003687f6fa.jpg,2,CLOSE
-TOM_002156,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria+on+rudbeckia.jpg,SRC002:septoria+on+rudbeckia.jpg,2,CLOSE
-TOM_002157,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria+tomato.jpg,SRC002:septoria+tomato.jpg,2,CLOSE
-TOM_002163,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria-leaf-spot-tomatoes2x2400-202yoxg.jpg,SRC002:septoria-leaf-spot-tomatoes2x2400-202yoxg.jpg,1,WIDE
-TOM_002167,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria-tomato-leaf.jpg,SRC002:septoria-tomato-leaf.jpg,0,MEDIUM
-TOM_002176,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septorialeafspot.jpg,SRC002:septorialeafspot.jpg,2,CLOSE
-TOM_002177,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septorialeafspot2.jpg,SRC002:septorialeafspot2.jpg,0,CLOSE
-TOM_002178,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septorialycopersici_small.jpg,SRC002:septorialycopersici_small.jpg,3,MEDIUM
-TOM_002179,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\slide21-n.jpg,SRC002:slide21-n.jpg,0,CLOSE
-TOM_002194,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\tomato-septoria-3.jpg,SRC002:tomato-septoria-3.jpg,2,CLOSE
-TOM_002215,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\10-3-bacterial-speck-on-tomato-RON.jpg,SRC002:10-3-bacterial-speck-on-tomato-RON.jpg,3,MEDIUM
-TOM_002228,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\71c944d61b08f6373a9a38d3c250cb2e.jpg,SRC002:71c944d61b08f6373a9a38d3c250cb2e.jpg,2,CLOSE
-TOM_002233,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Bacterial-Leaf-Spot-2.jpg,SRC002:Bacterial-Leaf-Spot-2.jpg,2,CLOSE
-TOM_002236,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Bacterial-spot-on-tomato-leaves.jpg,SRC002:Bacterial-spot-on-tomato-leaves.jpg,2,CLOSE
-TOM_002238,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\BacterialSpot06.jpg,SRC002:BacterialSpot06.jpg,3,MEDIUM
-TOM_002243,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Bacterial_spots562.jpg,SRC002:Bacterial_spots562.jpg,1,CLOSE
-TOM_002245,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Canker-GHTom-CAG-leaf-collapse-copy-50-QUALITY-1ur7cyk.jpg,SRC002:Canker-GHTom-CAG-leaf-collapse-copy-50-QUALITY-1ur7cyk.jpg,2,CLOSE
-TOM_002251,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\IMG_2348.jpg,SRC002:IMG_2348.jpg,3,MEDIUM
-TOM_002263,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\TC3.jpg,SRC002:TC3.jpg,2,CLOSE
-TOM_002271,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\alter_cank2-150x150.jpg,SRC002:alter_cank2-150x150.jpg,2,CLOSE
-TOM_002272,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\b-speck.jpg,SRC002:b-speck.jpg,2,CLOSE
-TOM_002275,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\bac.jpg,SRC002:bac.jpg,2,CLOSE
-TOM_002286,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\bacterial-spot-of-tomato-6-638.jpg,SRC002:bacterial-spot-of-tomato-6-638.jpg,0,WIDE
-TOM_002294,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\clothes014.jpg,SRC002:clothes014.jpg,2,CLOSE
-TOM_002296,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\image3_original.JPG_1472755422.jpg,SRC002:image3_original.JPG_1472755422.jpg,2,CLOSE
-TOM_002307,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\stock-photo-bacterial-spot-on-tomato-559799107.jpg,SRC002:stock-photo-bacterial-spot-on-tomato-559799107.jpg,2,CLOSE
-TOM_002311,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\tomato_bacterial-speck_03_zoom.jpg,SRC002:tomato_bacterial-speck_03_zoom.jpg,2,CLOSE
-TOM_002329,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\IMG_5813.jpg,SRC002:IMG_5813.jpg,2,CLOSE
-TOM_002345,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\Late_blight_on_tomato_leaf_%287871756748%29.jpg,SRC002:Late_blight_on_tomato_leaf_%287871756748%29.jpg,2,CLOSE
-TOM_002353,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\TomatoLateBlight-3-Underside-2ebj05b-300x225.jpg,SRC002:TomatoLateBlight-3-Underside-2ebj05b-300x225.jpg,2,CLOSE
-TOM_002361,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\late-blight-TomC2-10.jpg,SRC002:late-blight-TomC2-10.jpg,2,CLOSE
-TOM_002375,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\late_blight_tomato_leaf5x12001.jpg,SRC002:late_blight_tomato_leaf5x12001.jpg,2,CLOSE
-TOM_002377,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\late_blight_tomato_leaf_sporex1200.jpg,SRC002:late_blight_tomato_leaf_sporex1200.jpg,2,CLOSE
-TOM_002387,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\lb_leaf_lesions4x1200.jpg,SRC002:lb_leaf_lesions4x1200.jpg,2,CLOSE
-TOM_002399,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\tomato-late-blight-foliar-lesions_Scot-Nelson_CC-BY-SA-2.0.jpg,SRC002:tomato-late-blight-foliar-lesions_Scot-Nelson_CC-BY-SA-2.0.jpg,2,CLOSE
-TOM_002401,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\tomato-late-blight-phytophthora-infestans-lesions-and-damage-on-tomato-bh3w9j.jpg,SRC002:tomato-late-blight-phytophthora-infestans-lesions-and-damage-on-tomato-bh3w9j.jpg,3,MEDIUM
-TOM_002407,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\tomato-late-blight-sporulation-on-a-tomato-leaflet-picture-id81781370_s=612x612.jpg,SRC002:tomato-late-blight-sporulation-on-a-tomato-leaflet-picture-id81781370_s=612x612.jpg,1,CLOSE
-TOM_002414,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\1422_0.jpeg.jpg,SRC002:1422_0.jpeg.jpg,2,CLOSE
-TOM_002426,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\d41c86a650e49b8066d6b347d8e9d3ad.jpg,SRC002:d41c86a650e49b8066d6b347d8e9d3ad.jpg,3,MEDIUM
-TOM_002432,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\image022.jpg,SRC002:image022.jpg,2,CLOSE
-TOM_002434,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\mosaic-virus-foliage.jpg,SRC002:mosaic-virus-foliage.jpg,2,CLOSE
-TOM_002441,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\tomato-fern-leaf-a-symptom-of-tmv-cmv-or-pepmv-virus-on-tomato-plants-h6ey8w.jpg,SRC002:tomato-fern-leaf-a-symptom-of-tmv-cmv-or-pepmv-virus-on-tomato-plants-h6ey8w.jpg,2,CLOSE
-TOM_002442,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\tomato-leaf-herbicide-damage.jpg,SRC002:tomato-leaf-herbicide-damage.jpg,3,MEDIUM
-TOM_002455,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\tomato_virus_06_zoom.jpg,SRC002:tomato_virus_06_zoom.jpg,3,MEDIUM
-TOM_002491,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\art_15017325188173_a24a66.jpg,SRC002:art_15017325188173_a24a66.jpg,3,MEDIUM
-TOM_002496,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\leaves-curling-on-tomato-plant-characteristic-symptoms-tomato-plants-leaves-curling-down-on-tomato-plant.jpg,SRC002:leaves-curling-on-tomato-plant-characteristic-symptoms-tomato-plants-leaves-curling-down-on-tomato-plant.jpg,2,CLOSE
-TOM_002500,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\role-of-whitefly-in-plant-virus-transmission-by-pmanikandan-13-638.jpg,SRC002:role-of-whitefly-in-plant-virus-transmission-by-pmanikandan-13-638.jpg,1,CLOSE
-TOM_002512,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\tomato-yellow-leaf-curl-disease.jpg,SRC002:tomato-yellow-leaf-curl-disease.jpg,3,MEDIUM
-TOM_002514,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\tomato-yellow-leaf-curl-virus-symptoms-on-tomato-leaves-on-plants-ACGAME.jpg,SRC002:tomato-yellow-leaf-curl-virus-symptoms-on-tomato-leaves-on-plants-ACGAME.jpg,2,CLOSE
-TOM_002531,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\15481477375.jpg,SRC002:15481477375.jpg,2,CLOSE
-TOM_002533,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\1688.jpg,SRC002:1688.jpg,2,CLOSE
-TOM_002538,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\20140818-tomato-sauce-vicky-wasik-1.jpg,SRC002:20140818-tomato-sauce-vicky-wasik-1.jpg,2,CLOSE
-TOM_002553,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\Tomato%2Bleaf.jpg,SRC002:Tomato%2Bleaf.jpg,2,CLOSE
-TOM_002554,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\curling-issues.jpg,SRC002:curling-issues.jpg,2,CLOSE
-TOM_002564,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\mortgage-lifter-yellow-leaves-2.jpg,SRC002:mortgage-lifter-yellow-leaves-2.jpg,2,WIDE
-TOM_002572,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\tomato-leaf-20728368.jpg,SRC002:tomato-leaf-20728368.jpg,0,CLOSE
-TOM_002580,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\tomato-leaves-9025906.jpg,SRC002:tomato-leaves-9025906.jpg,0,MACRO
-TOM_002591,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\603-116-0.jpg,SRC002:603-116-0.jpg,2,CLOSE
-TOM_002601,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\Fig.%2015_opta.jpg,SRC002:Fig.%2015_opta.jpg,2,CLOSE
-TOM_002612,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\Leaf-mold-caused-by-the-fungal-pathogen-Passalore-fulva-in-tomatoes.jpg,SRC002:Leaf-mold-caused-by-the-fungal-pathogen-Passalore-fulva-in-tomatoes.jpg,2,CLOSE
-TOM_002613,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\Leaf-mold-web.jpg,SRC002:Leaf-mold-web.jpg,2,CLOSE
-TOM_002617,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\P1020365.jpg,SRC002:P1020365.jpg,2,CLOSE
-TOM_002627,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\dscn6690.jpg,SRC002:dscn6690.jpg,2,CLOSE
-TOM_002635,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\leaf_mold2.jpg,SRC002:leaf_mold2.jpg,2,CLOSE
-TOM_002640,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\leaf_mold_tomato3x1200.jpg,SRC002:leaf_mold_tomato3x1200.jpg,2,CLOSE
-TOM_002655,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\tomato-leaf-mold-infection-on-a-leaf-top-and-underside-picture-id81781575_s=612x612.jpg,SRC002:tomato-leaf-mold-infection-on-a-leaf-top-and-underside-picture-id81781575_s=612x612.jpg,2,CLOSE
-TOM_002659,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\tomato_fulvia.jpg,SRC002:tomato_fulvia.jpg,2,CLOSE
+TOM_000297,SRC014,C:\ds\rover_tomato\raw\SRC014\2519b107f9a34007.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block001,2,MEDIUM
+TOM_000298,SRC014,C:\ds\rover_tomato\raw\SRC014\8cacf802c38b57f1.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block001,2,WIDE
+TOM_000299,SRC014,C:\ds\rover_tomato\raw\SRC014\ee687d47cbe7f37a.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block001,2,WIDE
+TOM_000300,SRC014,C:\ds\rover_tomato\raw\SRC014\75b0a7f670c40690.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block001,2,WIDE
+TOM_000301,SRC014,C:\ds\rover_tomato\raw\SRC014\149489d34720b247.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block001,2,WIDE
+TOM_000302,SRC014,C:\ds\rover_tomato\raw\SRC014\e22d575f737dd161.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block001,3,WIDE
+TOM_000303,SRC014,C:\ds\rover_tomato\raw\SRC014\f52ccda5a0794b05.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block001,3,WIDE
+TOM_000403,SRC014,C:\ds\rover_tomato\raw\SRC014\87b169ae0209008a.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000404,SRC014,C:\ds\rover_tomato\raw\SRC014\1632d9a1d2d02189.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000405,SRC014,C:\ds\rover_tomato\raw\SRC014\0a5241ed08b41699.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,1,WIDE
+TOM_000406,SRC014,C:\ds\rover_tomato\raw\SRC014\960633bc36807605.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000407,SRC014,C:\ds\rover_tomato\raw\SRC014\78c54fdb7999dbb3.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000408,SRC014,C:\ds\rover_tomato\raw\SRC014\35f55ca8355d7cac.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000409,SRC014,C:\ds\rover_tomato\raw\SRC014\d7a542afda6e5f48.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000410,SRC014,C:\ds\rover_tomato\raw\SRC014\50d21bcbe4427edb.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000411,SRC014,C:\ds\rover_tomato\raw\SRC014\d24af3de827d60b1.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000412,SRC014,C:\ds\rover_tomato\raw\SRC014\cf040953eb09ef95.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,1,WIDE
+TOM_000413,SRC014,C:\ds\rover_tomato\raw\SRC014\985235ed5deaf939.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000414,SRC014,C:\ds\rover_tomato\raw\SRC014\2eb1d34991e23d3c.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000415,SRC014,C:\ds\rover_tomato\raw\SRC014\bf72f7a28a2d33d8.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000416,SRC014,C:\ds\rover_tomato\raw\SRC014\916a9a43d2ea775e.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000417,SRC014,C:\ds\rover_tomato\raw\SRC014\626d844b17a7bcc5.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000418,SRC014,C:\ds\rover_tomato\raw\SRC014\767a576344e97e06.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000419,SRC014,C:\ds\rover_tomato\raw\SRC014\e45f7dc5101ed1d5.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000420,SRC014,C:\ds\rover_tomato\raw\SRC014\a97d8eafaa1c0d8b.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000421,SRC014,C:\ds\rover_tomato\raw\SRC014\4abef496ff4ab250.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,1,WIDE
+TOM_000422,SRC014,C:\ds\rover_tomato\raw\SRC014\2cb841978fcb1bb8.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000423,SRC014,C:\ds\rover_tomato\raw\SRC014\f95404ec8434a13e.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000424,SRC014,C:\ds\rover_tomato\raw\SRC014\a81f0893e4fdc222.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000425,SRC014,C:\ds\rover_tomato\raw\SRC014\5cb32907ee78b306.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,1,WIDE
+TOM_000426,SRC014,C:\ds\rover_tomato\raw\SRC014\85e44beb0548a202.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000427,SRC014,C:\ds\rover_tomato\raw\SRC014\683fdd61ead8de53.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000428,SRC014,C:\ds\rover_tomato\raw\SRC014\c33931b4eab37f24.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000429,SRC014,C:\ds\rover_tomato\raw\SRC014\d553b3e67f9a0a2e.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,2,WIDE
+TOM_000430,SRC014,C:\ds\rover_tomato\raw\SRC014\00a583b33c3c677f.jpg,SRC014:tomates_2020-08-06-11-35-15_side:block005,3,WIDE
+TOM_000643,SRC015,C:\ds\rover_tomato\raw\SRC015\139ee28faab3423d.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000644,SRC015,C:\ds\rover_tomato\raw\SRC015\08f39299c85dcba9.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000645,SRC015,C:\ds\rover_tomato\raw\SRC015\7e8d73baa451a412.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000646,SRC015,C:\ds\rover_tomato\raw\SRC015\0d3b4b3b554ffd4b.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000647,SRC015,C:\ds\rover_tomato\raw\SRC015\11b824510b301a50.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000649,SRC015,C:\ds\rover_tomato\raw\SRC015\740623f86ebb0b43.jpg,SRC015:chunk0047,2,MACRO
+TOM_000650,SRC015,C:\ds\rover_tomato\raw\SRC015\71b6f749c543ba51.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000651,SRC015,C:\ds\rover_tomato\raw\SRC015\31827822e8c0b6a3.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000652,SRC015,C:\ds\rover_tomato\raw\SRC015\3413d4cc04863db1.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000653,SRC015,C:\ds\rover_tomato\raw\SRC015\aabf5e55665ff16f.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000654,SRC015,C:\ds\rover_tomato\raw\SRC015\638f537dc92123fb.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000655,SRC015,C:\ds\rover_tomato\raw\SRC015\ab99fb4c7381a8a7.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000656,SRC015,C:\ds\rover_tomato\raw\SRC015\e457ca2e589bef64.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000657,SRC015,C:\ds\rover_tomato\raw\SRC015\37699c6072545532.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000658,SRC015,C:\ds\rover_tomato\raw\SRC015\655171961573cb70.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000660,SRC015,C:\ds\rover_tomato\raw\SRC015\f070943c8be4878a.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000661,SRC015,C:\ds\rover_tomato\raw\SRC015\7ab4fb9d55e6bca1.jpg,SRC015:chunk0047,2,MACRO
+TOM_000662,SRC015,C:\ds\rover_tomato\raw\SRC015\cd738bd2a4819a55.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000663,SRC015,C:\ds\rover_tomato\raw\SRC015\7b2b5b2c77adb83e.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000664,SRC015,C:\ds\rover_tomato\raw\SRC015\ebf2efd928297dc0.jpg,SRC015:chunk0047,2,MACRO
+TOM_000665,SRC015,C:\ds\rover_tomato\raw\SRC015\c148b96c72902c39.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000666,SRC015,C:\ds\rover_tomato\raw\SRC015\1f8a56ac5d39f114.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000667,SRC015,C:\ds\rover_tomato\raw\SRC015\2ad81292d5069e70.jpg,SRC015:chunk0047,2,MACRO
+TOM_000668,SRC015,C:\ds\rover_tomato\raw\SRC015\a6e3a8c07aca06fa.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000669,SRC015,C:\ds\rover_tomato\raw\SRC015\54075b93501cea1b.jpg,SRC015:chunk0047,2,CLOSE
+TOM_000699,SRC015,C:\ds\rover_tomato\raw\SRC015\676c110f66c3e9c9.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000700,SRC015,C:\ds\rover_tomato\raw\SRC015\cc92e6f29257e9e3.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000701,SRC015,C:\ds\rover_tomato\raw\SRC015\238fc87680cfcc02.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000702,SRC015,C:\ds\rover_tomato\raw\SRC015\977fab0b361d3304.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000703,SRC015,C:\ds\rover_tomato\raw\SRC015\ea22f2af42684086.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000705,SRC015,C:\ds\rover_tomato\raw\SRC015\40377dbf384a0a17.jpg,SRC015:chunk0049,0,MACRO
+TOM_000706,SRC015,C:\ds\rover_tomato\raw\SRC015\9ba91c7775577b57.jpg,SRC015:chunk0049,3,MEDIUM
+TOM_000707,SRC015,C:\ds\rover_tomato\raw\SRC015\5e3673b87c22054e.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000708,SRC015,C:\ds\rover_tomato\raw\SRC015\82900e87aac7348f.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000709,SRC015,C:\ds\rover_tomato\raw\SRC015\860ed27ac884636a.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000710,SRC015,C:\ds\rover_tomato\raw\SRC015\28e17b86bcfb2837.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000711,SRC015,C:\ds\rover_tomato\raw\SRC015\fc3c39414b12bd56.jpg,SRC015:chunk0049,0,CLOSE
+TOM_000712,SRC015,C:\ds\rover_tomato\raw\SRC015\b1a6df7c74d99d7d.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000713,SRC015,C:\ds\rover_tomato\raw\SRC015\4b53208715f1b9c0.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000714,SRC015,C:\ds\rover_tomato\raw\SRC015\d25f60e7caf5f65d.jpg,SRC015:chunk0049,3,MEDIUM
+TOM_000716,SRC015,C:\ds\rover_tomato\raw\SRC015\c3b1862258b9ddc8.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000717,SRC015,C:\ds\rover_tomato\raw\SRC015\8951b2484f714938.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000718,SRC015,C:\ds\rover_tomato\raw\SRC015\7f25d3e098455e64.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000719,SRC015,C:\ds\rover_tomato\raw\SRC015\079a0d102801682d.jpg,SRC015:chunk0049,3,MEDIUM
+TOM_000720,SRC015,C:\ds\rover_tomato\raw\SRC015\0d7cee62246a4cd6.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000721,SRC015,C:\ds\rover_tomato\raw\SRC015\e8171dfab11f8b38.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000722,SRC015,C:\ds\rover_tomato\raw\SRC015\d9040b9651082b00.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000723,SRC015,C:\ds\rover_tomato\raw\SRC015\3d5ab7fbfac7409e.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000724,SRC015,C:\ds\rover_tomato\raw\SRC015\b87b124c24f50978.jpg,SRC015:chunk0049,2,CLOSE
+TOM_000865,SRC015,C:\ds\rover_tomato\raw\SRC015\11cc15ff1d7e0201.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000866,SRC015,C:\ds\rover_tomato\raw\SRC015\0262a5dd0c5e265d.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000867,SRC015,C:\ds\rover_tomato\raw\SRC015\03c940523bce548e.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000868,SRC015,C:\ds\rover_tomato\raw\SRC015\1d9f5454d306ae85.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000869,SRC015,C:\ds\rover_tomato\raw\SRC015\360a7262b2530cd5.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000870,SRC015,C:\ds\rover_tomato\raw\SRC015\fe8592435f14e3ea.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000871,SRC015,C:\ds\rover_tomato\raw\SRC015\d2054f545f5f7e8d.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000872,SRC015,C:\ds\rover_tomato\raw\SRC015\2858b6da5c17455b.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000874,SRC015,C:\ds\rover_tomato\raw\SRC015\24d0c8e841d015ad.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000875,SRC015,C:\ds\rover_tomato\raw\SRC015\0bcdb3fc0db864b0.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000876,SRC015,C:\ds\rover_tomato\raw\SRC015\86e2f59ab9bf625b.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000877,SRC015,C:\ds\rover_tomato\raw\SRC015\7d285c90f56daafa.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000878,SRC015,C:\ds\rover_tomato\raw\SRC015\afb5a098f52cdc77.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000879,SRC015,C:\ds\rover_tomato\raw\SRC015\a496300a27c2aecf.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000880,SRC015,C:\ds\rover_tomato\raw\SRC015\8e66397cb5ab52ab.jpg,SRC015:chunk0008,3,MEDIUM
+TOM_000881,SRC015,C:\ds\rover_tomato\raw\SRC015\9151fb77817a1f31.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000882,SRC015,C:\ds\rover_tomato\raw\SRC015\d2bf5726fb326ae7.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000883,SRC015,C:\ds\rover_tomato\raw\SRC015\1528f464e30f3572.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000885,SRC015,C:\ds\rover_tomato\raw\SRC015\6ebdb6526e0fe3a2.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000886,SRC015,C:\ds\rover_tomato\raw\SRC015\7704082ad7f10ea2.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000887,SRC015,C:\ds\rover_tomato\raw\SRC015\5bbcece2dbd5e4ec.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000888,SRC015,C:\ds\rover_tomato\raw\SRC015\ccef7b55b5f41436.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000889,SRC015,C:\ds\rover_tomato\raw\SRC015\63ad2189652290e7.jpg,SRC015:chunk0008,2,CLOSE
+TOM_000917,SRC015,C:\ds\rover_tomato\raw\SRC015\e7cf6251d0ac3d5c.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000918,SRC015,C:\ds\rover_tomato\raw\SRC015\f6033228e9c8f3e9.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000919,SRC015,C:\ds\rover_tomato\raw\SRC015\45adf11131658226.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000920,SRC015,C:\ds\rover_tomato\raw\SRC015\bd0ee8fcdd84f28d.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000921,SRC015,C:\ds\rover_tomato\raw\SRC015\34c6f4e1d259cf97.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000922,SRC015,C:\ds\rover_tomato\raw\SRC015\7ad69020b735d086.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000923,SRC015,C:\ds\rover_tomato\raw\SRC015\b02dc0f544d8358f.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000924,SRC015,C:\ds\rover_tomato\raw\SRC015\a29811488705d2c3.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000925,SRC015,C:\ds\rover_tomato\raw\SRC015\d2b09254d319d7f3.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000926,SRC015,C:\ds\rover_tomato\raw\SRC015\f565ac23fc9ece53.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000928,SRC015,C:\ds\rover_tomato\raw\SRC015\7b457ce9bea00a64.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000929,SRC015,C:\ds\rover_tomato\raw\SRC015\b82c4eca11a2bb48.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000930,SRC015,C:\ds\rover_tomato\raw\SRC015\c65f57c7174697f9.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000931,SRC015,C:\ds\rover_tomato\raw\SRC015\376fa0c0e10428a9.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000932,SRC015,C:\ds\rover_tomato\raw\SRC015\0d4179bbc3ad5779.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000933,SRC015,C:\ds\rover_tomato\raw\SRC015\8ba58e2a7b8f6f26.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000934,SRC015,C:\ds\rover_tomato\raw\SRC015\878e48b5f85f7cfc.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000935,SRC015,C:\ds\rover_tomato\raw\SRC015\5ee13374b1d69478.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000936,SRC015,C:\ds\rover_tomato\raw\SRC015\c18b26ab2f71f955.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000937,SRC015,C:\ds\rover_tomato\raw\SRC015\bfc476a25aa42438.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000939,SRC015,C:\ds\rover_tomato\raw\SRC015\04d0ba161ed93750.jpg,SRC015:chunk0010,2,CLOSE
+TOM_000940,SRC015,C:\ds\rover_tomato\raw\SRC015\3dc438556f9635a9.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000941,SRC015,C:\ds\rover_tomato\raw\SRC015\3ad5914ac913d1e5.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000942,SRC015,C:\ds\rover_tomato\raw\SRC015\565c0ec2ed3fbf0f.jpg,SRC015:chunk0010,3,MEDIUM
+TOM_000943,SRC015,C:\ds\rover_tomato\raw\SRC015\aa121ccadc7816e6.jpg,SRC015:chunk0010,2,CLOSE
+TOM_001055,SRC015,C:\ds\rover_tomato\raw\SRC015\089234e699514fa6.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001056,SRC015,C:\ds\rover_tomato\raw\SRC015\061f3139d04f6ade.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001057,SRC015,C:\ds\rover_tomato\raw\SRC015\6e54a6fed92d172f.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001058,SRC015,C:\ds\rover_tomato\raw\SRC015\0aa95476d6e01582.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001059,SRC015,C:\ds\rover_tomato\raw\SRC015\b3ab533cfcada040.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001061,SRC015,C:\ds\rover_tomato\raw\SRC015\e1c5f42998122c97.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001062,SRC015,C:\ds\rover_tomato\raw\SRC015\6d1e535c13f0c98a.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001063,SRC015,C:\ds\rover_tomato\raw\SRC015\f347f5b25177b70e.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001064,SRC015,C:\ds\rover_tomato\raw\SRC015\47a0287027bc5ba9.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001065,SRC015,C:\ds\rover_tomato\raw\SRC015\777448a7dfc95951.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001066,SRC015,C:\ds\rover_tomato\raw\SRC015\77d9b791f796d52b.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001067,SRC015,C:\ds\rover_tomato\raw\SRC015\452697bc25c7c755.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001068,SRC015,C:\ds\rover_tomato\raw\SRC015\7935cee3de6a7af9.jpg,SRC015:chunk0015,3,WIDE
+TOM_001069,SRC015,C:\ds\rover_tomato\raw\SRC015\3abceb6433bded3c.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001070,SRC015,C:\ds\rover_tomato\raw\SRC015\5e4ee54d80a87e50.jpg,SRC015:chunk0015,3,WIDE
+TOM_001072,SRC015,C:\ds\rover_tomato\raw\SRC015\d0f8e980dccb3b65.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001073,SRC015,C:\ds\rover_tomato\raw\SRC015\6f0415be98cdf709.jpg,SRC015:chunk0015,3,WIDE
+TOM_001074,SRC015,C:\ds\rover_tomato\raw\SRC015\905930e39a86c6ab.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001075,SRC015,C:\ds\rover_tomato\raw\SRC015\4f64b39f5a2e88d5.jpg,SRC015:chunk0015,3,WIDE
+TOM_001076,SRC015,C:\ds\rover_tomato\raw\SRC015\dcb9b43fca7104fe.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001077,SRC015,C:\ds\rover_tomato\raw\SRC015\b027787a730d8b0f.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001078,SRC015,C:\ds\rover_tomato\raw\SRC015\99a99da9a875f5f0.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001079,SRC015,C:\ds\rover_tomato\raw\SRC015\9a541c6dd94e6182.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001080,SRC015,C:\ds\rover_tomato\raw\SRC015\41c5c59079b55e0c.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001081,SRC015,C:\ds\rover_tomato\raw\SRC015\13c4c3ebbce72aae.jpg,SRC015:chunk0015,3,MEDIUM
+TOM_001084,SRC015,C:\ds\rover_tomato\raw\SRC015\7e1045838705b8ed.jpg,SRC015:chunk0016,3,WIDE
+TOM_001085,SRC015,C:\ds\rover_tomato\raw\SRC015\2040cd85e092fd2b.jpg,SRC015:chunk0016,3,WIDE
+TOM_001086,SRC015,C:\ds\rover_tomato\raw\SRC015\784e3975ed4b2017.jpg,SRC015:chunk0016,3,WIDE
+TOM_001087,SRC015,C:\ds\rover_tomato\raw\SRC015\d172e2e1c53e630a.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001088,SRC015,C:\ds\rover_tomato\raw\SRC015\f416a1c6eaef6ad4.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001089,SRC015,C:\ds\rover_tomato\raw\SRC015\01ecb9af2be8fbaf.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001090,SRC015,C:\ds\rover_tomato\raw\SRC015\691dff139903cad4.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001091,SRC015,C:\ds\rover_tomato\raw\SRC015\1e0ffe3b6809ab6e.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001092,SRC015,C:\ds\rover_tomato\raw\SRC015\49179266c38d6dd6.jpg,SRC015:chunk0016,3,WIDE
+TOM_001093,SRC015,C:\ds\rover_tomato\raw\SRC015\644da004e09893b7.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001095,SRC015,C:\ds\rover_tomato\raw\SRC015\7b7a35492ba67669.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001096,SRC015,C:\ds\rover_tomato\raw\SRC015\d031c78935bb28c2.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001097,SRC015,C:\ds\rover_tomato\raw\SRC015\90b90ec0e33e7f5f.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001098,SRC015,C:\ds\rover_tomato\raw\SRC015\af5fc8cf06c395d0.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001099,SRC015,C:\ds\rover_tomato\raw\SRC015\520a9f48bd9d3866.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001100,SRC015,C:\ds\rover_tomato\raw\SRC015\1ceab75eb10bd673.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001101,SRC015,C:\ds\rover_tomato\raw\SRC015\fbf6d20ffdac3ce1.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001102,SRC015,C:\ds\rover_tomato\raw\SRC015\a8fe8fdee8977b02.jpg,SRC015:chunk0016,3,WIDE
+TOM_001103,SRC015,C:\ds\rover_tomato\raw\SRC015\ef499c9624220d09.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001104,SRC015,C:\ds\rover_tomato\raw\SRC015\751e4d13ab91aba9.jpg,SRC015:chunk0016,3,WIDE
+TOM_001106,SRC015,C:\ds\rover_tomato\raw\SRC015\0d86be2053659682.jpg,SRC015:chunk0016,3,WIDE
+TOM_001107,SRC015,C:\ds\rover_tomato\raw\SRC015\6a5dd93a4dfedbb7.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001108,SRC015,C:\ds\rover_tomato\raw\SRC015\c3aec5b05df7c608.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001109,SRC015,C:\ds\rover_tomato\raw\SRC015\1436336b70c22ce5.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001110,SRC015,C:\ds\rover_tomato\raw\SRC015\ff013543bf2ded2c.jpg,SRC015:chunk0016,3,MEDIUM
+TOM_001472,SRC015,C:\ds\rover_tomato\raw\SRC015\2a2528c3073658fe.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001473,SRC015,C:\ds\rover_tomato\raw\SRC015\d5514a6fe7decc1f.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001474,SRC015,C:\ds\rover_tomato\raw\SRC015\4c778ceb89873141.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001475,SRC015,C:\ds\rover_tomato\raw\SRC015\d76605a63ddfcf1e.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001476,SRC015,C:\ds\rover_tomato\raw\SRC015\367e7329a526a050.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001477,SRC015,C:\ds\rover_tomato\raw\SRC015\08a984fdf1e77d60.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001478,SRC015,C:\ds\rover_tomato\raw\SRC015\2943d3bdca6733de.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001479,SRC015,C:\ds\rover_tomato\raw\SRC015\a55019b25ad1428c.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001480,SRC015,C:\ds\rover_tomato\raw\SRC015\90095728c0ffd973.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001481,SRC015,C:\ds\rover_tomato\raw\SRC015\1f4acb9fd718be9e.jpg,SRC015:chunk0030,2,MACRO
+TOM_001483,SRC015,C:\ds\rover_tomato\raw\SRC015\d40aceeeb3e14a21.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001484,SRC015,C:\ds\rover_tomato\raw\SRC015\f3d36bc0862843df.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001485,SRC015,C:\ds\rover_tomato\raw\SRC015\8b4bbe709f353c21.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001486,SRC015,C:\ds\rover_tomato\raw\SRC015\c166346e0d55d875.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001487,SRC015,C:\ds\rover_tomato\raw\SRC015\757b6ef89a513f3c.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001488,SRC015,C:\ds\rover_tomato\raw\SRC015\38fa666601df7c74.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001489,SRC015,C:\ds\rover_tomato\raw\SRC015\a856b757eac25052.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001490,SRC015,C:\ds\rover_tomato\raw\SRC015\adedf3274a447c88.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001491,SRC015,C:\ds\rover_tomato\raw\SRC015\1d323e9453ddd155.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001492,SRC015,C:\ds\rover_tomato\raw\SRC015\66b874bd6c63dc22.jpg,SRC015:chunk0030,2,MACRO
+TOM_001494,SRC015,C:\ds\rover_tomato\raw\SRC015\c91116d00374349e.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001495,SRC015,C:\ds\rover_tomato\raw\SRC015\32df26bdfdde6d34.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001496,SRC015,C:\ds\rover_tomato\raw\SRC015\d64accb7d0e27cdc.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001497,SRC015,C:\ds\rover_tomato\raw\SRC015\92c7030b4388866a.jpg,SRC015:chunk0030,2,CLOSE
+TOM_001498,SRC015,C:\ds\rover_tomato\raw\SRC015\4483d5d969d25cda.jpg,SRC015:chunk0030,2,MACRO
+TOM_001639,SRC015,C:\ds\rover_tomato\raw\SRC015\32a8be1ab26b1134.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001640,SRC015,C:\ds\rover_tomato\raw\SRC015\2b5d8196a1d78b90.jpg,SRC015:chunk0036,2,MACRO
+TOM_001641,SRC015,C:\ds\rover_tomato\raw\SRC015\7057e9b18f4d41cc.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001642,SRC015,C:\ds\rover_tomato\raw\SRC015\57129eb75a9cf951.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001643,SRC015,C:\ds\rover_tomato\raw\SRC015\245d09ee211337e5.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001644,SRC015,C:\ds\rover_tomato\raw\SRC015\42d1d3352c1dbb19.jpg,SRC015:chunk0036,2,MACRO
+TOM_001645,SRC015,C:\ds\rover_tomato\raw\SRC015\047e91a3285ae18a.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001646,SRC015,C:\ds\rover_tomato\raw\SRC015\ca8bc5c05758ea76.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001647,SRC015,C:\ds\rover_tomato\raw\SRC015\1ef3ae5fca627190.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001648,SRC015,C:\ds\rover_tomato\raw\SRC015\866bab8a70aff6d3.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001650,SRC015,C:\ds\rover_tomato\raw\SRC015\a4d42af28f84e7db.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001651,SRC015,C:\ds\rover_tomato\raw\SRC015\26844f6fdb82dea0.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001652,SRC015,C:\ds\rover_tomato\raw\SRC015\183d166b29ffee62.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001653,SRC015,C:\ds\rover_tomato\raw\SRC015\c0b136e7a696ad30.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001654,SRC015,C:\ds\rover_tomato\raw\SRC015\4fac955ba9fe451e.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001655,SRC015,C:\ds\rover_tomato\raw\SRC015\c8f12784e8347b3e.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001656,SRC015,C:\ds\rover_tomato\raw\SRC015\0a8421f3dd0b422a.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001657,SRC015,C:\ds\rover_tomato\raw\SRC015\f8c31f25b9d68781.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001658,SRC015,C:\ds\rover_tomato\raw\SRC015\101efa3ac955cea4.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001659,SRC015,C:\ds\rover_tomato\raw\SRC015\7e40b574171b7eab.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001661,SRC015,C:\ds\rover_tomato\raw\SRC015\453d6a990edbc986.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001662,SRC015,C:\ds\rover_tomato\raw\SRC015\92a357b940e30618.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001663,SRC015,C:\ds\rover_tomato\raw\SRC015\a2d47e865ef14680.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001664,SRC015,C:\ds\rover_tomato\raw\SRC015\bf77a894d7d57778.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001665,SRC015,C:\ds\rover_tomato\raw\SRC015\a49436e1205847cf.jpg,SRC015:chunk0036,2,CLOSE
+TOM_001760,SRC005,C:\ds\rover_tomato\raw\SRC005\6170b33bee1fb671.jpg,SRC005:D (112).jpg,3,MEDIUM
+TOM_001766,SRC005,C:\ds\rover_tomato\raw\SRC005\b8ac6d00efe57c8d.jpg,SRC005:D (118).jpg,3,MEDIUM
+TOM_001774,SRC005,C:\ds\rover_tomato\raw\SRC005\6c4534c09c5e811f.jpg,SRC005:D (126).jpg,3,WIDE
+TOM_001786,SRC005,C:\ds\rover_tomato\raw\SRC005\85e2ba54581d380e.jpg,SRC005:D (138).jpg,3,MEDIUM
+TOM_001788,SRC005,C:\ds\rover_tomato\raw\SRC005\6308b0375714aca2.jpg,SRC005:D (141).jpg,3,MEDIUM
+TOM_001794,SRC005,C:\ds\rover_tomato\raw\SRC005\36d39331e9976ce0.jpg,SRC005:D (147).jpg,2,CLOSE
+TOM_001797,SRC005,C:\ds\rover_tomato\raw\SRC005\d5bc0bf81063cee4.jpg,SRC005:D (150).jpg,3,MEDIUM
+TOM_001798,SRC005,C:\ds\rover_tomato\raw\SRC005\a89f61921974e4f0.jpg,SRC005:D (151).jpg,3,MEDIUM
+TOM_001808,SRC005,C:\ds\rover_tomato\raw\SRC005\e648dc7726f4cb0a.jpg,SRC005:D (161).jpg,3,MEDIUM
+TOM_001810,SRC005,C:\ds\rover_tomato\raw\SRC005\cb14f2420c8b5f51.jpg,SRC005:D (163).jpg,3,MEDIUM
+TOM_001815,SRC005,C:\ds\rover_tomato\raw\SRC005\6f9250658600d2ef.jpg,SRC005:D (168).jpg,3,MEDIUM
+TOM_001817,SRC005,C:\ds\rover_tomato\raw\SRC005\0e56cc57a928f1ae.jpg,SRC005:D (170).jpg,3,MEDIUM
+TOM_001819,SRC005,C:\ds\rover_tomato\raw\SRC005\f439e688bb613302.jpg,SRC005:D (172).jpg,3,WIDE
+TOM_001825,SRC005,C:\ds\rover_tomato\raw\SRC005\061bbf1fd99a322b.jpg,SRC005:D (178).jpg,3,MEDIUM
+TOM_001832,SRC005,C:\ds\rover_tomato\raw\SRC005\cacadb6b8a6b6f0f.jpg,SRC005:D (185).jpg,3,WIDE
+TOM_001836,SRC005,C:\ds\rover_tomato\raw\SRC005\7a9dd5cadefbe42e.jpg,SRC005:D (189).jpg,3,MEDIUM
+TOM_001844,SRC005,C:\ds\rover_tomato\raw\SRC005\125ab817f5c3ed86.jpg,SRC005:D (197).jpg,2,CLOSE
+TOM_001861,SRC005,C:\ds\rover_tomato\raw\SRC005\28d9ebfcbfbb5c1b.jpg,SRC005:D (214).jpg,3,MEDIUM
+TOM_001871,SRC005,C:\ds\rover_tomato\raw\SRC005\a6acd6dca2af8437.jpg,SRC005:D (224).jpg,2,CLOSE
+TOM_001880,SRC005,C:\ds\rover_tomato\raw\SRC005\4409dab4867d97b2.jpg,SRC005:D (233).jpg,2,CLOSE
+TOM_001881,SRC005,C:\ds\rover_tomato\raw\SRC005\3a4c416109cfb441.jpg,SRC005:D (234).jpg,2,CLOSE
+TOM_001908,SRC005,C:\ds\rover_tomato\raw\SRC005\ff5f7bcd44ad0ae5.jpg,SRC005:D (262).jpg,2,CLOSE
+TOM_001915,SRC005,C:\ds\rover_tomato\raw\SRC005\8efdbaaa94cbd6f1.jpg,SRC005:D (269).jpg,2,CLOSE
+TOM_001919,SRC005,C:\ds\rover_tomato\raw\SRC005\59d759e0a8a53f56.jpg,SRC005:D (274).jpg,3,MEDIUM
+TOM_001920,SRC005,C:\ds\rover_tomato\raw\SRC005\c96e161815e0cb65.jpg,SRC005:D (275).jpg,3,MEDIUM
+TOM_001931,SRC005,C:\ds\rover_tomato\raw\SRC005\1b7abfc12de5c57c.jpg,SRC005:D (287).jpg,2,CLOSE
+TOM_001935,SRC005,C:\ds\rover_tomato\raw\SRC005\e5ad85e3a0174b56.jpg,SRC005:D (291).jpg,2,CLOSE
+TOM_001937,SRC005,C:\ds\rover_tomato\raw\SRC005\665266371781dc02.jpg,SRC005:D (293).jpg,2,CLOSE
+TOM_001940,SRC005,C:\ds\rover_tomato\raw\SRC005\b025082bee47a647.jpg,SRC005:D (296).jpg,2,CLOSE
+TOM_001956,SRC005,C:\ds\rover_tomato\raw\SRC005\7fb32bc5d98622e5.jpg,SRC005:D (312).jpg,2,CLOSE
+TOM_001968,SRC005,C:\ds\rover_tomato\raw\SRC005\b64dd6bc8ab04dac.jpg,SRC005:D (325).jpg,2,CLOSE
+TOM_001980,SRC005,C:\ds\rover_tomato\raw\SRC005\66998d139ec7d7fa.jpg,SRC005:D (337).jpg,2,CLOSE
+TOM_001993,SRC005,C:\ds\rover_tomato\raw\SRC005\7587e9851d8fc91d.jpg,SRC005:D (350).jpg,2,CLOSE
+TOM_001994,SRC005,C:\ds\rover_tomato\raw\SRC005\c3968b2c4f759e1d.jpg,SRC005:D (351).jpg,2,CLOSE
+TOM_001998,SRC005,C:\ds\rover_tomato\raw\SRC005\46589f5b3d8ef386.jpg,SRC005:D (355).jpg,2,CLOSE
+TOM_001999,SRC005,C:\ds\rover_tomato\raw\SRC005\b8597dc26202984f.jpg,SRC005:D (356).jpg,2,CLOSE
+TOM_002001,SRC005,C:\ds\rover_tomato\raw\SRC005\739fd8bd6d500480.jpg,SRC005:D (358).jpg,2,CLOSE
+TOM_002010,SRC005,C:\ds\rover_tomato\raw\SRC005\cbc288ff50deba24.jpg,SRC005:D (367).jpg,2,CLOSE
+TOM_002011,SRC005,C:\ds\rover_tomato\raw\SRC005\9c4eb811574e394e.jpg,SRC005:D (368).jpg,2,CLOSE
+TOM_002013,SRC005,C:\ds\rover_tomato\raw\SRC005\255a62dd97cc00ba.jpg,SRC005:D (370).jpg,2,CLOSE
+TOM_002014,SRC005,C:\ds\rover_tomato\raw\SRC005\3f4e2e7e889ee1d5.jpg,SRC005:D (371).jpg,2,CLOSE
+TOM_002023,SRC005,C:\ds\rover_tomato\raw\SRC005\16d426c688430e89.jpg,SRC005:D (380).jpg,2,CLOSE
+TOM_002026,SRC005,C:\ds\rover_tomato\raw\SRC005\435324829e0943d5.jpg,SRC005:D (383).jpg,2,CLOSE
+TOM_002033,SRC005,C:\ds\rover_tomato\raw\SRC005\471b801bcb8822ff.jpg,SRC005:D (390).jpg,2,CLOSE
+TOM_002035,SRC005,C:\ds\rover_tomato\raw\SRC005\c9a7d26bee324e79.jpg,SRC005:D (392).jpg,2,CLOSE
+TOM_002037,SRC005,C:\ds\rover_tomato\raw\SRC005\7f370d88b4806df9.jpg,SRC005:D (394).jpg,2,CLOSE
+TOM_002039,SRC005,C:\ds\rover_tomato\raw\SRC005\ac0d0721cc698c1f.jpg,SRC005:D (396).jpg,2,CLOSE
+TOM_002045,SRC005,C:\ds\rover_tomato\raw\SRC005\afcc07fc4c43ff8f.jpg,SRC005:D (402).jpg,2,CLOSE
+TOM_002047,SRC005,C:\ds\rover_tomato\raw\SRC005\094582f246d988e9.jpg,SRC005:D (404).jpg,2,CLOSE
+TOM_002051,SRC005,C:\ds\rover_tomato\raw\SRC005\0a152e7b5aa171b4.jpg,SRC005:D (409).jpg,2,CLOSE
+TOM_002054,SRC005,C:\ds\rover_tomato\raw\SRC005\f83dae41b106daf7.jpg,SRC005:D (412).jpg,2,CLOSE
+TOM_002060,SRC005,C:\ds\rover_tomato\raw\SRC005\98dac123f729a505.jpg,SRC005:D (418).jpg,2,CLOSE
+TOM_002084,SRC005,C:\ds\rover_tomato\raw\SRC005\cfdd21f6b5f085e2.jpg,SRC005:D (443).jpg,2,CLOSE
+TOM_002117,SRC005,C:\ds\rover_tomato\raw\SRC005\2e8814192d0efbe3.jpg,SRC005:D (476).jpg,2,CLOSE
+TOM_002132,SRC005,C:\ds\rover_tomato\raw\SRC005\5a4e2600e5ef65cf.jpg,SRC005:D (491).jpg,2,CLOSE
+TOM_002133,SRC005,C:\ds\rover_tomato\raw\SRC005\23d822f69381f048.jpg,SRC005:D (492).jpg,2,CLOSE
+TOM_002134,SRC005,C:\ds\rover_tomato\raw\SRC005\cd86a9011e9c4ffd.jpg,SRC005:D (493).jpg,2,CLOSE
+TOM_002146,SRC005,C:\ds\rover_tomato\raw\SRC005\d84249ca5ab8bfb1.jpg,SRC005:D (505).jpg,2,CLOSE
+TOM_002154,SRC005,C:\ds\rover_tomato\raw\SRC005\2ef2f04364e8788c.jpg,SRC005:D (513).jpg,2,CLOSE
+TOM_002155,SRC005,C:\ds\rover_tomato\raw\SRC005\67bb926c99b14e1b.jpg,SRC005:D (514).jpg,2,CLOSE
+TOM_002162,SRC005,C:\ds\rover_tomato\raw\SRC005\8d4f22488a9a5d8f.jpg,SRC005:D (521).jpg,2,CLOSE
+TOM_002171,SRC005,C:\ds\rover_tomato\raw\SRC005\4fad96f3477c9508.jpg,SRC005:D (530).jpg,2,CLOSE
+TOM_002181,SRC005,C:\ds\rover_tomato\raw\SRC005\64ee73ca7bc3d542.jpg,SRC005:D (540).jpg,2,CLOSE
+TOM_002187,SRC005,C:\ds\rover_tomato\raw\SRC005\00b41bfa0dabf6cd.jpg,SRC005:D (546).jpg,2,CLOSE
+TOM_002199,SRC005,C:\ds\rover_tomato\raw\SRC005\aa5a6f6017982863.jpg,SRC005:D (93).jpg,3,WIDE
+TOM_002203,SRC005,C:\ds\rover_tomato\raw\SRC005\fe19bd383cc0a8bb.jpg,SRC005:D (97).jpg,3,MEDIUM
+TOM_002215,SRC005,C:\ds\rover_tomato\raw\SRC005\b4a9888167ebbe22.jpg,SRC005:H (110).jpg,2,CLOSE
+TOM_002227,SRC005,C:\ds\rover_tomato\raw\SRC005\ba6e99001d4e47eb.jpg,SRC005:H (122).jpg,2,CLOSE
+TOM_002229,SRC005,C:\ds\rover_tomato\raw\SRC005\a93857a623b6e964.jpg,SRC005:H (124).jpg,2,CLOSE
+TOM_002230,SRC005,C:\ds\rover_tomato\raw\SRC005\b568b9eb7102b69d.jpg,SRC005:H (125).jpg,2,CLOSE
+TOM_002252,SRC005,C:\ds\rover_tomato\raw\SRC005\da699572967001bf.jpg,SRC005:H (147).jpg,2,CLOSE
+TOM_002255,SRC005,C:\ds\rover_tomato\raw\SRC005\d548f357aadd0f2d.jpg,SRC005:H (150).jpg,2,CLOSE
+TOM_002256,SRC005,C:\ds\rover_tomato\raw\SRC005\5e89dae302f7fb4b.jpg,SRC005:H (151).jpg,2,CLOSE
+TOM_002257,SRC005,C:\ds\rover_tomato\raw\SRC005\b77f4faf4d777d51.jpg,SRC005:H (152).jpg,2,CLOSE
+TOM_002274,SRC005,C:\ds\rover_tomato\raw\SRC005\6c83e7afb94b6616.jpg,SRC005:H (169).jpg,2,CLOSE
+TOM_002278,SRC005,C:\ds\rover_tomato\raw\SRC005\3263dfbd46a1244f.jpg,SRC005:H (174).jpg,2,CLOSE
+TOM_002281,SRC005,C:\ds\rover_tomato\raw\SRC005\e64507af42c4ed1e.jpg,SRC005:H (177).jpg,2,CLOSE
+TOM_002282,SRC005,C:\ds\rover_tomato\raw\SRC005\11c11061a658e6d3.jpg,SRC005:H (178).jpg,2,CLOSE
+TOM_002283,SRC005,C:\ds\rover_tomato\raw\SRC005\ed8f89178484fa1b.jpg,SRC005:H (179).jpg,2,CLOSE
+TOM_002285,SRC005,C:\ds\rover_tomato\raw\SRC005\17794beda1801526.jpg,SRC005:H (181).jpg,2,CLOSE
+TOM_002291,SRC005,C:\ds\rover_tomato\raw\SRC005\d8fcc2b2119791d8.jpg,SRC005:H (187).jpg,2,CLOSE
+TOM_002296,SRC005,C:\ds\rover_tomato\raw\SRC005\66832074c1c882ff.jpg,SRC005:H (192).jpg,2,CLOSE
+TOM_002307,SRC005,C:\ds\rover_tomato\raw\SRC005\3c96f47bdb8df546.jpg,SRC005:H (203).jpg,2,CLOSE
+TOM_002310,SRC005,C:\ds\rover_tomato\raw\SRC005\64105968eae81a5e.jpg,SRC005:H (206).jpg,2,CLOSE
+TOM_002330,SRC005,C:\ds\rover_tomato\raw\SRC005\6b521f1298ac217f.jpg,SRC005:H (226).jpg,2,CLOSE
+TOM_002331,SRC005,C:\ds\rover_tomato\raw\SRC005\eb12a4bea6e7f226.jpg,SRC005:H (227).jpg,2,CLOSE
+TOM_002340,SRC005,C:\ds\rover_tomato\raw\SRC005\aabdff14b213ca2d.jpg,SRC005:H (236).jpg,2,CLOSE
+TOM_002342,SRC005,C:\ds\rover_tomato\raw\SRC005\e84a968909c253f8.jpg,SRC005:H (238).jpg,2,CLOSE
+TOM_002353,SRC005,C:\ds\rover_tomato\raw\SRC005\c0b2c39e0594f9d7.jpg,SRC005:H (249).jpg,2,CLOSE
+TOM_002354,SRC005,C:\ds\rover_tomato\raw\SRC005\810350d38e39286e.jpg,SRC005:H (250).jpg,2,CLOSE
+TOM_002356,SRC005,C:\ds\rover_tomato\raw\SRC005\7d744daa38692866.jpg,SRC005:H (252).jpg,2,CLOSE
+TOM_002359,SRC005,C:\ds\rover_tomato\raw\SRC005\f4d744475a9b6323.jpg,SRC005:H (255).jpg,2,CLOSE
+TOM_002362,SRC005,C:\ds\rover_tomato\raw\SRC005\d058c52c46742849.jpg,SRC005:H (260).jpg,2,CLOSE
+TOM_002365,SRC005,C:\ds\rover_tomato\raw\SRC005\fb3d6cf1265c33a6.jpg,SRC005:H (263).jpg,2,CLOSE
+TOM_002379,SRC005,C:\ds\rover_tomato\raw\SRC005\3d15858012032dc0.jpg,SRC005:H (277).jpg,2,CLOSE
+TOM_002380,SRC005,C:\ds\rover_tomato\raw\SRC005\625ba97b9d52b9d5.jpg,SRC005:H (278).jpg,2,CLOSE
+TOM_002381,SRC005,C:\ds\rover_tomato\raw\SRC005\78756934cb64c762.jpg,SRC005:H (279).jpg,2,CLOSE
+TOM_002383,SRC005,C:\ds\rover_tomato\raw\SRC005\fa32789cc1572053.jpg,SRC005:H (281).jpg,2,CLOSE
+TOM_002393,SRC005,C:\ds\rover_tomato\raw\SRC005\224033f2c505241a.jpg,SRC005:H (291).jpg,3,MEDIUM
+TOM_002409,SRC005,C:\ds\rover_tomato\raw\SRC005\cbfb9b147770f9fb.jpg,SRC005:H (307).jpg,2,CLOSE
+TOM_002410,SRC005,C:\ds\rover_tomato\raw\SRC005\f1b9155ca8205049.jpg,SRC005:H (308).jpg,2,CLOSE
+TOM_002412,SRC005,C:\ds\rover_tomato\raw\SRC005\da73872a5f54c076.jpg,SRC005:H (310).jpg,2,CLOSE
+TOM_002416,SRC005,C:\ds\rover_tomato\raw\SRC005\32c62fbcc47f3c72.jpg,SRC005:H (314).jpg,2,CLOSE
+TOM_002418,SRC005,C:\ds\rover_tomato\raw\SRC005\f913433c5ea3952c.jpg,SRC005:H (316).jpg,2,CLOSE
+TOM_002424,SRC005,C:\ds\rover_tomato\raw\SRC005\2ef1a625987cba96.jpg,SRC005:H (322).jpg,2,CLOSE
+TOM_002431,SRC005,C:\ds\rover_tomato\raw\SRC005\614c795258552e85.jpg,SRC005:H (329).jpg,3,MEDIUM
+TOM_002462,SRC005,C:\ds\rover_tomato\raw\SRC005\1a7d311b01525c93.jpg,SRC005:H (360).jpg,2,CLOSE
+TOM_002468,SRC005,C:\ds\rover_tomato\raw\SRC005\83b6afb4aa2d98cc.jpg,SRC005:H (366).jpg,2,CLOSE
+TOM_002472,SRC005,C:\ds\rover_tomato\raw\SRC005\297e4412a3c63a94.jpg,SRC005:H (370).jpg,3,MEDIUM
+TOM_002477,SRC005,C:\ds\rover_tomato\raw\SRC005\a04c6a24d75ad49e.jpg,SRC005:H (375).jpg,3,MEDIUM
+TOM_002489,SRC005,C:\ds\rover_tomato\raw\SRC005\50e70dfbc9e54deb.jpg,SRC005:H (387).jpg,3,MEDIUM
+TOM_002491,SRC005,C:\ds\rover_tomato\raw\SRC005\4cd48d823db2e321.jpg,SRC005:H (389).jpg,2,CLOSE
+TOM_002492,SRC005,C:\ds\rover_tomato\raw\SRC005\762766a75bc4a8a2.jpg,SRC005:H (390).jpg,2,CLOSE
+TOM_002494,SRC005,C:\ds\rover_tomato\raw\SRC005\83195fab19ee1c7e.jpg,SRC005:H (392).jpg,2,CLOSE
+TOM_002501,SRC005,C:\ds\rover_tomato\raw\SRC005\c301851604c1a101.jpg,SRC005:H (399).jpg,2,CLOSE
+TOM_002504,SRC005,C:\ds\rover_tomato\raw\SRC005\ac903d103417a6f3.jpg,SRC005:H (402).jpg,2,CLOSE
+TOM_002509,SRC005,C:\ds\rover_tomato\raw\SRC005\b0ee2d422cbe7ea4.jpg,SRC005:H (407).jpg,2,CLOSE
+TOM_002515,SRC005,C:\ds\rover_tomato\raw\SRC005\0e2a3ce77a17e6d7.jpg,SRC005:H (413).jpg,2,CLOSE
+TOM_002518,SRC005,C:\ds\rover_tomato\raw\SRC005\4a6531382351cc55.jpg,SRC005:H (416).jpg,2,CLOSE
+TOM_002523,SRC005,C:\ds\rover_tomato\raw\SRC005\a55c78a910c5f660.jpg,SRC005:H (421).jpg,2,CLOSE
+TOM_002526,SRC005,C:\ds\rover_tomato\raw\SRC005\5dd0fe2c891429b1.jpg,SRC005:H (424).jpg,3,MEDIUM
+TOM_002534,SRC005,C:\ds\rover_tomato\raw\SRC005\b24f108249b9162b.jpg,SRC005:H (432).jpg,3,MEDIUM
+TOM_002542,SRC005,C:\ds\rover_tomato\raw\SRC005\f80bada74070ec12.jpg,SRC005:H (440).jpg,2,CLOSE
+TOM_002547,SRC005,C:\ds\rover_tomato\raw\SRC005\fbbc98fbcb016632.jpg,SRC005:H (445).jpg,2,CLOSE
+TOM_002558,SRC005,C:\ds\rover_tomato\raw\SRC005\2f36baf5e0c4ed7e.jpg,SRC005:H (456).jpg,2,CLOSE
+TOM_002568,SRC005,C:\ds\rover_tomato\raw\SRC005\6fe191a5a8c1a1b8.jpg,SRC005:H (466).jpg,2,CLOSE
+TOM_002570,SRC005,C:\ds\rover_tomato\raw\SRC005\4f5e9e3bc18890b1.jpg,SRC005:H (468).jpg,2,CLOSE
+TOM_002584,SRC005,C:\ds\rover_tomato\raw\SRC005\7f1bd77762e5c432.jpg,SRC005:H (482).jpg,2,CLOSE
+TOM_002587,SRC005,C:\ds\rover_tomato\raw\SRC005\f3c2629e00d2e9dc.jpg,SRC005:H (83).jpg,2,CLOSE
+TOM_002603,SRC005,C:\ds\rover_tomato\raw\SRC005\92c2943763d2e8f1.jpg,SRC005:H (99).jpg,2,CLOSE
+TOM_002607,SRC005,C:\ds\rover_tomato\raw\SRC005\4d6703fe5aa2eac7.jpg,SRC005:D (12).jpg,2,CLOSE
+TOM_002610,SRC005,C:\ds\rover_tomato\raw\SRC005\d83cb1cc9aba135a.jpg,SRC005:D (15).jpg,2,CLOSE
+TOM_002618,SRC005,C:\ds\rover_tomato\raw\SRC005\b64b42c1cdfe1bc2.jpg,SRC005:D (22).jpg,3,MEDIUM
+TOM_002628,SRC005,C:\ds\rover_tomato\raw\SRC005\bd16a0a14baaec23.jpg,SRC005:D (31).jpg,3,MEDIUM
+TOM_002629,SRC005,C:\ds\rover_tomato\raw\SRC005\35e687dcca435b33.jpg,SRC005:D (32).jpg,2,MEDIUM
+TOM_002659,SRC005,C:\ds\rover_tomato\raw\SRC005\5365b32f7ec6fabf.jpg,SRC005:D (60).jpg,3,MEDIUM
+TOM_002661,SRC005,C:\ds\rover_tomato\raw\SRC005\a323a8780f9d4b5e.jpg,SRC005:D (62).jpg,2,CLOSE
+TOM_002663,SRC005,C:\ds\rover_tomato\raw\SRC005\7a32e739b58231e3.jpg,SRC005:D (64).jpg,3,MEDIUM
+TOM_002666,SRC005,C:\ds\rover_tomato\raw\SRC005\8dca802ba2adb30b.jpg,SRC005:D (67).jpg,3,MEDIUM
+TOM_002702,SRC005,C:\ds\rover_tomato\raw\SRC005\45a502007d94743f.jpg,SRC005:H (27).jpg,2,CLOSE
+TOM_002706,SRC005,C:\ds\rover_tomato\raw\SRC005\fb4a317de1661fcd.jpg,SRC005:H (30).jpg,2,CLOSE
+TOM_002711,SRC005,C:\ds\rover_tomato\raw\SRC005\1ec13a5fcb027058.jpg,SRC005:H (35).jpg,3,MEDIUM
+TOM_002717,SRC005,C:\ds\rover_tomato\raw\SRC005\c089d73d8c04da9a.jpg,SRC005:H (40).jpg,2,CLOSE
+TOM_002720,SRC005,C:\ds\rover_tomato\raw\SRC005\83786d5a0285968d.jpg,SRC005:H (43).jpg,2,CLOSE
+TOM_002721,SRC005,C:\ds\rover_tomato\raw\SRC005\b536222ae2a6207d.jpg,SRC005:H (44).jpg,2,CLOSE
+TOM_002728,SRC005,C:\ds\rover_tomato\raw\SRC005\a8652ce942af937f.jpg,SRC005:H (50).jpg,2,CLOSE
+TOM_002731,SRC005,C:\ds\rover_tomato\raw\SRC005\43dc3a03bc53caf1.jpg,SRC005:H (53).jpg,2,CLOSE
+TOM_002733,SRC005,C:\ds\rover_tomato\raw\SRC005\67627e4127442817.jpg,SRC005:H (55).jpg,2,CLOSE
+TOM_002735,SRC005,C:\ds\rover_tomato\raw\SRC005\80260d874c90b54e.jpg,SRC005:H (57).jpg,2,CLOSE
+TOM_002755,SRC005,C:\ds\rover_tomato\raw\SRC005\e03ea4cfe2cdec2f.jpg,SRC005:H (75).jpg,2,CLOSE
+TOM_002757,SRC005,C:\ds\rover_tomato\raw\SRC005\ac2f27d21dd790c9.jpg,SRC005:H (77).jpg,2,CLOSE
+TOM_002760,SRC005,C:\ds\rover_tomato\raw\SRC005\16eb17e7d3d274fd.jpg,SRC005:H (8).jpg,3,MEDIUM
+TOM_002767,SRC002,C:\ds\plantdoc_files\test\Tomato Early blight leaf\bugs-and-blight-061.jpg,SRC002:bugs-and-blight-061.jpg,3,WIDE
+TOM_002768,SRC002,C:\ds\plantdoc_files\test\Tomato Early blight leaf\dscn3175.jpg,SRC002:dscn3175.jpg,2,CLOSE
+TOM_002775,SRC002,C:\ds\plantdoc_files\test\Tomato Septoria leaf spot\55830b60a7cf2.image.jpg,SRC002:55830b60a7cf2.image.jpg,2,CLOSE
+TOM_002789,SRC002,C:\ds\plantdoc_files\test\Tomato leaf bacterial spot\bact-spot-fig-1.jpg,SRC002:bact-spot-fig-1.jpg,2,CLOSE
+TOM_002797,SRC002,C:\ds\plantdoc_files\test\Tomato leaf late blight\IMG_5808.jpg,SRC002:IMG_5808.jpg,2,CLOSE
+TOM_002803,SRC002,C:\ds\plantdoc_files\test\Tomato leaf mosaic virus\D%29AlfMov.jpg,SRC002:D%29AlfMov.jpg,0,CLOSE
+TOM_002812,SRC002,C:\ds\plantdoc_files\test\Tomato leaf yellow virus\11-40580_5.jpg,SRC002:11-40580_5.jpg,3,MEDIUM
+TOM_002815,SRC002,C:\ds\plantdoc_files\test\Tomato leaf yellow virus\fwa2013313115151.jpg,SRC002:fwa2013313115151.jpg,3,MEDIUM
+TOM_002833,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\1058_0.jpeg_itok=OQkdtxgv.jpg,SRC002:1058_0.jpeg_itok=OQkdtxgv.jpg,2,CLOSE
+TOM_002835,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\12July_mwnews_3-C.jpg,SRC002:12July_mwnews_3-C.jpg,2,CLOSE
+TOM_002837,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\20020531-early%20blight%20%20starts%20on%20lower%20leaves.jpg,SRC002:20020531-early%20blight%20%20starts%20on%20lower%20leaves.jpg,3,MEDIUM
+TOM_002839,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\2373320.jpg,SRC002:2373320.jpg,3,MEDIUM
+TOM_002843,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\8%20mistakes%204.jpg,SRC002:8%20mistakes%204.jpg,2,CLOSE
+TOM_002845,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\BCH%20medium%20thumbnail%20for%20upload%20%2836%29.jpg,SRC002:BCH%20medium%20thumbnail%20for%20upload%20%2836%29.jpg,2,CLOSE
+TOM_002847,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\EBTomato.jpg,SRC002:EBTomato.jpg,2,CLOSE
+TOM_002851,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Early_Blight_of_Tomato1687.jpg,SRC002:Early_Blight_of_Tomato1687.jpg,2,CLOSE
+TOM_002852,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Early_blight_1.jpg_1376579808.jpg,SRC002:Early_blight_1.jpg_1376579808.jpg,2,CLOSE
+TOM_002858,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Tomato%20early%20blight%20target%20like%20leaf%20spot.jpg,SRC002:Tomato%20early%20blight%20target%20like%20leaf%20spot.jpg,2,CLOSE
+TOM_002863,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\Tomato-Early-Blight.jpg,SRC002:Tomato-Early-Blight.jpg,2,CLOSE
+TOM_002868,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\b54d0e40027ff5e90e8ba7e1e9abf9bd--garden-guide-garden-ideas.jpg,SRC002:b54d0e40027ff5e90e8ba7e1e9abf9bd--garden-guide-garden-ideas.jpg,2,CLOSE
+TOM_002869,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\blog_early_blight_628.jpg,SRC002:blog_early_blight_628.jpg,2,CLOSE
+TOM_002874,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\early%20blight%20%283%29.jpg_itok=UMYWI0xr.jpg,SRC002:early%20blight%20%283%29.jpg_itok=UMYWI0xr.jpg,2,CLOSE
+TOM_002878,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\early-blight-in-high-tunnel-tomatoes-19tm74h.jpg,SRC002:early-blight-in-high-tunnel-tomatoes-19tm74h.jpg,2,CLOSE
+TOM_002887,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\earlyblight.jpg,SRC002:earlyblight.jpg,2,CLOSE
+TOM_002892,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\eblight5.jpg,SRC002:eblight5.jpg,2,CLOSE
+TOM_002898,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\tomato-blight-phytophthora-infestans-early-stages-on-tomato-plant-b5n952.jpg,SRC002:tomato-blight-phytophthora-infestans-early-stages-on-tomato-plant-b5n952.jpg,2,CLOSE
+TOM_002905,SRC002,C:\ds\plantdoc_files\train\Tomato Early blight leaf\tomatoearlyblight.jpg,SRC002:tomatoearlyblight.jpg,3,MEDIUM
+TOM_002908,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\140714+%2811%29.JPG.jpg,SRC002:140714+%2811%29.JPG.jpg,2,CLOSE
+TOM_002910,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\1c421500ddd390c90596ad2cf12d5429.jpg,SRC002:1c421500ddd390c90596ad2cf12d5429.jpg,2,CLOSE
+TOM_002912,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\20100824septoria.jpg,SRC002:20100824septoria.jpg,2,CLOSE
+TOM_002932,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\5866245865865216.jpeg.jpg,SRC002:5866245865865216.jpeg.jpg,2,CLOSE
+TOM_002944,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\IMG_0312_original.jpg,SRC002:IMG_0312_original.jpg,3,MEDIUM
+TOM_002948,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Leaf%20spot.jpg,SRC002:Leaf%20spot.jpg,2,CLOSE
+TOM_002960,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Septoria_Leaf_Spot.jpg,SRC002:Septoria_Leaf_Spot.jpg,0,CLOSE
+TOM_002961,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Septoria_Leaf_Spot_of_Tomato186.jpg,SRC002:Septoria_Leaf_Spot_of_Tomato186.jpg,2,CLOSE
+TOM_002962,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Septoria_Leaf_Spot_of_Tomato187.jpg,SRC002:Septoria_Leaf_Spot_of_Tomato187.jpg,2,MEDIUM
+TOM_002967,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Tom_Sept4.jpg,SRC002:Tom_Sept4.jpg,0,MEDIUM
+TOM_002970,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\Tomato+leaf+spot2.jpg,SRC002:Tomato+leaf+spot2.jpg,3,MEDIUM
+TOM_002974,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\bd0b83af4c5e4b739ccc6c36fa66f141.jpg,SRC002:bd0b83af4c5e4b739ccc6c36fa66f141.jpg,2,CLOSE
+TOM_002982,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\early+blight+on+leaf+yel+halo+IMG_2313.JPG.jpg,SRC002:early+blight+on+leaf+yel+halo+IMG_2313.JPG.jpg,2,CLOSE
+TOM_002983,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\gray-leaf-spot.jpg,SRC002:gray-leaf-spot.jpg,2,WIDE
+TOM_002985,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\leafspot-5aba8283642dca003687f6fa.jpg,SRC002:leafspot-5aba8283642dca003687f6fa.jpg,2,CLOSE
+TOM_002987,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria+on+rudbeckia.jpg,SRC002:septoria+on+rudbeckia.jpg,2,CLOSE
+TOM_002988,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria+tomato.jpg,SRC002:septoria+tomato.jpg,2,CLOSE
+TOM_002994,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria-leaf-spot-tomatoes2x2400-202yoxg.jpg,SRC002:septoria-leaf-spot-tomatoes2x2400-202yoxg.jpg,1,WIDE
+TOM_002998,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septoria-tomato-leaf.jpg,SRC002:septoria-tomato-leaf.jpg,0,MEDIUM
+TOM_003007,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septorialeafspot.jpg,SRC002:septorialeafspot.jpg,2,CLOSE
+TOM_003008,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septorialeafspot2.jpg,SRC002:septorialeafspot2.jpg,0,CLOSE
+TOM_003009,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\septorialycopersici_small.jpg,SRC002:septorialycopersici_small.jpg,3,MEDIUM
+TOM_003010,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\slide21-n.jpg,SRC002:slide21-n.jpg,0,CLOSE
+TOM_003025,SRC002,C:\ds\plantdoc_files\train\Tomato Septoria leaf spot\tomato-septoria-3.jpg,SRC002:tomato-septoria-3.jpg,2,CLOSE
+TOM_003043,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\10-3-bacterial-speck-on-tomato-RON.jpg,SRC002:10-3-bacterial-speck-on-tomato-RON.jpg,3,MEDIUM
+TOM_003056,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\71c944d61b08f6373a9a38d3c250cb2e.jpg,SRC002:71c944d61b08f6373a9a38d3c250cb2e.jpg,2,CLOSE
+TOM_003060,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Bacterial-Leaf-Spot-2.jpg,SRC002:Bacterial-Leaf-Spot-2.jpg,2,CLOSE
+TOM_003063,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Bacterial-spot-on-tomato-leaves.jpg,SRC002:Bacterial-spot-on-tomato-leaves.jpg,2,CLOSE
+TOM_003065,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\BacterialSpot06.jpg,SRC002:BacterialSpot06.jpg,3,MEDIUM
+TOM_003070,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Bacterial_spots562.jpg,SRC002:Bacterial_spots562.jpg,1,CLOSE
+TOM_003072,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\Canker-GHTom-CAG-leaf-collapse-copy-50-QUALITY-1ur7cyk.jpg,SRC002:Canker-GHTom-CAG-leaf-collapse-copy-50-QUALITY-1ur7cyk.jpg,2,CLOSE
+TOM_003077,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\IMG_2348.jpg,SRC002:IMG_2348.jpg,3,MEDIUM
+TOM_003088,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\TC3.jpg,SRC002:TC3.jpg,2,CLOSE
+TOM_003096,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\alter_cank2-150x150.jpg,SRC002:alter_cank2-150x150.jpg,2,CLOSE
+TOM_003097,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\b-speck.jpg,SRC002:b-speck.jpg,2,CLOSE
+TOM_003100,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\bac.jpg,SRC002:bac.jpg,2,CLOSE
+TOM_003110,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\bacterial-spot-of-tomato-6-638.jpg,SRC002:bacterial-spot-of-tomato-6-638.jpg,0,WIDE
+TOM_003118,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\clothes014.jpg,SRC002:clothes014.jpg,2,CLOSE
+TOM_003120,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\image3_original.JPG_1472755422.jpg,SRC002:image3_original.JPG_1472755422.jpg,2,CLOSE
+TOM_003131,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\stock-photo-bacterial-spot-on-tomato-559799107.jpg,SRC002:stock-photo-bacterial-spot-on-tomato-559799107.jpg,2,CLOSE
+TOM_003135,SRC002,C:\ds\plantdoc_files\train\Tomato leaf bacterial spot\tomato_bacterial-speck_03_zoom.jpg,SRC002:tomato_bacterial-speck_03_zoom.jpg,2,CLOSE
+TOM_003152,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\IMG_5813.jpg,SRC002:IMG_5813.jpg,2,CLOSE
+TOM_003167,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\Late_blight_on_tomato_leaf_%287871756748%29.jpg,SRC002:Late_blight_on_tomato_leaf_%287871756748%29.jpg,2,CLOSE
+TOM_003175,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\TomatoLateBlight-3-Underside-2ebj05b-300x225.jpg,SRC002:TomatoLateBlight-3-Underside-2ebj05b-300x225.jpg,2,CLOSE
+TOM_003183,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\late-blight-TomC2-10.jpg,SRC002:late-blight-TomC2-10.jpg,2,CLOSE
+TOM_003196,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\late_blight_tomato_leaf5x12001.jpg,SRC002:late_blight_tomato_leaf5x12001.jpg,2,CLOSE
+TOM_003198,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\late_blight_tomato_leaf_sporex1200.jpg,SRC002:late_blight_tomato_leaf_sporex1200.jpg,2,CLOSE
+TOM_003208,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\lb_leaf_lesions4x1200.jpg,SRC002:lb_leaf_lesions4x1200.jpg,2,CLOSE
+TOM_003219,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\tomato-late-blight-foliar-lesions_Scot-Nelson_CC-BY-SA-2.0.jpg,SRC002:tomato-late-blight-foliar-lesions_Scot-Nelson_CC-BY-SA-2.0.jpg,2,CLOSE
+TOM_003221,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\tomato-late-blight-phytophthora-infestans-lesions-and-damage-on-tomato-bh3w9j.jpg,SRC002:tomato-late-blight-phytophthora-infestans-lesions-and-damage-on-tomato-bh3w9j.jpg,3,MEDIUM
+TOM_003227,SRC002,C:\ds\plantdoc_files\train\Tomato leaf late blight\tomato-late-blight-sporulation-on-a-tomato-leaflet-picture-id81781370_s=612x612.jpg,SRC002:tomato-late-blight-sporulation-on-a-tomato-leaflet-picture-id81781370_s=612x612.jpg,1,CLOSE
+TOM_003233,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\1422_0.jpeg.jpg,SRC002:1422_0.jpeg.jpg,2,CLOSE
+TOM_003245,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\d41c86a650e49b8066d6b347d8e9d3ad.jpg,SRC002:d41c86a650e49b8066d6b347d8e9d3ad.jpg,3,MEDIUM
+TOM_003251,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\image022.jpg,SRC002:image022.jpg,2,CLOSE
+TOM_003253,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\mosaic-virus-foliage.jpg,SRC002:mosaic-virus-foliage.jpg,2,CLOSE
+TOM_003260,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\tomato-fern-leaf-a-symptom-of-tmv-cmv-or-pepmv-virus-on-tomato-plants-h6ey8w.jpg,SRC002:tomato-fern-leaf-a-symptom-of-tmv-cmv-or-pepmv-virus-on-tomato-plants-h6ey8w.jpg,2,CLOSE
+TOM_003261,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\tomato-leaf-herbicide-damage.jpg,SRC002:tomato-leaf-herbicide-damage.jpg,3,MEDIUM
+TOM_003274,SRC002,C:\ds\plantdoc_files\train\Tomato leaf mosaic virus\tomato_virus_06_zoom.jpg,SRC002:tomato_virus_06_zoom.jpg,3,MEDIUM
+TOM_003309,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\art_15017325188173_a24a66.jpg,SRC002:art_15017325188173_a24a66.jpg,3,MEDIUM
+TOM_003314,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\leaves-curling-on-tomato-plant-characteristic-symptoms-tomato-plants-leaves-curling-down-on-tomato-plant.jpg,SRC002:leaves-curling-on-tomato-plant-characteristic-symptoms-tomato-plants-leaves-curling-down-on-tomato-plant.jpg,2,CLOSE
+TOM_003318,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\role-of-whitefly-in-plant-virus-transmission-by-pmanikandan-13-638.jpg,SRC002:role-of-whitefly-in-plant-virus-transmission-by-pmanikandan-13-638.jpg,1,CLOSE
+TOM_003329,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\tomato-yellow-leaf-curl-disease.jpg,SRC002:tomato-yellow-leaf-curl-disease.jpg,3,MEDIUM
+TOM_003331,SRC002,C:\ds\plantdoc_files\train\Tomato leaf yellow virus\tomato-yellow-leaf-curl-virus-symptoms-on-tomato-leaves-on-plants-ACGAME.jpg,SRC002:tomato-yellow-leaf-curl-virus-symptoms-on-tomato-leaves-on-plants-ACGAME.jpg,2,CLOSE
+TOM_003347,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\15481477375.jpg,SRC002:15481477375.jpg,2,CLOSE
+TOM_003349,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\1688.jpg,SRC002:1688.jpg,2,CLOSE
+TOM_003354,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\20140818-tomato-sauce-vicky-wasik-1.jpg,SRC002:20140818-tomato-sauce-vicky-wasik-1.jpg,2,CLOSE
+TOM_003369,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\Tomato%2Bleaf.jpg,SRC002:Tomato%2Bleaf.jpg,2,CLOSE
+TOM_003370,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\curling-issues.jpg,SRC002:curling-issues.jpg,2,CLOSE
+TOM_003380,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\mortgage-lifter-yellow-leaves-2.jpg,SRC002:mortgage-lifter-yellow-leaves-2.jpg,2,WIDE
+TOM_003388,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\tomato-leaf-20728368.jpg,SRC002:tomato-leaf-20728368.jpg,0,CLOSE
+TOM_003396,SRC002,C:\ds\plantdoc_files\train\Tomato leaf\tomato-leaves-9025906.jpg,SRC002:tomato-leaves-9025906.jpg,0,MACRO
+TOM_003407,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\603-116-0.jpg,SRC002:603-116-0.jpg,2,CLOSE
+TOM_003417,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\Fig.%2015_opta.jpg,SRC002:Fig.%2015_opta.jpg,2,CLOSE
+TOM_003428,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\Leaf-mold-caused-by-the-fungal-pathogen-Passalore-fulva-in-tomatoes.jpg,SRC002:Leaf-mold-caused-by-the-fungal-pathogen-Passalore-fulva-in-tomatoes.jpg,2,CLOSE
+TOM_003429,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\Leaf-mold-web.jpg,SRC002:Leaf-mold-web.jpg,2,CLOSE
+TOM_003433,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\P1020365.jpg,SRC002:P1020365.jpg,2,CLOSE
+TOM_003443,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\dscn6690.jpg,SRC002:dscn6690.jpg,2,CLOSE
+TOM_003451,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\leaf_mold2.jpg,SRC002:leaf_mold2.jpg,2,CLOSE
+TOM_003456,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\leaf_mold_tomato3x1200.jpg,SRC002:leaf_mold_tomato3x1200.jpg,2,CLOSE
+TOM_003471,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\tomato-leaf-mold-infection-on-a-leaf-top-and-underside-picture-id81781575_s=612x612.jpg,SRC002:tomato-leaf-mold-infection-on-a-leaf-top-and-underside-picture-id81781575_s=612x612.jpg,2,CLOSE
+TOM_003475,SRC002,C:\ds\plantdoc_files\train\Tomato mold leaf\tomato_fulvia.jpg,SRC002:tomato_fulvia.jpg,2,CLOSE
+TOM_003487,SRC004,C:\ds\rover_tomato\raw\SRC004\7a18aa67a1845647.jpg,SRC004:1723454501459.jpg,2,CLOSE
+TOM_003492,SRC004,C:\ds\rover_tomato\raw\SRC004\020c9f938282b44d.jpg,SRC004:1723454503933.jpg,2,CLOSE
+TOM_003533,SRC004,C:\ds\rover_tomato\raw\SRC004\b0bfd35e10271bbb.jpg,SRC004:IMG_20251102_155246.jpg,2,CLOSE
+TOM_003549,SRC004,C:\ds\rover_tomato\raw\SRC004\e4aa3a15cf293afa.jpg,SRC004:IMG_20251102_160940.jpg,2,CLOSE
+TOM_003559,SRC004,C:\ds\rover_tomato\raw\SRC004\1c9273241ccecc02.jpg,SRC004:Tomato-diseases-prevention-treatment--Early-blight-_jpg.rf.83f31e79700bb2de422ce9eafe28d2d0.jpg,2,CLOSE
+TOM_003560,SRC004,C:\ds\rover_tomato\raw\SRC004\7613f78d19331cba.jpg,SRC004:_storage_emulated_0_DCIM_Camera_IMG_20251102_155855.jpg,2,CLOSE
+TOM_003570,SRC004,C:\ds\rover_tomato\raw\SRC004\09ea2163f2ce6235.jpg,SRC004:HL_(110).jpg,2,CLOSE
+TOM_003573,SRC004,C:\ds\rover_tomato\raw\SRC004\0a371a4e34f3bf3c.jpg,SRC004:HL_(138).jpg,2,CLOSE
+TOM_003578,SRC004,C:\ds\rover_tomato\raw\SRC004\bef8706f6142be79.jpg,SRC004:HL_(77).jpg,2,CLOSE
+TOM_003579,SRC004,C:\ds\rover_tomato\raw\SRC004\b4574f350b69c973.jpg,SRC004:HL_(78).jpg,2,CLOSE
+TOM_003580,SRC004,C:\ds\rover_tomato\raw\SRC004\09b8c90a76bd0122.jpg,SRC004:HL_(80).jpg,2,CLOSE
+TOM_003586,SRC004,C:\ds\rover_tomato\raw\SRC004\f65a476db60f7ac3.jpg,SRC004:IMG_20251102_153538.jpg,2,CLOSE
+TOM_003590,SRC004,C:\ds\rover_tomato\raw\SRC004\0d277516093e0f11.jpg,SRC004:IMG_20251102_161616.jpg,2,CLOSE
+TOM_003596,SRC004,C:\ds\rover_tomato\raw\SRC004\d21fc19e0084e158.jpg,SRC004:IMG_20251102_161629.jpg,2,CLOSE
+TOM_003599,SRC004,C:\ds\rover_tomato\raw\SRC004\a19179c190c383c1.jpg,SRC004:IMG_20251102_161638.jpg,2,CLOSE
+TOM_003601,SRC004,C:\ds\rover_tomato\raw\SRC004\8ecc25fae1713e0f.jpg,SRC004:IMG_20251102_161647.jpg,2,CLOSE
+TOM_003602,SRC004,C:\ds\rover_tomato\raw\SRC004\55d2a8e99ae798e8.jpg,SRC004:IMG_20251102_161649.jpg,2,CLOSE
+TOM_003623,SRC004,C:\ds\rover_tomato\raw\SRC004\861ca1d5a8a97167.jpg,SRC004:IMG_20251102_161827.jpg,2,CLOSE
+TOM_003626,SRC004,C:\ds\rover_tomato\raw\SRC004\fc5e167e0a9ca4d6.jpg,SRC004:IMG_20251102_161844.jpg,2,CLOSE
+TOM_003632,SRC004,C:\ds\rover_tomato\raw\SRC004\4a5bb5cf79c7b50f.jpg,SRC004:IMG_20251102_161933.jpg,2,CLOSE
+TOM_003636,SRC004,C:\ds\rover_tomato\raw\SRC004\15fc7dff4a967af1.jpg,SRC004:IMG_20251102_161948.jpg,2,CLOSE
+TOM_003645,SRC004,C:\ds\rover_tomato\raw\SRC004\276ac527d0ea6704.jpg,SRC004:IMG_20251102_162040.jpg,2,CLOSE
+TOM_003652,SRC004,C:\ds\rover_tomato\raw\SRC004\e2915be51bc98928.jpg,SRC004:h103.jpg,2,CLOSE
+TOM_003666,SRC004,C:\ds\rover_tomato\raw\SRC004\72b3223bfc839346.jpg,SRC004:h71.jpg,2,CLOSE
+TOM_003676,SRC004,C:\ds\rover_tomato\raw\SRC004\0b00e617a9253d16.jpg,SRC004:h96.jpg,2,CLOSE
+TOM_003681,SRC004,C:\ds\rover_tomato\raw\SRC004\fe322c4e3226421d.jpg,SRC004:1723454505812.jpg,2,CLOSE
+TOM_003684,SRC004,C:\ds\rover_tomato\raw\SRC004\2fac967a5d8e49ca.jpg,SRC004:1723454507962.jpg,2,CLOSE
+TOM_003688,SRC004,C:\ds\rover_tomato\raw\SRC004\acdced733a169369.jpg,SRC004:Gls11_mirror_vertical.jpg,2,CLOSE
+TOM_003694,SRC004,C:\ds\rover_tomato\raw\SRC004\322dfc2eff219985.jpg,SRC004:Gls38.jpg,2,CLOSE
+TOM_003700,SRC004,C:\ds\rover_tomato\raw\SRC004\13f15e5a9d1f9a23.jpg,SRC004:Gls81.JPG,2,CLOSE
+TOM_003706,SRC004,C:\ds\rover_tomato\raw\SRC004\93107b3fe538d3e1.jpg,SRC004:IMG-20240812-WA0159.jpg,2,CLOSE
+TOM_003713,SRC004,C:\ds\rover_tomato\raw\SRC004\2de358eeaf22f250.jpg,SRC004:IMG-20240812-WA0213.jpg,2,CLOSE
+TOM_003716,SRC004,C:\ds\rover_tomato\raw\SRC004\9e0a0d6e1f58346f.jpg,SRC004:IMG-20240812-WA0247.jpg,2,CLOSE
+TOM_003717,SRC004,C:\ds\rover_tomato\raw\SRC004\996f5305ededc407.jpg,SRC004:IMG-20240812-WA0257.jpg,2,CLOSE
+TOM_003720,SRC004,C:\ds\rover_tomato\raw\SRC004\c7b020e5c755750b.jpg,SRC004:IMG-20240812-WA0297.jpg,2,CLOSE
+TOM_003722,SRC004,C:\ds\rover_tomato\raw\SRC004\cd455a0773395f68.jpg,SRC004:IMG-20240812-WA0363.jpg,2,CLOSE
+TOM_003726,SRC004,C:\ds\rover_tomato\raw\SRC004\f3f4f9196a6d2e62.jpg,SRC004:IMG_3175.jpg,2,CLOSE
+TOM_003727,SRC004,C:\ds\rover_tomato\raw\SRC004\60bb82de5a695300.jpg,SRC004:IMG_6433-300x225.jpg,2,CLOSE
+TOM_003735,SRC004,C:\ds\rover_tomato\raw\SRC004\c49689283b00f437.jpg,SRC004:SS_ (969).jpg,3,MEDIUM
+TOM_003737,SRC004,C:\ds\rover_tomato\raw\SRC004\17cfe3677d1c3d09.jpg,SRC004:SS_ (974)1.jpg,2,CLOSE
+TOM_003745,SRC004,C:\ds\rover_tomato\raw\SRC004\03fc23cabf1ba8da.jpg,SRC004:SS_ (993).jpg,2,CLOSE
+TOM_003747,SRC004,C:\ds\rover_tomato\raw\SRC004\05f771c677cbfd7f.jpg,SRC004:SeptoriaLeaf_T3.jpg,3,MEDIUM
+TOM_003751,SRC004,C:\ds\rover_tomato\raw\SRC004\e3753ea2f7df9b91.jpg,SRC004:early-blight-tomatoes-1200x746-1.jpg,2,CLOSE
+TOM_003755,SRC004,C:\ds\rover_tomato\raw\SRC004\87ec4f74f4314d1d.jpg,SRC004:septoria3.jpg,2,CLOSE
+TOM_003758,SRC004,C:\ds\rover_tomato\raw\SRC004\23ec2f549c46cac1.jpg,SRC004:6-13lateblightleavesMARY_jpg.rf.1114a350a3d07eb0c4f5a4cdcbbe82ed.jpg,2,CLOSE
+TOM_003762,SRC004,C:\ds\rover_tomato\raw\SRC004\435de9f32ad88872.jpg,SRC004:Gls70_change_90.jpg,2,CLOSE
+TOM_003768,SRC004,C:\ds\rover_tomato\raw\SRC004\f63f16c0caf7d36f.jpg,SRC004:IMG20251102153828.jpg,2,CLOSE
+TOM_003772,SRC004,C:\ds\rover_tomato\raw\SRC004\d2774a1445bfdc0c.jpg,SRC004:IMG_20251102_160928.jpg,2,CLOSE
+TOM_003773,SRC004,C:\ds\rover_tomato\raw\SRC004\8e3ad7f450c9e85d.jpg,SRC004:IMG_20251102_161026.jpg,2,CLOSE
+TOM_003776,SRC004,C:\ds\rover_tomato\raw\SRC004\9cbf4ffa580f6578.jpg,SRC004:IMG_5808_jpg.rf.9de5af872dd2e7a58b115c4826fb18d4.jpg,2,CLOSE
+TOM_003787,SRC004,C:\ds\rover_tomato\raw\SRC004\29e4b559078b2659.jpg,SRC004:Lb51_change_90.jpg,2,CLOSE
+TOM_003796,SRC004,C:\ds\rover_tomato\raw\SRC004\5a05293f88def5f3.jpg,SRC004:Lb8_change_270.jpg,2,CLOSE
+TOM_003800,SRC004,C:\ds\rover_tomato\raw\SRC004\8f8395642afd1d3c.jpg,SRC004:Leaf-2Bsymptoms-2BMDA_jpg.rf.39b220104d04636fad4f5aae043826cb.jpg,2,CLOSE
+TOM_003805,SRC004,C:\ds\rover_tomato\raw\SRC004\c700d7943ed502a9.jpg,SRC004:3782849713_398f3a1086_b_jpg.rf.459a511773f9b32c153d53a41b5bd3d2.jpg,2,CLOSE
+TOM_003808,SRC004,C:\ds\rover_tomato\raw\SRC004\a3e1ea940df4c6ee.jpg,SRC004:DSC02007.JPG.jpg,2,CLOSE
+TOM_003809,SRC004,C:\ds\rover_tomato\raw\SRC004\3bae08e4ec3fd7d7.jpg,SRC004:IMG20251102153724.jpg,3,MEDIUM
+TOM_003826,SRC004,C:\ds\rover_tomato\raw\SRC004\4e7018b997bffe6c.jpg,SRC004:IMG_20251102_155119.jpg,2,CLOSE
+TOM_003831,SRC004,C:\ds\rover_tomato\raw\SRC004\a04101202f1f0518.jpg,SRC004:IMG_20251102_155358.jpg,2,CLOSE
+TOM_003835,SRC004,C:\ds\rover_tomato\raw\SRC004\a508edc554a24937.jpg,SRC004:IMG_20251102_160553.jpg,3,MEDIUM
+TOM_003858,SRC004,C:\ds\rover_tomato\raw\SRC004\b57d6b6b4e6a2d37.jpg,SRC004:IMG-20240724-WA0053.jpg,2,CLOSE
+TOM_003860,SRC004,C:\ds\rover_tomato\raw\SRC004\d731a015f0d65d1b.jpg,SRC004:IMG-20240724-WA0063.jpg,2,CLOSE
+TOM_003867,SRC004,C:\ds\rover_tomato\raw\SRC004\b455882d89e1c184.jpg,SRC004:IMG-20240724-WA0099.jpg,2,CLOSE
+TOM_003868,SRC004,C:\ds\rover_tomato\raw\SRC004\8f6a6e3674e15336.jpg,SRC004:IMG-20240724-WA0102.jpg,2,CLOSE
+TOM_003873,SRC004,C:\ds\rover_tomato\raw\SRC004\4aad036e2fcf84db.jpg,SRC004:IMG-20240724-WA0108.jpg,2,CLOSE
+TOM_003882,SRC004,C:\ds\rover_tomato\raw\SRC004\262838797c4897f1.jpg,SRC004:IMG-20240725-WA0025.jpg,2,CLOSE
+TOM_003894,SRC004,C:\ds\rover_tomato\raw\SRC004\b224226082d509d6.jpg,SRC004:IMG-20240727-WA0044.jpg,2,CLOSE
+TOM_003907,SRC004,C:\ds\rover_tomato\raw\SRC004\34a59eb1b75e639f.jpg,SRC004:IMG-20240727-WA0123.jpg,2,CLOSE
+TOM_003923,SRC004,C:\ds\rover_tomato\raw\SRC004\1b7e8233382526fd.jpg,SRC004:IMG-20240727-WA0197.jpg,2,CLOSE
+TOM_003924,SRC004,C:\ds\rover_tomato\raw\SRC004\8cc09dedd3f7036d.jpg,SRC004:IMG-20240727-WA0199.jpg,2,CLOSE
+TOM_003947,SRC004,C:\ds\rover_tomato\raw\SRC004\ec05e3c687820a9f.jpg,SRC004:IMG-20240728-WA0057.jpg,2,CLOSE
+TOM_003950,SRC004,C:\ds\rover_tomato\raw\SRC004\cc695b20f858da89.jpg,SRC004:IMG-20240728-WA0060.jpg,2,CLOSE
+TOM_003954,SRC004,C:\ds\rover_tomato\raw\SRC004\f1e4fa1f4a52f065.jpg,SRC004:IMG-20240728-WA0065.jpg,2,CLOSE
+TOM_003968,SRC004,C:\ds\rover_tomato\raw\SRC004\183d72b06857a34a.jpg,SRC004:IMG-20240728-WA0086.jpg,2,CLOSE
+TOM_003972,SRC004,C:\ds\rover_tomato\raw\SRC004\c0e85ab8777d7c7b.jpg,SRC004:IMG-20240728-WA0094.jpg,2,CLOSE
+TOM_003984,SRC004,C:\ds\rover_tomato\raw\SRC004\32a221a0a4f87e1d.jpg,SRC004:IMG_20251102_154920.jpg,2,CLOSE
+TOM_003985,SRC004,C:\ds\rover_tomato\raw\SRC004\854a8dfa4775e0a5.jpg,SRC004:IMG_20251102_155427.jpg,2,CLOSE

@@ -1,30 +1,34 @@
 statistic,value
-total images retained,2350.0
-total rejected as duplicates,200.0
-sources contributing,3.0
+total images retained,3875.0
+total rejected as duplicates,535.0
+sources contributing,5.0
 synthetic images,0.0
-leakage groups,789.0
+leakage groups,2314.0
 guard-band frames excluded from splits,0.0
 images from SRC002,722.0
-share of dataset from SRC002 (%),30.7
+share of dataset from SRC002 (%),18.6
+images from SRC004,510.0
+share of dataset from SRC004 (%),13.2
+images from SRC005,1015.0
+share of dataset from SRC005 (%),26.2
 images from SRC014,327.0
-share of dataset from SRC014 (%),13.9
+share of dataset from SRC014 (%),8.4
 images from SRC015,1301.0
-share of dataset from SRC015 (%),55.4
+share of dataset from SRC015 (%),33.6
 rover_relevance == 0,79.0
-rover_relevance == 1,103.0
-rover_relevance == 2,1583.0
-rover_relevance == 3,585.0
-camera_distance == CLOSE,1449.0
-camera_distance == MEDIUM,446.0
-camera_distance == WIDE,360.0
+rover_relevance == 1,108.0
+rover_relevance == 2,2788.0
+rover_relevance == 3,900.0
+camera_distance == CLOSE,2650.0
+camera_distance == MEDIUM,732.0
+camera_distance == WIDE,398.0
 camera_distance == MACRO,95.0
-split train,1683.0
-split test,350.0
-split val,317.0
-licence CC BY 4.0,1628.0
+split train,2736.0
+split test,571.0
+split val,568.0
+licence CC BY 4.0,3153.0
 licence UNKNOWN,722.0
-redistributable images (licence VERIFIED),1628.0
-median megapixels,0.328
+redistributable images (licence VERIFIED),3153.0
+median megapixels,0.743
 min megapixels,0.009
 max megapixels,24.0

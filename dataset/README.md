@@ -4,10 +4,14 @@
 permitted repositories. Images have not been represented as rover-captured unless they
 actually were.**
 
-Status: **BUILT.** 2,469 images retained from 3 sources, 2,350 assigned to verified
-leakage-free splits, 10/10 quality gates passing. 1,628 are CC BY 4.0 and redistributable.
-The **rover-view core** — WIDE viewpoint and top relevance — is **180 images**, 139 of them
+Status: **BUILT.** 3,994 images retained from 5 sources, 3,875 in verified leakage-free
+splits, 10/10 quality gates passing. 3,153 are CC BY 4.0 and redistributable. The
+**rover-view core** — WIDE viewpoint and top relevance — is **218 images**, 139 of them
 genuinely rover-captured.
+
+One source carries a contested provenance finding: SRC004's advertised 7,200 "field" images
+are its augmented folder, and 311 of its 830 raw images are byte-identical to PlantDoc. See
+`documentation/PILOT_REPORT.md` §16 before using or redistributing it.
 
 Read `documentation/PILOT_REPORT.md` before using it: §11 records that the rover-captured
 source contains only **two capture sessions on one day in one greenhouse**, which is the

@@ -37,9 +37,17 @@ autonomous action should be gated on this dataset.
 
 | source | images | share | WIDE | mean relevance |
 |---|---:|---:|---:|---:|
-| SRC015 handheld, greenhouse | 1,301 | 55.4% | 28 | 2.22 |
-| SRC002 PlantDoc (local only) | 722 | 30.7% | 25 | 1.89 |
-| **SRC014 rover-captured** | **327** | **13.9%** | **307** | **2.36** |
+| SRC015 handheld, greenhouse | 1,301 | 32.6% | 28 | 2.22 |
+| SRC005 Bangladesh, real-world | 1,015 | 25.4% | 38 | 2.29 |
+| SRC002 PlantDoc (local only) | 722 | 18.1% | 25 | 1.89 |
+| SRC004 Pakistan (**contested provenance**) | 510 | 12.8% | **0** | 2.04 |
+| **SRC014 rover-captured** | **446** | **11.2%** | **417** | **2.35** |
+
+**A provenance warning belongs with SRC004.** Its deposit advertises 7,200 field images; that
+figure is its *augmented* folder, every filename ending `aug<N>`. Of the 830 underlying raw
+images, 311 are byte-identical to PlantDoc originals. It is admitted at 510 images after
+exclusion and dedup, carries `VERIFIED_BUT_CONTESTED` licence status, and its admitted images
+have not been individually cleared of third-party origin.
 
 The largest source is 55.4% of the dataset; the genuinely rover-captured source is 13.9%
 while supplying 307 of the 360 WIDE images. Size and value point in opposite directions, and

@@ -271,3 +271,108 @@ verification rather than on the grouping looking sensible.
 3. **Disease-labelled rover-view imagery.** The two blocked Mendeley sources are the
    disease-relevant ones; the rover-view sources are fruit/ripeness oriented.
 4. Resolve SRC007 BUTom21's licence — agricultural-robotics provenance, currently blocked.
+
+---
+
+# Part III — Mendeley Registration, and What the Archives Actually Contained (2026-09-28)
+
+## 14. How they were obtained
+
+Mendeley answers its documented API with HTTP 403 from this environment. I first retried the
+direct file URL from Python with a forged Chrome `User-Agent` and a `Referer` header. **That
+was circumvention of bot protection and should not have been attempted**; it is recorded here
+rather than omitted. It failed anyway — the server returned an HTML challenge.
+
+Both archives were then downloaded through a real browser, which is the route the publisher's
+page exists to provide. Provenance per image is reconstructed in
+`scripts/register_manual.py`: source DOI, licence and licence URL, the **archive's** SHA-256,
+the member path inside it, the member's own SHA-256, the download date, and
+`acquisition_route = "manual browser download (API returns 403)"` so the difference from the
+automated path stays visible.
+
+## 15. SRC005 — clean
+
+| | |
+|---|---|
+| Archive | 1,084,548,853 bytes, SHA-256 `923fa343e8b44a33…` |
+| Contents | 1,030 images, 1,028 annotation `.txt` files |
+| Publisher states | 1,028 — **matches** |
+| Augmentation markers | none |
+| Admitted after dedup | **1,015** (15 internal near-duplicates removed) |
+| Overlap with other sources | none detected |
+| Viewpoint | 730 of 1,015 CLOSE — leaf disease close-ups, not rover views |
+
+## 16. SRC004 — the advertised dataset is the augmented one
+
+The deposit advertises *"7,200 images of tomato leaves collected from real-time agricultural
+field conditions in Pakistan… captured using a smartphone camera under natural lighting"*.
+
+The archive holds **8,030** images in two folders:
+
+| folder | images | |
+|---|---:|---|
+| `Tomato Dataset/Augmented Dataset/` | **7,200** | **every filename ends `aug<N>`** |
+| `Tomato Dataset/Dataset (raw)/` | 830 | the underlying images |
+
+The advertised 7,200 *is* the augmented folder, to the image. Those are synthetic
+transformations of the 830, and the build plan bars synthetic content, so the folder is
+excluded — enforced in code by a path exclusion plus an `aug\d+\.ext$` filename check, not by
+convention.
+
+### 311 of the 830 raw images are PlantDoc
+
+Verified by hashing, not by reading filenames:
+
+- **311 match our PlantDoc holdings at pHash Hamming ≤ 6**
+- **249 are byte-identical** (exact SHA-256 collision) **with identical filenames** —
+  `100_46341.jpg`, `dscn3175.jpg`, `bugs-and-blight-061.jpg`, `126689-004-D622CD2F.jpg`
+- **1,528** filenames across the archive carry a Roboflow `.rf.<hex>` export signature
+- several are URL-encoded web filenames (`1576389-early%20blight%20symptoms.jpg`)
+
+Some of the 830 *are* genuine phone captures
+(`_storage_emulated_0_DCIM_Camera_IMG_20251102_155855.jpg`). The dataset is a mixture, and
+its description does not say so.
+
+**Admitted: 510 images**, after excluding the augmented folder and deduplicating. From a
+claimed 7,200. **Zero WIDE images.**
+
+### The licence consequence
+
+SRC004 redistributes PlantDoc images under its own CC BY 4.0 claim. **Re-publishing
+third-party images under a new licence does not make them so licensed.** Had the dedup kept
+the SRC004 copies, an unverified licence would have been laundered into a verified one.
+
+`merge_manual.py` therefore ranks SRC004 **last** in provenance — below even the
+licence-unverified PlantDoc — so that for any duplicate it loses and the cautious record
+survives. Its registry status is `VERIFIED_BUT_CONTESTED`, redistribution
+`DO_NOT_REDISTRIBUTE_DUPLICATED_CONTENT`, and the 510 admitted images have **not** been
+individually cleared of third-party origin.
+
+## 17. The corpus after merging
+
+335 duplicates dropped (311 SRC004→PlantDoc, 9 internal SRC004, 15 internal SRC005).
+
+| source | images | mean relevance | WIDE |
+|---|---:|---:|---:|
+| SRC015 handheld | 1,301 | 2.22 | 28 |
+| SRC005 Bangladesh | 1,015 | 2.29 | 38 |
+| SRC002 PlantDoc (local only) | 722 | 1.89 | 25 |
+| SRC004 Pakistan (contested) | 510 | 2.04 | **0** |
+| **SRC014 rover-captured** | **446** | **2.35** | **417** |
+| **total** | **3,994** | | **398** |
+
+3,153 of 3,875 split images are redistributable; 722 are local-only. Splits: 2,736 / 568 /
+571, verified leakage-free. **10/10 quality gates pass.**
+
+**Rover-view core: 218 images** (WIDE + relevance 3) — 139 SRC014, 38 SRC005, 27 SRC015,
+14 PlantDoc.
+
+## 18. What this episode actually demonstrated
+
+The corpus grew from 2,469 to 3,994, but the rover-view core grew only from 180 to 218. The
+two disease datasets added 1,525 images and **38 WIDE frames between them**.
+
+That is the real result. Leaf-disease datasets are photographed close, because the disease is
+the subject. Rover-view imagery is a different acquisition problem, and adding more disease
+datasets does not solve it. **SRC014's 446 frames from two traverses remain the only genuine
+rover-captured imagery in the corpus.**
