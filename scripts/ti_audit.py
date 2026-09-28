@@ -84,9 +84,16 @@ def main() -> int:
                          "control: the anchor is then almost exactly right, which is "
                          "the condition under which anchor-dominated estimators should "
                          "do well.")
+    ap.add_argument("--out", default=None,
+                    help="write to results/<this> instead of results/ti_audit. "
+                         "Required when running a different arm set: the default "
+                         "directory holds the frozen three-arm results that 47 "
+                         "manifests and the validation suite depend on.")
     args = ap.parse_args()
     t0 = time.time()
-    OUT.mkdir(parents=True, exist_ok=True)
+    out_dir = paths.RESULTS_DIR / args.out if args.out else OUT
+    globals()["OUT"] = out_dir
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     models = clean_models()
     facs = factories()
