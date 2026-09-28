@@ -237,6 +237,10 @@ class RoverHardware:
 
     gpio: GPIOBackend | None = None
     speed: int = DEFAULT_SPEED
+    #: Monotonic-ish time source for the ultrasonic pulse measurement. Injectable
+    #: so a simulated sensor can drive it; defaults to the wall clock, which is
+    #: what runs on the Pi. See rover/digital_twin.py for why this exists.
+    clock: Any = time.time
     _pwm_left: Any = field(default=None, init=False, repr=False)
     _pwm_right: Any = field(default=None, init=False, repr=False)
     _relay_asserted: bool = field(default=False, init=False)
@@ -368,15 +372,17 @@ class RoverHardware:
         time.sleep(0.00001)
         g.output(TRIG, False)
 
-        start = time.time()
+        now = self.clock
+        start = now()
         while g.input(ECHO) == 0:
-            if time.time() - start > timeout_s:
+            if now() - start > timeout_s:
                 return None
-        pulse_start = time.time()
+        pulse_start = now()
         while g.input(ECHO) == 1:
-            if time.time() - pulse_start > timeout_s:
+            if now() - pulse_start > timeout_s:
                 return None
-        return (time.time() - pulse_start) * 17150
+        # 17150 = speed of sound in cm/s, halved for the round trip.
+        return (now() - pulse_start) * 17150
 
 
 def remaining_defects() -> dict[str, str]:

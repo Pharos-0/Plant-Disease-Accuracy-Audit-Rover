@@ -100,3 +100,16 @@ The delivered paper's Table I (92.4% navigation accuracy, 89.1% spraying precisi
 have produced any of it** — the delivered file contains no logging of any kind. None
 of these figures may appear in the thesis, including as a baseline to improve on. Any
 performance number in the rover chapter must come from a run logged by our own code.
+
+---
+
+## Note added 2026-09-28 — the digital twin does not change this report
+
+A digital twin now exercises the rover control software end to end
+(`docs/digital_twin.md`, `rover/digital_twin.py`). It simulates GPIO, camera and ultrasonic
+sensor so the real control code can be run and its safety invariants checked.
+
+**Every row above still reads NOT RUN and remains correct.** The twin establishes properties of
+the software. It establishes nothing about the Raspberry Pi, the camera, the motor driver, the
+ultrasonic sensor, the relay, the pump, the battery or power draw, none of which has been
+powered on. A simulated actuator firing proves a decision was taken, not that a pump works.
