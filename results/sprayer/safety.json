@@ -1,0 +1,28 @@
+{
+  "hardware": "SIMULATED",
+  "fuzz": {
+    "runs": 2000,
+    "commands": 160000,
+    "spray_commands": 5998,
+    "obstacles_met_while_spraying": 1497,
+    "violations": 0
+  },
+  "fault_injection": {
+    "stale ultrasonic": {
+      "injected": 200,
+      "safe_stops": 200
+    },
+    "stale resource telemetry": {
+      "injected": 200,
+      "safe_stops": 200
+    },
+    "wrong vision zone count": {
+      "injected": 200,
+      "safe_stops": 200
+    }
+  },
+  "autonomous_return": {
+    "trials": 500,
+    "docked_without_spraying": 500
+  }
+}

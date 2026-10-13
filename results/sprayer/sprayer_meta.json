@@ -1,0 +1,16 @@
+{
+  "hardware": "SIMULATED",
+  "geometry_source": "AgRobTomato, Zenodo 10.5281/zenodo.5596799, 446 rover frames",
+  "disease_source": "Tomato-Village, Jodhpur and Jaipur, Rajasthan, India",
+  "pairing": "each frame paired with a random India plant; independence assumed",
+  "not_measured": [
+    "navigation accuracy",
+    "energy per run (Wh)"
+  ],
+  "canopy_threshold": 0.15,
+  "tau_safe": 0.8,
+  "gate_estimator": "atc_mc",
+  "n_nozzles": 4,
+  "pairings_per_classifier": 10,
+  "seed": 20261013
+}
