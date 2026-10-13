@@ -26,3 +26,8 @@ dataset/processed/
 # Camera sessions: logs and analysis are tracked; captured frames are personal
 # images and stay local unless deliberately added.
 camera_sessions/*/frames/
+
+# Paper 2 literature search: per-query raw records (12.7 MB) are local only;
+# unique_records.csv holds every retrieved work after deduplication.
+results/litsearch_paper2/raw_records.csv
+results/litsearch_paper2/supplement/raw_records.csv
