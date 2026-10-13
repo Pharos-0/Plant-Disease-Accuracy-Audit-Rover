@@ -221,5 +221,8 @@ decision rule, thresholds or conditions changed.
 
 Re-run on the dry-run data, the new analysis reproduces §9 and adds the paired difference: in low
 light the gated policy missed **25.0 percentage points** more diseased frames than spatial-only
-(95% interval 16.7–33.6, resampling photographs, which play the role of plants there). That is the
+(95% interval 16.7–33.6, resampling the 40 diseased photographs). Tomato-Village does not record
+which plant a photograph came from, so the photographs are not known to be independent plants:
+if several share a plant, that interval is too narrow. It is a dry-run estimate on edited
+images, not biological replication. That is the
 effect the real session tests on actual captures.
