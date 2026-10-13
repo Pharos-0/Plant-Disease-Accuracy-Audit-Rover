@@ -109,3 +109,18 @@ python scripts/openfield_sprayer.py all
 python scripts/make_openfield_figure.py
 python -m pytest tests/test_openfield_geometry.py tests/test_sprayer_fsm.py -q
 ```
+
+---
+
+## Added 2026-10-13: a bias this simulation could not see
+
+A later dry run with **real diseased leaves** (`docs/camera_experiment_protocol.md` §8) found
+that a green-pixel plant test is **blind to severe disease**: late-blight leaves average only
+0.20 green, and 38% of them showed no zone ≥ 15% green. The sicker the plant, the less likely
+a green test is to spray it.
+
+This simulation could not reveal that, because its disease state was borrowed from another
+dataset and did not change any plant's colour. **Wherever a result here relies on green
+detection — the vision-only baseline, and canopy detection — real missed treatment of
+diseased plants would be higher than the coverage figures above.** The camera demo now detects
+leaf tissue of any plant colour; the simulations have not been re-run with that change.
