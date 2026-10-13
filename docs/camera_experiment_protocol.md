@@ -4,6 +4,12 @@
 and metrics below are fixed. A dry run on edited field photographs (§8) found one design
 flaw, which was corrected *before* this protocol was finalised; both runs are recorded.
 
+**Revised 2026-10-14, still before any real leaf was photographed** (§10): the sample is
+specified in plants rather than leaves; each diagnosis must be confirmed independently and the
+confirmation recorded; intervals resample whole plants; and the primary outcome is now stated as
+the paired difference in missed treatment between the two policies on the same frames. The
+decision rule and conditions are unchanged.
+
 ---
 
 ## 1. What this experiment can and cannot show
@@ -14,6 +20,7 @@ flaw, which was corrected *before* this protocol was finalised; both runs are re
 | Lighting, distance, angle, occlusion and background change predictions | **Yes**, measured against true labels |
 | Confidence identifies wrong predictions | **Yes**, as a measured AUROC |
 | The decision rule never leaves a visible diseased leaf unsprayed | **Yes**, the missed-treatment rate is measured directly |
+| Letting the classifier withhold spray misses more diseased leaves than spraying all leaf tissue | **Yes**, as a paired difference on the same frames, with plant-level intervals |
 | Disease-recognition accuracy in a real field | **No** — a few leaves on a desk are not a field sample |
 | Rover motors, sensors or spray hardware work | **No** |
 | Real pesticide savings | **No** |
@@ -21,10 +28,19 @@ flaw, which was corrected *before* this protocol was finalised; both runs are re
 ## 2. What you need
 
 - A laptop with a webcam (or a phone — see §7).
-- **Real tomato leaves with a known label**: healthy, early blight, late blight. A leaf whose
-  disease is not confirmed should be labelled with the best judgement *and noted*; if in doubt,
-  leave it out. **Aim for at least 10 leaves: 5 healthy and 5 diseased.** With only healthy
-  leaves, false alarms (wasted spray) can be measured but disease detection cannot.
+- **Real tomato leaves from several independent plants**: healthy, early blight, late blight.
+  Leaves of one plant are not independent samples, any more than frames of one leaf are. **Aim
+  for at least 6 diseased plants and 4 healthy plants, 2–3 leaves from each** — about 25 leaves.
+  Ten leaves from two plants would be a pilot, not evidence: even zero missed treatments on them
+  would say little.
+- **An independent confirmation of each diagnosis.** A leaf's appearance alone does not establish
+  its disease. Have each plant's diagnosis confirmed by an agronomist, a plant-protection or
+  extension officer, or a laboratory test, and record how (`--diagnosis-source`, §5). A plant
+  whose diagnosis cannot be confirmed is **left out**, not labelled by best judgement. If only a
+  visual diagnosis is available, record `visual only`; the analysis reports the sources, and the
+  results must then be described as against visual labels.
+- With only healthy plants, false alarms (wasted spray) can be measured but disease detection
+  cannot.
 - A lamp or phone torch, sheets of white paper and dark cloth, and some soil or plant clutter.
 
 ## 3. Conditions — 5 frames each, per leaf
@@ -39,7 +55,10 @@ flaw, which was corrected *before* this protocol was finalised; both runs are re
 | `6` | **background** | the leaf on dark cloth, then on soil or among other plants |
 
 Between the 5 frames, move the leaf slightly so they are not identical — but they are still
-**one leaf**, and the analysis treats them as one.
+**one leaf** from **one plant**, and the analysis treats them so.
+
+**Low light is the priority condition**: the dry run's largest difference between the policies
+was there (§9). If time is short, record *normal* and *low light* for every leaf first.
 
 ## 4. The decision rule (fixed before any real frame)
 
@@ -64,16 +83,20 @@ frames are not different plants.
 ## 5. Running it
 
 ```bash
-python demo/live_sprayer.py --camera 0
+python demo/live_sprayer.py --camera 0 --diagnosis-source "agronomist"
 ```
 
 | key | action |
 |---|---|
 | `h` / `e` / `l` | set the true label: healthy / early blight / late blight |
 | `1`–`6` | set the condition |
-| `n` | next leaf |
+| `n` | next leaf **from the same plant** |
+| `p` | next **plant** (also starts its first leaf) |
 | **SPACE** | save this frame with its labels |
 | `q` | quit |
+
+Every saved frame records its plant, leaf, condition, true label, diagnosis source, and **both**
+policies' decisions, so the two policies are always compared on exactly the same frames.
 
 **Nothing is saved except on SPACE.** Frames and a log go to `camera_sessions/<date_time>/`.
 
@@ -83,13 +106,19 @@ python demo/live_sprayer.py --camera 0
 python scripts/analyse_camera_session.py camera_sessions/<date_time>
 ```
 
-Per condition: accuracy, confidence, abstention, spray rate, and three outcomes for every
-diseased leaf — **sprayed**, **missed** (the system decided not to spray), **deferred** (it
+**Primary outcome.** Per condition, the share of diseased frames missed by the
+**classifier-gated** policy and by the **spatial-only** policy, and their **difference** (gated
+minus spatial-only) on the same frames, with a 95% interval (`policy_comparison.csv`). The
+claim to be tested is that the difference is above zero in low light.
+
+Secondary, per condition: accuracy, confidence, abstention, spray rate, and three outcomes for
+every diseased leaf — **sprayed**, **missed** (the system decided not to spray), **deferred** (it
 refused to decide). Healthy leaves give the **wasted-spray** rate. Pooled: confidence as an
 error detector (AUROC). Paired: each condition against *normal* for the same leaf.
 
-**Every interval is a cluster bootstrap over leaves**, because frames of one leaf are not
-independent samples.
+**Every interval is a cluster bootstrap over plants** when every frame carries a plant
+identifier, and over leaves otherwise; the analysis prints which. Frames of one leaf, and
+leaves of one plant, are not independent samples.
 
 **Safety criterion: missed treatment = 0.** Deferred leaves are reported beside it, and
 "untreated" = missed + deferred.
@@ -99,10 +128,14 @@ independent samples.
 Take the photos with a phone, copy them to the laptop, and list them in a CSV:
 
 ```
-path,truth,leaf_id,condition
-C:/photos/IMG_001.jpg,healthy,L01,normal
-C:/photos/IMG_002.jpg,healthy,L01,low_light
+path,truth,plant_id,leaf_id,condition,diagnosis_source
+C:/photos/IMG_001.jpg,healthy,P01,P01L01,normal,agronomist
+C:/photos/IMG_002.jpg,healthy,P01,P01L01,low_light,agronomist
+C:/photos/IMG_003.jpg,late_blight,P02,P02L01,low_light,lab test
 ```
+
+`plant_id` and `diagnosis_source` are optional columns, but without `plant_id` on every row the
+intervals fall back to resampling leaves.
 
 ```bash
 python demo/live_sprayer.py --manifest photos.csv --out camera_sessions/phone_run
@@ -173,3 +206,20 @@ the classifier believes a plant is diseased. That is consistent with every other
 project: label-free estimators cannot verify the classifier under field shift (the thesis
 research), confidence barely flags errors in the field (AUROC 0.57–0.67 across target
 conditions), and the 62.5% open-field saving came almost entirely from spatial targeting.
+
+## 10. Revision of 2026-10-14 — before any real leaf
+
+Made after an external review of Paper 2 and before any real frame was recorded. Nothing in the
+decision rule, thresholds or conditions changed.
+
+| What | Before | After | Why |
+|---|---|---|---|
+| Sample | ≥ 10 leaves (5 healthy, 5 diseased) | ≥ 6 diseased and ≥ 4 healthy **plants**, 2–3 leaves each | leaves of one plant are not independent; ten leaves is a pilot |
+| Labels | best judgement, noted | independent confirmation (agronomist, extension officer or lab), recorded per frame; unconfirmed plants left out | appearance alone does not establish a diagnosis |
+| Resampling unit | leaf | plant (leaf if any frame lacks a plant id) | uncertainty at the level of independent units |
+| Primary outcome | missed treatment per policy | **paired difference**, gated minus spatial-only, same frames | the claim is about the policies, so compare them directly |
+
+Re-run on the dry-run data, the new analysis reproduces §9 and adds the paired difference: in low
+light the gated policy missed **25.0 percentage points** more diseased frames than spatial-only
+(95% interval 16.7–33.6, resampling photographs, which play the role of plants there). That is the
+effect the real session tests on actual captures.

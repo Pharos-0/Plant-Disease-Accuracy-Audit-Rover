@@ -21,7 +21,10 @@ credit and not claim:
    decision-support system and spray prescription maps. F1 fell from 66.3% to 34.8% (grape downy
    mildew), 45.1% to 5.5% (apple scab) and 42.1% to 4.2% (carrot Alternaria) between closed-set
    and open-set field images. The authors explicitly expect PlantVillage-trained models to degrade
-   in the field. A weed-sprayer prototype (*J. ASABE* 2026) went from a 100% weed hit rate indoors
+   in the field — and Desai 2026 (*Discover AI*; full text read) has since measured exactly that inside
+   a spraying pipeline: a PlantVillage-trained classifier driving a drone spray-dose planner fell
+   from 69.6% to 20.6% accuracy on PlantDoc, the same lab and field datasets the companion study
+   uses. **This is the closest disease-spraying study found.** A weed-sprayer prototype (*J. ASABE* 2026) went from a 100% weed hit rate indoors
    to 74.6% in the field. A rice-disease advisory system (Han & Zhou 2025) fell from about 80% to
    about 13% accuracy on an external dataset, and its unknown-input detectors scored AUROC 0.512 and
    0.486.
@@ -31,11 +34,17 @@ credit and not claim:
    least 90% of weeds; the strict rule (spray only on a confident singleton) covered about 70%.
    Tested on new farms ("near out-of-distribution", no field test), the guarantee held for most
    farms but fell well short on some, which the authors attribute to visual differences from the
-   calibration data.
+   calibration data. Disease sprayers already hedge in different ways (all full text): the potato
+   systems of Sharma & Raheman (2025; 2026 preprint) give a "healthy" or low-confidence (<0.6) call a
+   40% baseline dose rather than none; Desai 2026 sends images below 0.5 confidence to human review;
+   Oberti et al. 2013 spray only where two detectors agree above a probability threshold, so
+   uncertainty there *reduces* treatment.
 3. **Reporting treatment success beside chemical saved, and the resolution trade-off, are
-   established** in weed spraying. Avent et al. 2025 measured treatment success of a commercial
-   targeted sprayer per sensitivity setting: 98–99.6% at the most sensitive setting, falling to
-   48–84% at the least, by weed class. Ruigrok et al. 2020 evaluated detection at the level of
+   established** in weed spraying. Avent et al. 2025 (full text) measured treatment success of a
+   commercial targeted sprayer per sensitivity setting, which are detector confidence thresholds of
+   0.4, 0.7 and 0.9: 98–99.6% at the most sensitive setting, falling to 48–84% at the least, by weed
+   class — field evidence, for weeds, that requiring confidence costs coverage. Oberti et al. 2013
+   reported the same pairing for disease (85% of diseased area sprayed, 84% less pesticide). Ruigrok et al. 2020 evaluated detection at the level of
    spray decisions. Darbyshire et al. 2023 defined weed coverage rate and area sprayed. Berge et
    al. 2008 and Petelewicz et al. 2024 simulated how spraying resolution trades errors against
    reduction.
@@ -123,23 +132,31 @@ This is an observation from abstracts, not a full-text audit.
 
 ## 5. Closest studies
 
-What was read is recorded for each: **FT** = full text, **A** = abstract only.
+What was read is recorded for each: **FT** = full text, **A** = abstract only. Full texts were
+obtained only from open-access copies; where a publisher returned a bot check or a page without
+readable text, the study stays at **A** and the reason is given. **14 of the closest studies were
+read in full.**
 
 | Study | Read | Sensing → decision | Uncertainty / shift handling | Evaluation | Outcomes | Shift evaluated |
 |---|---|---|---|---|---|---|
 | Melki et al. 2025, arXiv 2501.07185 | FT | RGB → ResNet-50 classifier → conformal sets → spray rule (weeds) | Conformal prediction; lenient rule sprays when weed is plausible | Image-level, old and new farms; no field test | ≥90% weed coverage guaranteed with lenient rule; ~70% with strict | Near-OOD: guarantee fails on some farms |
+| Desai 2026, *Discover AI* | FT | PlantVillage-trained MobileNetV2 (pepper, potato, tomato) → per-tile dose planner for a drone | MSP < 0.5 → "request human review"; dose 0 below the disease threshold | Laboratory images; PlantDoc as external test; no field spraying | 69.6% → 20.6% accuracy on PlantDoc | **Yes**, PlantVillage → PlantDoc (same pair as the companion study) |
 | Polder et al. 2025, *J. Field Robot.* | FT | RGB smart camera → CNN detector → DSS → prescription map → sprayer | None in the spray decision; open-set evaluation | Commercial vineyards, orchards, fields; 31 h hardware run | F1 drop closed→open set (above) | **Yes**, lab-condition → field |
-| Han & Zhou 2025, *JTIE* | A | Image → classifier → advisory with gates | Open-set rejection, quality triage, abstain | Grouped test + external dataset | ~80% → ~13% accuracy external; unknown-detection AUROC ~0.5 | **Yes**, external dataset |
-| Oberti et al. 2016 (2013 conf.) | A | Multispectral sensor on robot arm → spray symptomatic canopy (powdery mildew) | — | First experiments | — (not in abstract) | No |
-| Tewari et al. 2020, *AI in Agriculture* | A | Webcams → colour segmentation → severity → spray time (paddy) | — | Field, variable vs constant rate | ≥33.9% less chemical | No |
-| Anand et al. 2025, *Front. Agric. Sci. Eng.* | A | Spectral sensor → SVM (black rot) → targeted spraying | — | Cauliflower crop | 72.5% less chemical | No |
-| Sharma & Raheman 2025, *Cogent Food Agric.* | A | YOLOv3 + CNN (tomato healthy / early / late blight) → variable-rate spray | — | Laboratory trolley | 83.3% dose accuracy; 92.8% validation accuracy | No |
-| Chang et al. 2023, *Agriculture* | A | DL detection of weeds and unhealthy crops → spray | Robust navigation under varying light | Field robot | 83% effective weed coverage, 53% reduction | Light varied for navigation only |
-| Avent et al. 2025, *Weed Technol.* | A | Commercial targeted sprayer (sensitivity settings) | Sensitivity setting trades coverage for savings | Multi-state field trials | Treatment success 98–99.6% → 48–84% by setting | Across weed species and sizes |
-| Ruigrok et al. 2020, *Sensors* | A | Weed detector → plant-specific spraying robot | — | Image-, application- and field-level | 96% weeds controlled, 3% crop hit | No |
-| Darbyshire et al. 2023, *Front. Plant Sci.* | A | Detectors → simplified spray model | — | Two datasets, nozzle precision varied | Weed coverage rate vs area sprayed | No |
-| Berge et al. 2008, *Acta Agric. Scand. B* | A | Simulated camera decisions → patch spraying | — | Simulation on mapped weeds | Mapping vs spraying error vs control-area size | No |
-| Adam et al. 2024; 2023, IEEE CASE | A | UV-C treatment robot | Model checking → runtime monitors (ROS2) | Design and verification | Verified safety requirements | — |
+| Han & Zhou 2025, *JTIE* | FT | Image → classifier → advisory with gates | Open-set rejection, quality triage, abstain; thresholds fixed from source | Grouped test + external dataset | ~80% → ~13% accuracy external; unknown-detection AUROC ~0.5 | **Yes**, external dataset |
+| Oberti et al. 2013, *J. Agric. Eng.* (conf. version of 2016) | FT | Multispectral camera on robot arm → spray where two detectors agree (powdery mildew) | Agreement above a probability threshold — uncertainty *reduces* treatment | Greenhouse, vs plant-pathologist map | 85% of diseased area sprayed, 92% selectivity, 84% less pesticide (illustrative example) | No |
+| Doruchowski et al. 2012 (CASA), *Asp. Appl. Biol.* | FT | Reflectance disease detection + ultrasonic canopy sensing → variable rate | — | Disease detection in the lab only; orchard field trials for canopy sensing | 31–82% spray savings from canopy sensing, efficacy maintained | No (authors: lab-to-orchard "still a challenge") |
+| Sharma & Raheman 2025, *Cogent Food Agric.* | FT | YOLOv3 + CNN (**potato** healthy / early / late blight) → PWM dose | Confidence < 0.6 → "healthy" setting, which is a 40% baseline dose, never zero | Laboratory trolley, 12 potato plants; random 70/30 split | 83.3% correct dose; 100% of plants received some spray | No |
+| Sharma & Raheman 2026, Research Square preprint | FT | YOLO26 (potato) → severity index → PWM duty 40/80/100% | "Healthy" still gets the 40% baseline; zero only without canopy | Field rows; random split | 598 spray decisions logged; not checked against true disease | No |
+| Islam et al. 2026, *Automation* | FT | YOLOv9 (tomato, 9 classes) → lookup-table spray prescription | — | Random 70/15/15 split of one dataset | 97% mAP50; "94% prescription accuracy" | No (generalisation listed as a limitation) |
+| Tewari et al. 2020, *AI in Agriculture* | A (ScienceDirect bot check) | Webcams → colour segmentation → severity → spray time (paddy) | — | Field, variable vs constant rate | ≥33.9% less chemical | No |
+| Anand et al. 2025, *Front. Agric. Sci. Eng.* | A (page not readable) | Spectral sensor → SVM (black rot) → targeted spraying | — | Cauliflower crop | 72.5% less chemical | No |
+| Chang et al. 2023, *Agriculture* | FT | YOLOv4 detection of weeds and unhealthy crops → three nozzles | — (varying light for navigation only) | Field robot | 83% effective weed coverage, 8% ineffective, 53% reduction | No |
+| Avent et al. 2025, *Weed Technol.* | FT | Commercial targeted sprayer; sensitivity = detector threshold 0.4 / 0.7 / 0.9 | Higher threshold → fewer weeds treated | Multi-state field trials | Treatment success 98–99.6% → 48–84% by threshold | Across weed species and sizes |
+| Ruigrok et al. 2020, *Sensors* | FT | Weed detector → plant-specific spraying robot | — (controlled illumination under a hood) | Image-, application- and field-level | 96% weeds controlled, 3% crop hit | No |
+| Darbyshire et al. 2023, *Front. Plant Sci.* | FT | Detectors → simplified spray model | — | Two datasets, nozzle precision varied | Weed coverage rate vs area sprayed | Two datasets, not a shift test |
+| Berge et al. 2008, *Acta Agric. Scand. B* | A (no open copy) | Simulated camera decisions → patch spraying | — | Simulation on mapped weeds | Mapping vs spraying error vs control-area size | No |
+| Adam et al. 2023, IEEE CASE | FT (arXiv copy) | UV-C treatment robot: robot, perception and human as three state machines | Probabilistic model checking (PRISM) | Design-phase risk analysis | Quantified risk reduction per design option | — |
+| Adam et al. 2024, IEEE CASE | A (paywalled) | UV-C treatment robot | Model checking → runtime monitors (ROS2) | Design and verification | Verified safety requirements | — |
 
 ## 6. What changes in Paper 2
 
@@ -158,5 +175,7 @@ What was read is recorded for each: **FT** = full text, **A** = abstract only.
 Scopus, Web of Science, IEEE Xplore's native search and the ACM Digital Library were not
 searchable from here. Crossref ranks by relevance and does not support boolean queries. The
 pre-registered queries missed weed-only sprayers (recall 1/3), and the supplement's arXiv coverage
-is weak (5 of 6 requests failed). Only two of the closest studies were read in full; the rest are
-characterised from abstracts and are labelled so.
+is weak (5 of 6 requests failed). Fourteen of the closest studies were read in full from
+open-access copies; five remain abstract-only (one behind a bot check, one whose page had no
+readable text, three without an open copy) and are labelled so. Screening of the remaining
+included records was by title and abstract.

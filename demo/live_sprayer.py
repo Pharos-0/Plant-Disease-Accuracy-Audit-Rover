@@ -30,10 +30,11 @@ MODES
 -----
     python demo/live_sprayer.py --verify 300           # parity with cached predictions
     python demo/live_sprayer.py --camera 0             # interactive, laptop webcam
-    python demo/live_sprayer.py --manifest frames.csv  # batch: path,truth,leaf_id,condition
+    python demo/live_sprayer.py --manifest frames.csv  # batch: path,truth,leaf_id,condition[,plant_id,diagnosis_source]
 
 Interactive keys: h / e / l set the true label (healthy / early / late blight),
-1-6 set the condition, n starts a new leaf, SPACE saves a labelled frame, q quits.
+1-6 set the condition, n starts a new leaf on the same plant, p starts a new plant,
+SPACE saves a labelled frame, q quits.
 Nothing is written to disk except on SPACE.
 """
 from __future__ import annotations
@@ -215,7 +216,7 @@ class SprayPipeline:
 # overlay
 # --------------------------------------------------------------------------
 def draw(frame: np.ndarray, d: Decision, truth: str, cond: str, leaf: str,
-         tau: float) -> np.ndarray:
+         tau: float, plant: str = "") -> np.ndarray:
     out = frame.copy()
     h, w = out.shape[:2]
     for k, on in enumerate(d.nozzles):
@@ -229,7 +230,8 @@ def draw(frame: np.ndarray, d: Decision, truth: str, cond: str, leaf: str,
         f"  gate {'OPEN' if d.gate_open else 'shut'}  FSM {d.fsm_state}",
         f"DECISION: {'SPRAY ' + str(sum(d.nozzles)) + '/4' if d.spray else 'no spray'}"
         f"{'  [TOO DARK - DEFERRED]' if d.deferred else ''}   {d.latency_ms:.0f} ms",
-        f"leaf {leaf}  truth {truth or '?'}  condition {cond}   [h/e/l 1-6 n SPACE q]",
+        f"plant {plant or '-'} leaf {leaf}  truth {truth or '?'}  condition {cond}"
+        f"   [h/e/l 1-6 n p SPACE q]",
     ]
     cv2.rectangle(out, (0, 0), (w, 20 * len(lines) + 8), (0, 0, 0), -1)
     for i, s in enumerate(lines):
@@ -242,22 +244,27 @@ def draw(frame: np.ndarray, d: Decision, truth: str, cond: str, leaf: str,
 # logging
 # --------------------------------------------------------------------------
 class SessionLog:
-    def __init__(self, out_dir: Path, source: str) -> None:
+    def __init__(self, out_dir: Path, source: str, diagnosis_source: str = "") -> None:
         self.dir = out_dir
+        self.diagnosis_source = diagnosis_source
         (self.dir / "frames").mkdir(parents=True, exist_ok=True)
         self.f = (self.dir / "log.jsonl").open("a", encoding="utf-8")
         self.source = source
         self.n = 0
 
     def write(self, d: Decision, *, truth: str, cond: str, leaf: str,
-              frame_bgr: np.ndarray | None, src_path: str | None, tau: float) -> None:
+              frame_bgr: np.ndarray | None, src_path: str | None, tau: float,
+              plant: str = "", diagnosis_source: str | None = None) -> None:
         self.n += 1
         frame_file = None
         if frame_bgr is not None:
             frame_file = f"frames/{leaf}_{cond}_{self.n:04d}.jpg"
             cv2.imwrite(str(self.dir / frame_file), frame_bgr)
         rec = {"time": time.strftime("%Y-%m-%dT%H:%M:%S"), "source": self.source,
-               "hardware": HARDWARE_TAG, "leaf_id": leaf, "condition": cond,
+               "hardware": HARDWARE_TAG, "plant_id": plant, "leaf_id": leaf,
+               "condition": cond,
+               "diagnosis_source": (self.diagnosis_source if diagnosis_source is None
+                                    else diagnosis_source),
                "truth": truth, "frame_file": frame_file, "src_path": src_path,
                "model": f"{VERSION}/{BACKBONE}/seed{SEED}", "tau": tau,
                **{k: v for k, v in d.__dict__.items()}, "spray": d.spray,
@@ -302,9 +309,10 @@ def run_verify(n: int) -> int:
     return 0 if ok else 2
 
 
-def run_manifest(manifest: Path, out_dir: Path) -> int:
+def run_manifest(manifest: Path, out_dir: Path, diagnosis_source: str = "") -> int:
     pipe = SprayPipeline(device="cpu")
-    log = SessionLog(out_dir, source=f"manifest:{manifest.name}")
+    log = SessionLog(out_dir, source=f"manifest:{manifest.name}",
+                     diagnosis_source=diagnosis_source)
     with manifest.open(newline="", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
     for r in rows:
@@ -313,20 +321,21 @@ def run_manifest(manifest: Path, out_dir: Path) -> int:
         d = pipe.decide(rgb)
         log.write(d, truth=r.get("truth", ""), cond=r.get("condition", "normal"),
                   leaf=r.get("leaf_id", "?"), frame_bgr=None, src_path=r["path"],
-                  tau=pipe.tau)
+                  tau=pipe.tau, plant=r.get("plant_id", ""),
+                  diagnosis_source=r.get("diagnosis_source") or None)
     print(f"logged {log.n} frames to {out_dir / 'log.jsonl'}")
     return 0
 
 
-def run_camera(index: int, out_dir: Path) -> int:
+def run_camera(index: int, out_dir: Path, diagnosis_source: str = "") -> int:
     pipe = SprayPipeline(device="cpu")
     cap = cv2.VideoCapture(index)
     if not cap.isOpened():
         print(f"camera {index} could not be opened")
         return 1
-    log = SessionLog(out_dir, source=f"camera:{index}")
-    truth, cond, leaf_n = "", "normal", 1
-    print("keys: h/e/l truth, 1-6 condition, n new leaf, SPACE save, q quit")
+    log = SessionLog(out_dir, source=f"camera:{index}", diagnosis_source=diagnosis_source)
+    truth, cond, leaf_n, plant_n = "", "normal", 1, 1
+    print("keys: h/e/l truth, 1-6 condition, n new leaf, p new plant, SPACE save, q quit")
     try:
         while True:
             ok, frame = cap.read()
@@ -335,9 +344,10 @@ def run_camera(index: int, out_dir: Path) -> int:
                 break
             rgb = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             d = pipe.decide(rgb)
-            leaf = f"L{leaf_n:02d}"
+            plant = f"P{plant_n:02d}"
+            leaf = f"{plant}L{leaf_n:02d}"
             cv2.imshow("selective sprayer - decision only", draw(frame, d, truth, cond,
-                                                                 leaf, pipe.tau))
+                                                                 leaf, pipe.tau, plant))
             key = chr(cv2.waitKey(1) & 0xFF)
             if key == "q":
                 break
@@ -347,9 +357,11 @@ def run_camera(index: int, out_dir: Path) -> int:
                 cond = CONDITIONS[key]
             elif key == "n":
                 leaf_n += 1
+            elif key == "p":
+                plant_n, leaf_n = plant_n + 1, 1
             elif key == " ":
                 log.write(d, truth=truth, cond=cond, leaf=leaf, frame_bgr=frame,
-                          src_path=None, tau=pipe.tau)
+                          src_path=None, tau=pipe.tau, plant=plant)
                 print(f"saved #{log.n}: {leaf} {cond} truth={truth or '?'} pred={d.pred} "
                       f"conf={d.msp:.2f} spray={d.spray}")
     finally:
@@ -367,12 +379,16 @@ def main() -> int:
     g.add_argument("--manifest", type=Path)
     ap.add_argument("--out", type=Path,
                     default=ROOT / "camera_sessions" / time.strftime("%Y%m%d_%H%M%S"))
+    ap.add_argument("--diagnosis-source", default="",
+                    help="how the true labels were confirmed, e.g. 'agronomist', 'lab test', "
+                         "'visual only'; recorded on every frame (a manifest's "
+                         "diagnosis_source column overrides it per row)")
     a = ap.parse_args()
     if a.verify is not None:
         return run_verify(a.verify)
     if a.manifest is not None:
-        return run_manifest(a.manifest, a.out)
-    return run_camera(a.camera, a.out)
+        return run_manifest(a.manifest, a.out, a.diagnosis_source)
+    return run_camera(a.camera, a.out, a.diagnosis_source)
 
 
 if __name__ == "__main__":
