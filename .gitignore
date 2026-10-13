@@ -22,3 +22,7 @@ PC-handoff/
 # tracked. A sample grid under documentation/ is small and IS tracked.
 dataset/raw/
 dataset/processed/
+
+# Camera sessions: logs and analysis are tracked; captured frames are personal
+# images and stay local unless deliberately added.
+camera_sessions/*/frames/

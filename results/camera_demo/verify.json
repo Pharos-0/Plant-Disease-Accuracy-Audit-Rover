@@ -1,0 +1,10 @@
+{
+  "images": 300,
+  "argmax_agreement": 1.0,
+  "max_abs_logit_diff": 0.09080123901367188,
+  "median_abs_logit_diff": 0.034683942794799805,
+  "accuracy_vs_truth": 0.93,
+  "tau": 0.8880664110183716,
+  "median_latency_ms_cpu_this_laptop": 24.06075003091246,
+  "note": "cache was computed on GPU in fp16; the demo runs fp32 on CPU"
+}
