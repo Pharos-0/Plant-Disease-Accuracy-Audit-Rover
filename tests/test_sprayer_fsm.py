@@ -182,3 +182,40 @@ def test_fuzz_never_sprays_outside_spraying_state():
             if cmd.spraying:
                 assert c.state is State.SPRAYING, f"run {run}: sprayed in {c.state}"
                 assert r.range_cm >= 25.0, f"run {run}: sprayed at an obstacle"
+
+
+# --------------------------------------------- crop detector path (open field)
+def test_weed_is_sprayed_by_vision_only_but_not_by_crop_targeting():
+    """The open-field failure of a green detector: a weed is green."""
+    green_everywhere = (0.6, 0.6, 0.6, 0.6)
+    crop_only_in_zone_0 = (0.9, 0.1, 0.1, 0.1)
+    vo = nozzle_decision(SprayPolicy.VISION_ONLY, green_everywhere, 0.9, True,
+                         crop_only_in_zone_0)
+    sel = nozzle_decision(SprayPolicy.SELECTIVE, green_everywhere, 0.9, True,
+                          crop_only_in_zone_0)
+    assert vo == (True, True, True, True)
+    assert sel == (True, False, False, False)
+
+
+def test_shut_gate_falls_back_to_crop_only_not_green_or_blanket():
+    sel = nozzle_decision(SprayPolicy.SELECTIVE, (0.6, 0.6, 0.6, 0.6), 0.1,
+                          gate_open=False, crop_prob=(0.9, 0.1, 0.9, 0.1))
+    assert sel == (True, False, True, False)
+
+
+def test_per_zone_disease_is_respected():
+    sel = nozzle_decision(SprayPolicy.SELECTIVE, (0.6,) * 4, 0.0, True,
+                          crop_prob=(0.9,) * 4, disease_by_zone=(0.9, 0.1, 0.9, 0.1))
+    assert sel == (True, False, True, False)
+
+
+def test_without_a_detector_behaviour_is_unchanged():
+    old = nozzle_decision(SprayPolicy.SELECTIVE, (0.6, 0.0, 0.6, 0.0), 0.9, True)
+    assert old == (True, False, True, False)
+
+
+@pytest.mark.parametrize("field", ["crop_prob", "disease_by_zone"])
+def test_wrong_length_zone_vector_faults(field):
+    c = started()
+    cmd = c.step(reading(**{field: (0.9, 0.9)}), gate_open=True)
+    assert c.state is State.FAULT_SAFE_STOP and not cmd.spraying

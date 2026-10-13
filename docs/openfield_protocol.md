@@ -128,3 +128,10 @@ not change which plants are where.
 **D6 — `NR` (not recognised, 368 instances in the sample) is treated as non-crop vegetation.**
 It is not `LYPES`, so it can never need spray; in the off-target metric it is counted with the
 weeds as "non-crop vegetation".
+
+**D7 — Disease pairings are drawn once per run and image, and shared by every layout.** Made
+*after* the detector result (precision 0.289, recall 0.831) was seen, *before* any spray
+result was computed. In the first draft each layout re-drew its own pairings, so layout
+comparisons mixed geometry with re-sampled disease. Sharing them changes variance only, not
+the expected value of any metric.
+

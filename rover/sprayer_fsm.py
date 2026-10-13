@@ -145,6 +145,12 @@ class FusedReading:
     #: Dock beacon. Without an arrival signal RETURNING could never complete, and
     #: the autonomous-return capability would be a claim with no test behind it.
     at_dock: bool = False
+    #: Per-nozzle probability that the zone holds the CROP, from a trained
+    #: detector. None => fall back to the vegetation fraction in `canopy`, which
+    #: cannot tell a tomato from a weed.
+    crop_prob: tuple[float, ...] | None = None
+    #: Per-nozzle disease confidence. None => use the single `disease_confidence`.
+    disease_by_zone: tuple[float, ...] | None = None
 
     def validate(self) -> list[str]:
         """Return the names of stale inputs. Deliberately not a single score:
@@ -183,6 +189,8 @@ class Command:
 
 #: Vegetation fraction in a nozzle zone above which there is something to spray.
 CANOPY_THRESHOLD = 0.15
+#: Crop-detector probability above which a zone is treated as holding the crop.
+CROP_THRESHOLD = 0.5
 
 
 class SprayPolicy(Enum):
@@ -194,7 +202,10 @@ class SprayPolicy(Enum):
 
 
 def nozzle_decision(policy: SprayPolicy, canopy: tuple[float, ...],
-                    disease_conf: float, gate_open: bool) -> tuple[bool, ...]:
+                    disease_conf: float, gate_open: bool,
+                    crop_prob: tuple[float, ...] | None = None,
+                    disease_by_zone: tuple[float, ...] | None = None,
+                    ) -> tuple[bool, ...]:
     """Which nozzles should fire, before any state-machine veto.
 
     The gate is deliberately *outside* the vision decision. A classifier that is
@@ -212,9 +223,14 @@ def nozzle_decision(policy: SprayPolicy, canopy: tuple[float, ...],
     if policy is SprayPolicy.VISION_ONLY:
         return has_canopy
 
+    # The selective policy targets the CROP when a detector is available, and
+    # the vegetation mask only when it is not.
+    target = (tuple(p >= CROP_THRESHOLD for p in crop_prob)
+              if crop_prob is not None else has_canopy)
     if not gate_open:
-        return has_canopy                      # degrade to vision-only, not blanket
-    return tuple(c and disease_conf >= 0.5 for c in has_canopy)
+        return target                          # degrade to crop-only, never blanket
+    dis = disease_by_zone if disease_by_zone is not None else (disease_conf,) * n
+    return tuple(t_ and d >= 0.5 for t_, d in zip(target, dis))
 
 
 # --------------------------------------------------------------------------
@@ -305,7 +321,13 @@ class SprayerController:
             return Command(self.state, "return", off, r.row_offset, "returning to dock")
 
         # -- spraying -------------------------------------------------------
-        want = nozzle_decision(self.policy, r.canopy, r.disease_confidence, gate_open)
+        for name, vec in (("crop_prob", r.crop_prob),
+                          ("disease_by_zone", r.disease_by_zone)):
+            if vec is not None and len(vec) != self.n_nozzles:
+                return self._fault(f"{name} has {len(vec)} zones, "
+                                   f"expected {self.n_nozzles}")
+        want = nozzle_decision(self.policy, r.canopy, r.disease_confidence, gate_open,
+                               r.crop_prob, r.disease_by_zone)
 
         # Vision loss disables selective spraying rather than defaulting to on.
         if "vision" in stale:

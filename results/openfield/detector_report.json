@@ -1,0 +1,10 @@
+{
+  "train_images": 133,
+  "test_images": 60,
+  "test_subcells": 11520,
+  "test_crop_subcells": 480,
+  "precision": 0.2885032537960954,
+  "recall": 0.83125,
+  "average_precision": 0.7064410725443863,
+  "prevalence": 0.041666666666666664
+}
