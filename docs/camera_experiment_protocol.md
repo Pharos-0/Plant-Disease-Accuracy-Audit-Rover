@@ -48,7 +48,8 @@ and decides per frame:
 
 1. **Is there leaf tissue?** Foliage of any plant colour — green, yellow, orange-brown,
    red-brown — in each of 4 nozzle zones (≥ 15% of the zone).
-2. **Is the frame too dark to judge?** If median brightness is below 35/255, the frame is
+2. **Is the frame too dark to judge?** If median brightness is below 32/255 (128 divided by
+   the tissue test's maximum brightness gain of 4; it was 35 before the v3 revision in §9), the frame is
    **deferred**: no spray, flagged, and counted separately — never silently treated as a
    decision.
 3. **Spray, unless confidently healthy.** A visible leaf is left unsprayed only if the session
