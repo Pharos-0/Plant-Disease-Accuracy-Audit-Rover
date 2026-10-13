@@ -94,4 +94,37 @@ coverage: consumption can always be cut by missing plants.
 
 ## 9. Deviations
 
-*(none yet — any change after the data arrives is recorded here with its reason)*
+Recorded 2026-10-13, **after the data arrived and before any spray or detector result was
+computed.** Each was forced by the data, not chosen for its effect.
+
+**D1 — Only 193 of 938 images could be obtained.** DIGITAL.CSIC ends every download at about
+1.08 GB: three browsers produced partials of 1,083,592,484 / 1,083,821,860 / 1,084,075,070
+bytes, and resuming restarts from zero. `scripts/recover_truncated_zip.py` walked the partial
+archive and recovered every complete member, CRC-verified: **193 images and all 938 annotation
+files**, zero CRC failures. The cut fell inside `IMG_4090.JPG`.
+
+**D2 — The recovered sample is not representative, and the direction of the bias is known.**
+
+| | recovered 193 | full 938 |
+|---|---:|---:|
+| images containing tomato | 43% | 67% |
+| weeds per tomato plant | 16.7 | 6.8 |
+
+Fewer tomato plants means more ground a crop-targeted sprayer may skip, so **savings measured
+on the 193 overstate the full-field figure.** Because annotations exist for all 938 images, the
+ground-truth ceiling is computed on **both** and reported side by side, which measures the
+size of that overstatement. Policies that need pixels — vision-only and the detector — can only
+be run on the 193.
+
+**D3 — The split is applied within the 193**, by the pre-registered rule (blocks of 20 in
+filename order, 70/30, seed 20261013). Test-set intervals are correspondingly wider.
+
+**D4 — Portrait images are rotated to landscape before gridding** (94 of the 193; 363 of the
+938). The protocol assumed one orientation; rotating keeps every cell the same shape and does
+not change which plants are where.
+
+**D5 — Boxes are clipped to the image.** At least one tomato box extends past its image edge.
+
+**D6 — `NR` (not recognised, 368 instances in the sample) is treated as non-crop vegetation.**
+It is not `LYPES`, so it can never need spray; in the off-target metric it is counted with the
+weeds as "non-crop vegetation".
