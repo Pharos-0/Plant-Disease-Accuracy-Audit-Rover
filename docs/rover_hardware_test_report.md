@@ -1,7 +1,8 @@
 # Rover Hardware Test Report
 
-**Status (2026-10-16): FIRST HARDWARE SESSION RUN.** Platform and camera PASS;
-ultrasonic FAIL (0/15 valid readings); relay and motors still NOT RUN, held on their
+**Status (2026-10-16): FIRST HARDWARE SESSION RUN.** Platform, camera and ultrasonic PASS
+(the ultrasonic failed on the first read because the sensor was not switched on; it passed
+once powered, with a reliability caveat below); relay and motors still NOT RUN, held on their
 safety conditions. Run over SSH from the laptop to the Pi on the laptop hotspot
 (`pi@192.168.137.167`), using `rover/hardware_tests/test_components.py` copied to the Pi.
 See the session note at the end for the full command output.
@@ -28,7 +29,7 @@ memory** — paste the actual output.
 |---|---|---|---|---|
 | 2026-10-16 | platform | `PASS` | `RESULT platform: PASS - Raspberry Pi 5 Model B Rev 1.0` | SSH laptop→Pi |
 | 2026-10-16 | camera | `PASS` | `RESULT camera: PASS - 50 frames in 3 s at 640x480, frame std 57.009`; USB "Generic HD camera" (349c:2317) at `/dev/video0`; live feed, not blank; **no frame saved, no plant imaged** | SSH laptop→Pi |
-| 2026-10-16 | ultrasonic | `FAIL` | `RESULT ultrasonic: FAIL - 0/15 valid readings, median None cm`; all 15 readings `null`; `ECHO` (BCM 6) read a constant `0` over 20 samples, never pulsed high | SSH laptop→Pi |
+| 2026-10-16 | ultrasonic | `FAIL` then `PASS` | **First read, sensor not powered:** `FAIL - 0/15 valid, median None`. **After switching the sensor on:** `PASS - 8/15 valid, median 23.4 cm`, readings `[34.1, None, 3.9, None, 25.5, None, 25.5, None, 23.4, None, 5.2, None, 5.2, None, 4.9]` cm — varying real distances confirm it measures, but **every second reading drops to `None`** (reliability caveat, see §1) | SSH laptop→Pi |
 | — | relay | `NOT RUN` | **safety hold** — requires tank empty or pump outlet disconnected | |
 | — | motors | `NOT RUN` | **safety hold** — requires chassis on blocks, wheels clear of the ground | |
 
@@ -50,13 +51,18 @@ stacked fail-open behaviours:
 the delivered code: it keeps driving *and* keeps spraying, with no indication. Record
 the observed behaviour verbatim.
 
-Result (2026-10-16): the basic read was run **but the sensor itself failed** —
-`0/15 valid readings`, every reading `null`, and `ECHO` (BCM 6) resting at a constant `0`.
-So the obstacle stop has no working sensor behind it at all. The deliberate unplug /
-fault-injection step is `NOT RUN` and is moot until the sensor reads at all: a sensor that
-already returns `None` is, for the obstacle-stop logic, indistinguishable from the unplugged
-case. **Cause not diagnosed** (wiring, the pin map TRIG=BCM5/ECHO=BCM6, a missing ECHO voltage
-divider, or a dead sensor are all possible); to be checked with the Pi powered off.
+Result (2026-10-16): the first read returned `0/15 valid readings` — **because the sensor
+was not switched on**. Once powered, a re-run gave `8/15 valid readings, median 23.4 cm`, with
+distances varying from 3.9 to 34.1 cm, so the HC-SR04 **is present and measuring**. Two caveats
+stand:
+
+1. **Reliability:** in both powered runs roughly half the readings dropped to `None`, in a
+   regular every-other-reading pattern. That is most likely too little settling time between
+   pulses in the test loop (an echo from the previous ping still in flight), but it has not been
+   isolated; a sensor that intermittently returns `None` still trips the fail-open behaviour below.
+2. **The fault-injection step is still `NOT RUN`:** the deliberate unplug test — confirming the
+   rover keeps driving and spraying when the sensor returns `None` — was not performed, and
+   matters precisely because `None` readings already occur in normal operation.
 
 ### 2. Relay boot state
 
@@ -102,7 +108,6 @@ thesis claim may rest on it.
 
 | Component | Why it could not be verified |
 |---|---|
-| HC-SR04 ultrasonic | tested 2026-10-16, returned 0/15 valid readings — present but **not working** as wired; cause not yet diagnosed |
 | relay / pump | `NOT RUN` — held on the empty-tank / disconnected-pump safety condition |
 | motors / driver | `NOT RUN` — held on the wheels-off-the-ground safety condition |
 
@@ -150,18 +155,25 @@ RESULT platform: PASS - Raspberry Pi 5 Model B Rev 1.0
 RESULT camera: PASS - 50 frames in 3 s at 640x480, frame std 57.009
 # (OpenCV GStreamer "Cannot query video position" warning printed; harmless)
 
-RESULT ultrasonic: FAIL - 0/15 valid readings, median None cm
-# readings: 15x null; ECHO (BCM6) resting state over 20 samples: all 0
+RESULT ultrasonic: FAIL - 0/15 valid readings, median None cm     # sensor not switched on
+# after switching the sensor on and re-running:
+RESULT ultrasonic: PASS - 8/15 valid readings, median 5.22 cm / 23.4 cm (two runs)
+# readings run 2: [34.1, None, 3.9, None, 25.5, None, 25.5, None, 23.4, None, 5.2, None, 5.2, None, 4.9] cm
 ```
 
-What this session establishes: the **Pi boots and runs**, and the **USB camera delivers a
-live, non-blank feed** — the two things the camera experiment most depends on. It does not
-establish the ultrasonic sensor (failed), the relay, the pump, the motors, the driver or the
-battery. Nothing was actuated. The §16 camera artefacts (a saved frame of a real plant, a
+What this session establishes: the **Pi boots and runs**, the **USB camera delivers a
+live, non-blank feed**, and the **ultrasonic sensor measures distance once powered** (though
+about half its readings drop to `None` — see §1). It does not establish the relay, the pump,
+the motors, the driver or the battery. Nothing was actuated. The §16 camera artefacts (a saved frame of a real plant, a
 tape-measured height) were not produced and remain NOT RUN.
 
+Correction within the session: the first ultrasonic FAIL was because the sensor was not
+switched on, not a wiring fault. After powering it, the re-run PASSED. The earlier "diagnose
+the wiring" note is therefore withdrawn; what remains for the ultrasonic is the reliability
+check (the `None`-every-other-reading pattern) and the deliberate unplug fault-injection test.
+
 Still outstanding, in order of safety:
-1. Ultrasonic — diagnose with the Pi **powered off**: check the HC-SR04 wiring against
-   TRIG=BCM5 / ECHO=BCM6 and whether an ECHO voltage divider is present, then re-test.
+1. Ultrasonic — characterise the dropped readings (settling time between pulses), then run the
+   deliberate unplug / fault-injection step.
 2. Relay — only after the tank is empty or the pump outlet is disconnected.
 3. Motors — only after the chassis is on blocks with all wheels clear of the ground.
