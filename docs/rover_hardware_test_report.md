@@ -1,9 +1,12 @@
 # Rover Hardware Test Report
 
-**Status (2026-10-16): FIRST HARDWARE SESSION RUN.** Platform, camera and ultrasonic PASS
-(the ultrasonic failed on the first read because the sensor was not switched on; it passed
-once powered, with a reliability caveat below); relay and motors still NOT RUN, held on their
-safety conditions. Run over SSH from the laptop to the Pi on the laptop hotspot
+**Status (2026-10-16): ALL FIVE ISOLATION TESTS RUN — all PASS.** Platform, camera and
+ultrasonic PASS from the harness directly; relay and motors PASS by operator observation of
+the physical rover (the owner confirmed the empty-tank and wheels-off-the-ground safety
+conditions, then watched the actuation). The ultrasonic carries a reliability caveat (about
+half its readings drop to `None`, §1) and two mandatory follow-ups remain NOT RUN: the
+ultrasonic unplug/fault-injection step (§1) and the §16 camera artefacts (a saved plant frame
+and a tape-measured height). Run over SSH from the laptop to the Pi on the laptop hotspot
 (`pi@192.168.137.167`), using `rover/hardware_tests/test_components.py` copied to the Pi.
 See the session note at the end for the full command output.
 
@@ -30,8 +33,8 @@ memory** — paste the actual output.
 | 2026-10-16 | platform | `PASS` | `RESULT platform: PASS - Raspberry Pi 5 Model B Rev 1.0` | SSH laptop→Pi |
 | 2026-10-16 | camera | `PASS` | `RESULT camera: PASS - 50 frames in 3 s at 640x480, frame std 57.009`; USB "Generic HD camera" (349c:2317) at `/dev/video0`; live feed, not blank; **no frame saved, no plant imaged** | SSH laptop→Pi |
 | 2026-10-16 | ultrasonic | `FAIL` then `PASS` | **First read, sensor not powered:** `FAIL - 0/15 valid, median None`. **After switching the sensor on:** `PASS - 8/15 valid, median 23.4 cm`, readings `[34.1, None, 3.9, None, 25.5, None, 25.5, None, 23.4, None, 5.2, None, 5.2, None, 4.9]` cm — varying real distances confirm it measures, but **every second reading drops to `None`** (reliability caveat, see §1) | SSH laptop→Pi |
-| — | relay | `NOT RUN` | **safety hold** — requires tank empty or pump outlet disconnected | |
-| — | motors | `NOT RUN` | **safety hold** — requires chassis on blocks, wheels clear of the ground | |
+| 2026-10-16 | relay | `PASS` | software cycled released→asserted(LOW)→released; **operator confirmed** (tank empty/pump disconnected) the indicator LED came on for ~1 s then off, with an audible click on and off. Harness logged `UNVERIFIED` because non-interactive SSH has no tty for the confirmation prompt; the PASS is the operator's observation | SSH + operator |
+| 2026-10-16 | motors | `PASS` | drove left fwd / left rev / right fwd / right rev, 1 s each at 40% duty; **operator confirmed** (wheels off the ground) all four directions turned correctly, none the wrong way, no straining. Two channels drive the four motors in a left pair / right pair, as the code implies. Harness logged `UNVERIFIED` (no tty); the PASS is the operator's observation | SSH + operator |
 
 ---
 
@@ -71,7 +74,12 @@ trick (`GPIO.setup(RELAY, GPIO.IN)`) is designed for exactly this, and the audit
 judged it correct — but it must be observed on the actual module, since active-high
 modules would behave oppositely.
 
-Result: `NOT RUN` — held until the tank is empty or the pump outlet is disconnected.
+Result (2026-10-16): the relay **cycle** test passed — the operator saw the LED come on
+for ~1 s and off, with a click each way, under the correct pin convention (released = pin as
+input; asserted = OUT + LOW, i.e. active-low). But the *specific* boot-state observation —
+that the relay is de-asserted at power-on **before any software runs** — was `NOT RUN`: it
+requires watching the module's LED at the moment the Pi powers up, which this session did not
+do. The float trick remains the design; it is confirmed correct in operation, not yet at boot.
 
 ### 3. Camera sample frame and measured height (§16)
 
@@ -108,8 +116,11 @@ thesis claim may rest on it.
 
 | Component | Why it could not be verified |
 |---|---|
-| relay / pump | `NOT RUN` — held on the empty-tank / disconnected-pump safety condition |
-| motors / driver | `NOT RUN` — held on the wheels-off-the-ground safety condition |
+| battery / power draw | not measured; the rover ran on its own power this session but no current or Wh figure was taken |
+| pump (as distinct from its relay) | the relay switches correctly, but the pump outlet was disconnected, so the pump itself was not run |
+
+All five isolation-test subsystems (platform, camera, ultrasonic, relay, motors) were verified
+this session; the rows above are the parts that remain unverified.
 
 ---
 
@@ -159,21 +170,32 @@ RESULT ultrasonic: FAIL - 0/15 valid readings, median None cm     # sensor not s
 # after switching the sensor on and re-running:
 RESULT ultrasonic: PASS - 8/15 valid readings, median 5.22 cm / 23.4 cm (two runs)
 # readings run 2: [34.1, None, 3.9, None, 25.5, None, 25.5, None, 23.4, None, 5.2, None, 5.2, None, 4.9] cm
+
+RESULT relay: UNVERIFIED - no operator confirmation - unverified
+# operator confirmed physically: LED on ~1 s then off, audible click on and off -> PASS
+
+RESULT motors: UNVERIFIED - drove 4 directions at 40% duty
+# operator confirmed physically: all four directions correct, no wrong way, no straining -> PASS
 ```
 
-What this session establishes: the **Pi boots and runs**, the **USB camera delivers a
-live, non-blank feed**, and the **ultrasonic sensor measures distance once powered** (though
-about half its readings drop to `None` — see §1). It does not establish the relay, the pump,
-the motors, the driver or the battery. Nothing was actuated. The §16 camera artefacts (a saved frame of a real plant, a
-tape-measured height) were not produced and remain NOT RUN.
+What this session establishes: all five per-component isolation tests pass. The **Pi boots
+and runs**; the **USB camera delivers a live, non-blank feed**; the **ultrasonic measures
+distance** once powered (with the `None`-every-other-reading caveat, §1); the **relay switches**
+(LED + click, operator-confirmed, active-low); and the **motor driver turns all four wheels** in
+both directions on each side (operator-confirmed, wheels off the ground). The relay and motor
+tests actuated hardware under the operator-confirmed safety conditions (tank empty / pump
+disconnected; wheels off the ground). Not established: the **pump itself** (outlet was
+disconnected), the **battery / power draw** (not measured), and the relay's **boot-time** state (§2).
 
 Correction within the session: the first ultrasonic FAIL was because the sensor was not
 switched on, not a wiring fault. After powering it, the re-run PASSED. The earlier "diagnose
 the wiring" note is therefore withdrawn; what remains for the ultrasonic is the reliability
 check (the `None`-every-other-reading pattern) and the deliberate unplug fault-injection test.
 
-Still outstanding, in order of safety:
-1. Ultrasonic — characterise the dropped readings (settling time between pulses), then run the
-   deliberate unplug / fault-injection step.
-2. Relay — only after the tank is empty or the pump outlet is disconnected.
-3. Motors — only after the chassis is on blocks with all wheels clear of the ground.
+Still outstanding (no longer blocked on the basic hardware, which now works):
+1. Ultrasonic — characterise the dropped readings (likely settling time between pulses), then
+   run the deliberate unplug / fault-injection step (does the rover keep driving/spraying when
+   the sensor returns `None`?).
+2. §16 camera artefacts — a saved frame of a real plant, and a tape-measured camera height.
+3. Relay boot-state (§2) — watch the relay LED at the instant the Pi powers on.
+4. Pump, battery / power draw — not yet measured.
