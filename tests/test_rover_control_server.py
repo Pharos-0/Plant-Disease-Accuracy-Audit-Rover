@@ -217,6 +217,26 @@ def test_auto_never_sprays_a_frame_too_dark_to_judge(rover):
     assert prc._state["auto_fires"] == fires
 
 
+def test_auto_never_sprays_on_a_stuck_camera(rover):
+    """2026-10-21 on the robot: a stuck sensor's stripes read as 86% leaf ('LEAF').
+    They are now a camera fault: deferred, flagged, and AUTO does not fire."""
+    r, prc = rover, rover.prc
+    r.reset()
+    stuck = cv2.imread(str(ROOT / "tests" / "fixtures" / "rover_stuck_sensor_20261021.jpg"))
+    r.show(stuck)
+    assert prc._state["camera_fault"] is True and prc._state["spatial_fire"] is False
+    assert prc.telemetry()["camera_fault"] is True
+    fires = prc._state["auto_fires"]
+    i = len(r.gpio.calls)
+    r.post(prc.spray_enable, {"on": True})
+    r.post(prc.auto, {"on": True})
+    time.sleep(1.0)
+    assert not r.relay_fired_since(i) and prc._state["auto_fires"] == fires
+    r.show(one_zone_plant())                                     # camera recovers
+    assert prc._state["camera_fault"] is False
+    assert r.wait_until(lambda: r.relay_fired_since(i))          # and AUTO works again
+
+
 def test_spray_is_refused_without_the_tank_gate(rover):
     r, prc = rover, rover.prc
     r.reset()
@@ -285,6 +305,35 @@ def test_obstacle_within_range_refuses_forward_only(rover):
     r.hold("left", 0.5)
     assert r.duty_after(i) == prc.DUTY                          # turning away is allowed
     r.post(prc.stop)
+
+
+def test_releasing_a_drive_button_stops_the_wheels_but_stays_armed(rover):
+    """Found on the robot 2026-10-21: the page posted /stop on release, and /stop
+    disarms, so every press after the first was silently ignored. Release now sends
+    drive 'stop'; only the STOP button disarms."""
+    r, prc = rover, rover.prc
+    r.reset()
+    r.show(BENCH)
+    r.post(prc.arm, {"armed": True})
+    for direction in ("forward", "back"):
+        i = len(r.gpio.calls)
+        r.hold(direction, 0.5)
+        assert r.duty_after(i) == prc.DUTY
+        r.post(prc.drive, {"dir": "stop"})                      # the release
+        j = len(r.gpio.calls)
+        assert r.wait_until(lambda: r.duty_after(j) == 0)       # wheels stop at once
+        assert prc._state["armed"] is True                      # and the rover stays armed
+    r.post(prc.stop)
+    assert prc._state["armed"] is False                         # STOP still disarms
+
+
+def test_page_release_handler_never_disarms(rover):
+    js = rover.prc.PAGE.split("<script>")[1]
+    release = js.split("const end=")[1].split("};")[0]
+    assert "post('/stop')" not in release and "send('stop')" in release
+    assert "if(held===null)return" in release                   # a hover-out is not a release
+    assert "pointercancel" in js
+    assert "showArmed(t.armed)" in js                           # buttons follow the rover
 
 
 def test_raw_frame_is_clean_and_snapshot_is_annotated(rover):

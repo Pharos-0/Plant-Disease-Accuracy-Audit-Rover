@@ -1,0 +1,3 @@
+condition,frames,leaves,units,accuracy,accuracy_lo,accuracy_hi,confidence,confidence_lo,confidence_hi,abstain,abstain_lo,abstain_hi,spray,spray_lo,spray_hi,missed_treatment,missed_treatment_lo,missed_treatment_hi,deferred,deferred_lo,deferred_hi,wasted_spray,wasted_spray_lo,wasted_spray_hi
+low_light,12,4,1,0.5833333333333334,,,0.7371008992195129,,,0.75,,,0.25,,,0.0,,,0.6666666666666666,,,0.0,,
+normal,10,3,1,0.4,,,0.9004219174385071,,,0.2,,,1.0,,,0.0,,,0.0,,,1.0,,

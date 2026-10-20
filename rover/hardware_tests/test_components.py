@@ -102,6 +102,35 @@ def frame_is_blank(frame, threshold: float = UNIFORM_FRAME_STD) -> bool:
     return bool(np.asarray(frame).std() < threshold)
 
 
+#: A stuck sensor - seen on the rover 2026-10-21 - delivers static stripes: frames
+#: varying strongly BETWEEN rows and not at all WITHIN them (stuck: within 0.09-0.14,
+#: between 71-83). Their s.d. is ~80, so frame_is_blank passed them.
+STRIPE_WITHIN_MAX = 0.5
+STRIPE_BETWEEN_MIN = 10.0
+#: Mean absolute change between consecutive frames below which the camera is
+#: replaying one buffer: sensor noise alone changes a live frame (stuck: 0.00).
+MIN_FRAME_CHANGE = 0.05
+
+
+def frame_is_stuck_stripes(frame) -> bool:
+    """True for a stuck sensor's stripes: no variation along rows, a lot between them."""
+    import numpy as np
+
+    g = np.asarray(frame, dtype=np.float32)
+    if g.ndim == 3:
+        g = g.mean(axis=2)
+    m = g.mean(axis=1, keepdims=True)
+    return bool((g - m).std() < STRIPE_WITHIN_MAX and m.std() > STRIPE_BETWEEN_MIN)
+
+
+def frames_are_frozen(prev, last, threshold: float = MIN_FRAME_CHANGE) -> bool:
+    """True when two consecutive frames are identical: a stuck, replayed buffer."""
+    import numpy as np
+
+    return bool(np.abs(np.asarray(last, dtype=np.int16) - np.asarray(prev, dtype=np.int16))
+                .mean() < threshold)
+
+
 def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> dict:
     """Open the camera, grab frames, and check they contain an actual image.
 
@@ -131,19 +160,21 @@ def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> di
     for _ in range(warmup):
         cap.read()
 
-    t0, frames, last = time.time(), 0, None
+    t0, frames, prev, last = time.time(), 0, None, None
     while time.time() - t0 < 3.0:
         ok, frame = cap.read()
         if not ok:
             break
-        last, frames = frame, frames + 1
+        prev, last, frames = last, frame, frames + 1
 
     evidence: dict = {"frames_captured": frames}
-    blank = None
+    blank = stripes = frozen = None
     if last is not None:
         h, w = last.shape[:2]
         spatial_std = float(last.std())
         blank = spatial_std < UNIFORM_FRAME_STD
+        stripes = frame_is_stuck_stripes(last)
+        frozen = prev is not None and frames_are_frozen(prev, last)
         evidence.update(
             {
                 "width": int(w),
@@ -152,6 +183,8 @@ def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> di
                 "mean_brightness": round(float(last.mean()), 1),
                 "frame_std": round(spatial_std, 4),
                 "uniform_frame": blank,
+                "stuck_stripes": stripes,
+                "frozen_frames": frozen,
             }
         )
         if save_frame:
@@ -169,6 +202,17 @@ def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> di
             f"{frames} frames delivered but every pixel is identical "
             f"(std={evidence['frame_std']}) - the camera is blind, not dark. "
             "Check the privacy shutter and the OS camera permission.",
+            evidence,
+        )
+    if stripes or frozen:
+        return _result(
+            "camera", False,
+            f"{frames} frames delivered but "
+            + ("they are stripes - uniform along every row" if stripes else "")
+            + (" and " if stripes and frozen else "")
+            + ("consecutive frames are identical (a replayed buffer)" if frozen else "")
+            + " - a stuck sensor, not a scene. Power-cycle the Pi (a USB reset is not "
+              "enough) and re-run.",
             evidence,
         )
     return _result(

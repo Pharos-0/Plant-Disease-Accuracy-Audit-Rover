@@ -144,6 +144,37 @@ def test_view_only_server_raw_route_serves_the_clean_frame():
         pcs._latest = pcs._latest_raw = None
 
 
+def test_view_only_server_ignores_the_cache_busting_query():
+    """The page asks for /snapshot?t=<time>; the stdlib server must not 404 it."""
+    import pi_camera_stream as pcs
+    ann, raw = _annotated_jpeg()
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), pcs.Handler)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{srv.server_address[1]}"
+    try:
+        pcs._latest, pcs._latest_raw = ann, raw
+        assert urllib.request.urlopen(base + "/snapshot?t=1792529138298", timeout=5).read() == ann
+        assert urllib.request.urlopen(base + "/raw?t=1", timeout=5).read() == raw
+    finally:
+        srv.shutdown()
+        pcs._latest = pcs._latest_raw = None
+
+
+@pytest.mark.parametrize("module", ["pi_camera_stream", "pi_rover_control"])
+def test_pages_draw_frames_off_screen_onto_a_fixed_canvas(module):
+    """Found on the robot 2026-10-21: an <img> on /stream went dead after a server
+    restart and never reconnected, and swapping an <img> src blanks it between
+    frames, collapsing the layout - which moved the drive buttons under a thumb."""
+    if module == "pi_rover_control":
+        src = (ROOT / "rover" / "pi_rover_control.py").read_text(encoding="utf-8")
+    else:
+        src = (ROOT / "rover" / "pi_camera_stream.py").read_text(encoding="utf-8")
+    assert 'src="/stream"' not in src                       # no self-dead MJPEG <img>
+    assert "<canvas id=cam" in src and "aspect-ratio:4/3" in src
+    assert "buf=new Image()" in src and "camCtx.drawImage(buf" in src
+    assert "buf.onerror=()=>nextFrame(800)" in src           # retries after an outage
+
+
 def test_control_server_raw_route_serves_the_clean_frame():
     pytest.importorskip("flask")        # installed on the Pi, not in the laptop venv
     import pi_rover_control as prc

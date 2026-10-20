@@ -1,0 +1,3 @@
+condition,diseased_frames,units,unit_kind,missed_gated,missed_gated_lo,missed_gated_hi,missed_spatial,missed_spatial_lo,missed_spatial_hi,difference,difference_lo,difference_hi
+low_light,9,1,plant,0.0,,,0.0,,,0.0,,
+normal,5,1,plant,0.0,,,0.0,,,0.0,,

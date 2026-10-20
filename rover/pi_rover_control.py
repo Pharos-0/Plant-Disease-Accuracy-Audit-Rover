@@ -73,7 +73,7 @@ _state = {
     "distance_cm": None, "distance_at": 0.0, "blocked": False, "sensor_lost": True,
     "spray_request": False, "relay_until": 0.0, "last_cmd": 0.0,
     "spray_enabled": False, "auto": False, "auto_until": 0.0,
-    "tissue_frac": 0.0, "tissue_zones": [0.0] * 4, "deferred": False,
+    "tissue_frac": 0.0, "tissue_zones": [0.0] * 4, "deferred": False, "camera_fault": False,
     "spatial_fire": False, "auto_last_spray": 0.0, "auto_fires": 0,
 }
 _lock = threading.Lock()
@@ -105,6 +105,7 @@ def _camera_loop(index: int) -> None:
             _state["tissue_frac"] = tissue
             _state["tissue_zones"] = sd["zones"]
             _state["deferred"] = sd["deferred"]
+            _state["camera_fault"] = sd["camera_fault"]
             _state["spatial_fire"] = sd["fire"]
             armed, dist = _state["armed"], _state["distance_cm"]
             blocked, auto = _state["blocked"], _state["auto"]
@@ -112,7 +113,7 @@ def _camera_loop(index: int) -> None:
         h, w = frame.shape[:2]
         banner = (f"{'AUTO' if auto else ('ARMED' if armed else 'disarmed')}  "
                   f"tissue {tissue * 100:3.0f}%"
-                  f"{'  TOO DARK' if sd['deferred'] else ('  LEAF' if sd['fire'] else '')}  "
+                  f"{'  CAMERA FAULT' if sd['camera_fault'] else '  TOO DARK' if sd['deferred'] else ('  LEAF' if sd['fire'] else '')}  "
                   f"dist {'-' if lost or dist is None else f'{dist:.0f}cm'}"
                   f"{'  SENSOR LOST' if lost else ('  OBSTACLE' if blocked else '')}"
                   f"  {time.strftime('%H:%M:%S')}")
@@ -240,13 +241,13 @@ PAGE = """<!doctype html><html><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no">
 <title>Rover control</title><style>
 body{margin:0;background:#111;color:#eee;font-family:system-ui,sans-serif;text-align:center;touch-action:none}
-img{max-width:100%;height:auto}#grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:360px;margin:8px auto}
-button{font-size:20px;padding:16px;border:0;border-radius:10px;background:#2b4;color:#042;font-weight:700}
+#cam{display:block;width:100%;max-width:640px;aspect-ratio:4/3;margin:0 auto;background:#000}#grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:360px;margin:8px auto}
+button{font-size:20px;padding:16px;border:0;border-radius:10px;background:#2b4;color:#042;font-weight:700;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .dir{background:#39c;color:#021}.stop{background:#e33;color:#fff;grid-column:1/4}.sp{background:#fa0;color:#311}
 #arm,#auto{width:95%;max-width:360px;margin:6px auto;display:block;background:#555;color:#ccc}
 #arm.on{background:#2b4;color:#042}#auto.on{background:#0c6;color:#021}
 .row{max-width:360px;margin:6px auto;font-size:14px;color:#9b9}label{font-size:14px}</style></head><body>
-<img src="/stream" alt="rover camera"><div class=row id=tele>…</div>
+<canvas id=cam width=640 height=480></canvas><div class=row id=tele>…</div>
 <button id=arm onclick="arm()">ARM to enable driving</button>
 <div id=grid>
 <span></span><button class=dir data-d=forward>▲</button><span></span>
@@ -274,12 +275,38 @@ function stopAll(){armed=false;auto=false;
 function send(d){post('/drive',{dir:d});}
 document.querySelectorAll('.dir').forEach(b=>{
  const start=e=>{e.preventDefault();if(!armed)return;const d=b.dataset.d;send(d);clearInterval(held);held=setInterval(()=>send(d),150);};
- const end=e=>{e.preventDefault();clearInterval(held);held=null;post('/stop');};
- b.addEventListener('pointerdown',start);b.addEventListener('pointerup',end);b.addEventListener('pointerleave',end);});
+ // Releasing a drive button stops the wheels and stays ARMED. Only the STOP button
+ // disarms (/stop). A release that was not a press - the mouse merely passing over
+ // the button - sends nothing.
+ const end=e=>{e.preventDefault();if(held===null)return;clearInterval(held);held=null;send('stop');};
+ b.addEventListener('pointerdown',start);b.addEventListener('pointerup',end);
+ b.addEventListener('pointerleave',end);b.addEventListener('pointercancel',end);
+ b.addEventListener('contextmenu',e=>e.preventDefault());});
+function showArmed(on){armed=on;const e=document.getElementById('arm');e.className=on?'on':'';
+ e.textContent=on?'ARMED — tap to disarm':'ARM to enable driving';}
+function showAuto(on){auto=on;const e=document.getElementById('auto');e.className=on?'on':'';
+ e.textContent='AUTO: spray where leaf tissue is seen ('+(on?'ON':'off')+')';}
+// Camera: one fresh /snapshot at a time, each requested when the last has arrived,
+// loaded off-screen and painted onto a fixed 4:3 canvas only when complete, so the
+// view never blanks between frames and the controls below never move.
+// An <img> on the MJPEG /stream never reconnects after a server restart or a Wi-Fi
+// drop and some phone browsers render it badly; this self-heals, and paces itself
+// to whatever the link can carry. A request that hangs is replaced after 3 s.
+const cam=document.getElementById('cam'),camCtx=cam.getContext('2d'),buf=new Image();
+let camT=null,camAt=Date.now(),camFrames=0;
+function nextFrame(ms){clearTimeout(camT);camT=setTimeout(()=>{camAt=Date.now();
+ buf.src='/snapshot?t='+camAt;},ms);}
+buf.onload=()=>{if(cam.width!==buf.naturalWidth||cam.height!==buf.naturalHeight){
+ cam.width=buf.naturalWidth;cam.height=buf.naturalHeight;}
+ camCtx.drawImage(buf,0,0);camFrames++;nextFrame(40);};
+buf.onerror=()=>nextFrame(800);nextFrame(0);
+setInterval(()=>{if(Date.now()-camAt>3000)nextFrame(0);},1000);
 setInterval(async()=>{try{const t=await(await fetch('/telemetry')).json();
+ // the buttons show the rover's real state, not what this page last asked for
+ if(t.armed!==armed)showArmed(t.armed);if(t.auto!==auto)showAuto(t.auto);
  document.getElementById('tele').textContent=
   (t.auto?'AUTO':(t.armed?'ARMED':'disarmed'))+' · tissue '+(t.tissue_frac*100).toFixed(0)+'%'
-  +(t.deferred?' · TOO DARK':(t.spatial_fire?' · LEAF':''))
+  +(t.camera_fault?' · CAMERA FAULT (no spray)':t.deferred?' · TOO DARK':(t.spatial_fire?' · LEAF':''))
   +' · '+(t.distance_cm==null?'dist —':'dist '+t.distance_cm.toFixed(0)+'cm')
   +(t.sensor_lost?' · SENSOR LOST (forward refused)':(t.blocked?' · OBSTACLE':''))
   +' · fires '+t.auto_fires;}catch(e){}},400);
@@ -364,6 +391,7 @@ def telemetry():
                         "sensor_lost": _state["sensor_lost"],
                         "tissue_frac": _state["tissue_frac"], "auto_fires": _state["auto_fires"],
                         "tissue_zones": _state["tissue_zones"], "deferred": _state["deferred"],
+                        "camera_fault": _state["camera_fault"],
                         "spatial_fire": _state["spatial_fire"],
                         "distance_cm": _state["distance_cm"] if fresh else None})
 

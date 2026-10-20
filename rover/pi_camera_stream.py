@@ -65,9 +65,22 @@ PAGE = b"""<!doctype html><html><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>Rover camera</title>
 <style>body{margin:0;background:#111;color:#ddd;font-family:system-ui,sans-serif;text-align:center}
-img{max-width:100%;height:auto;margin-top:8px}.b{padding:6px;font-size:14px;color:#9b9}</style>
+#cam{display:block;width:100%;max-width:640px;aspect-ratio:4/3;margin:8px auto;background:#000}.b{padding:6px;font-size:14px;color:#9b9}</style>
 </head><body><div class=b>Rover camera - view only. No control is exposed on this page.</div>
-<img src="/stream" alt="rover camera stream"></body></html>"""
+<canvas id=cam width=640 height=480></canvas>
+<script>
+// One fresh /snapshot at a time: self-heals after a restart or a Wi-Fi drop, which an
+// <img> on the MJPEG /stream does not, and paces itself to the link.
+const cam=document.getElementById('cam'),camCtx=cam.getContext('2d'),buf=new Image();
+let camT=null,camAt=Date.now(),camFrames=0;
+function nextFrame(ms){clearTimeout(camT);camT=setTimeout(()=>{camAt=Date.now();
+ buf.src='/snapshot?t='+camAt;},ms);}
+buf.onload=()=>{if(cam.width!==buf.naturalWidth||cam.height!==buf.naturalHeight){
+ cam.width=buf.naturalWidth;cam.height=buf.naturalHeight;}
+ camCtx.drawImage(buf,0,0);camFrames++;nextFrame(40);};
+buf.onerror=()=>nextFrame(800);nextFrame(0);
+setInterval(()=>{if(Date.now()-camAt>3000)nextFrame(0);},1000);
+</script></body></html>"""
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -75,12 +88,14 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
     def do_GET(self):
-        if self.path in ("/", "/index.html"):
+        # the page asks for /snapshot?t=<time> so browsers never cache a frame
+        path = self.path.split("?", 1)[0]
+        if path in ("/", "/index.html"):
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
             self.wfile.write(PAGE)
-        elif self.path == "/healthz":
+        elif path == "/healthz":
             with _lock:
                 m = dict(_meta)
             body = (f"ok frames={m['frames']} size={m['w']}x{m['h']} "
@@ -88,9 +103,9 @@ class Handler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.end_headers()
             self.wfile.write(body)
-        elif self.path in ("/snapshot", "/raw"):
+        elif path in ("/snapshot", "/raw"):
             with _lock:
-                frame = _latest_raw if self.path == "/raw" else _latest
+                frame = _latest_raw if path == "/raw" else _latest
             if frame is None:
                 self.send_error(503, "no frame yet")
                 return
@@ -99,7 +114,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(frame)))
             self.end_headers()
             self.wfile.write(frame)
-        elif self.path == "/stream":
+        elif path == "/stream":
             self.send_response(200)
             self.send_header("Content-Type",
                              "multipart/x-mixed-replace; boundary=frame")

@@ -10,6 +10,42 @@ and a tape-measured height). Run over SSH from the laptop to the Pi on the lapto
 (`pi@192.168.137.167`), using `rover/hardware_tests/test_components.py` copied to the Pi.
 See the session note at the end for the full command output.
 
+**Update (2026-10-21): plant session — hardware results and findings.** (Pi clock in UTC.)
+
+- **§2 relay boot state: PASS.** On a cold boot verified by the Pi's uptime (booted 21:56:09),
+  the operator watched the relay LED through boot: it stayed off. A first attempt cycled only
+  the motor/relay supply while the Pi stayed up (uptime 23 min) and is **not** counted.
+- **§1 fault injection: partly run, NOT complete.** With the sensor switched off by the operator,
+  telemetry showed `sensor_lost: true` and forward `blocked` within about a second — the
+  fail-safe flag works on the robot. But the rover was disarmed at that moment (the page bug
+  below), so the wheels stopping *under a forward command* was not observed. A second run
+  (laptop holding forward, 22:25:48–22:27:06, 404 drive commands) ended with the operator
+  reporting that the rover **"hit an obstacle and stopped; it did not roll over"**. **The wheels
+  were on the floor**: the "wheels off the ground" confirmation had been given before a
+  power-cycle of the Pi, during which the operator handled the rover, and it was not
+  re-confirmed before the run — a process error on the laptop side. The rover drove forward,
+  contacted the obstacle, and stopped with the sensor reading 3.7 cm: **the obstacle stop engaged
+  only at contact**, so the HC-SR04 did not see that obstacle in time (low, narrow, soft or angled
+  objects can fall outside or absorb its beam). No damage reported. The run's own log was lost
+  when it was stopped; the Pi's request log is the record.
+  **Consequences:** (1) the ultrasonic obstacle stop is a backstop, not a guarantee — forward
+  motion needs the operator watching; (2) every motor run is preceded by a fresh confirmation of
+  the physical setup, and runs are kept short.
+- **Camera: a stuck-sensor failure mode.** Twice, after the camera was closed and reopened (a
+  server restart or a mode switch), its sensor delivered static uniform-row stripes — s.d. ≈ 80,
+  so the old blank-frame check passed them — which the tissue test read as 86% leaf. A raw grab
+  from the driver showed the same, so it is the camera, not OpenCV. A USB reset did not clear it;
+  **a power cycle of the Pi did**. The servers, the demo and `test_components.py --test camera`
+  now treat such frames as a camera fault (no spray); the deployed guard caught the second episode
+  live. For the rest of a session the camera should be opened once (rover-control set as the boot
+  service for this session; view-only to be restored as the boot default afterwards).
+- **Control page bugs, fixed and redeployed:** releasing a drive button posted `/stop`, which
+  disarms, so every press after the first was ignored (and merely moving the mouse off a button
+  disarmed); and the camera `<img>` never reconnected after a server restart. Release now stops
+  the wheels and stays armed; the view loads frames one at a time onto a fixed canvas.
+- **Still not run:** §3 artefacts (plant frame + tape-measured height), pump with liquid,
+  battery / power draw, AUTO on the real plant.
+
 **Update (2026-10-17): integrated teleop drive + spray confirmed.** With the control server
 (`rover-control.service`, `rover/pi_rover_control.py`) running and driven from a browser, the
 operator confirmed the rover **drove under teleoperation and the spray actuated** — i.e. the

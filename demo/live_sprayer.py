@@ -92,6 +92,26 @@ HARDWARE_TAG = "NONE - decision only, no actuator driven"
 MAX_GAIN = 4.0
 #: Median V (0-255) below which a frame is too dark to judge: 128 / MAX_GAIN.
 MIN_EXPOSURE = 128.0 / MAX_GAIN
+#: Camera fault, added 2026-10-21 before any real leaf frame (protocol section 11.4).
+#: A stuck sensor, seen on the rover, delivers static stripes: frames that vary
+#: strongly BETWEEN rows and not at all WITHIN them. Measured: stuck frames within
+#: 0.09-0.14 and between 71-83; real rover frames within ~38; of the 1,800 dry-run
+#: frames none has both (a blown-out frame has neither, and remains an exposure
+#: matter, not a camera fault), so no dry-run decision changes.
+STRIPE_WITHIN_MAX = 0.5
+STRIPE_BETWEEN_MIN = 10.0
+
+
+def row_structure(bgr: np.ndarray) -> tuple[float, float]:
+    """(grey variation along rows, pooled over all rows; variation between row means)."""
+    g = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY).astype(np.float32)
+    m = g.mean(axis=1, keepdims=True)
+    return float((g - m).std()), float(m.std())
+
+
+def is_stuck_stripes(bgr: np.ndarray) -> bool:
+    within, between = row_structure(bgr)
+    return within < STRIPE_WITHIN_MAX and between > STRIPE_BETWEEN_MIN
 
 
 def foliage_mask(hsv: np.ndarray) -> np.ndarray:
@@ -127,6 +147,7 @@ class Decision:
     blank: bool
     deferred: bool
     spray_spatial: bool
+    camera_fault: bool
     latency_ms: float
 
     @property
@@ -178,6 +199,7 @@ class SprayPipeline:
         t0 = time.perf_counter()
         bgr = cv2.cvtColor(np.asarray(rgb), cv2.COLOR_RGB2BGR)
         blank = float(bgr.std()) < 0.5        # the dead-camera check
+        camera_fault = blank or is_stuck_stripes(bgr)   # dead, or stuck sensor
         lg = self.logits(rgb)
         z = lg - lg.max()
         p = np.exp(z) / np.exp(z).sum()
@@ -194,7 +216,7 @@ class SprayPipeline:
             gate = est >= TAU_SAFE
 
         hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-        deferred = blank or float(np.median(hsv[..., 2])) < MIN_EXPOSURE
+        deferred = camera_fault or float(np.median(hsv[..., 2])) < MIN_EXPOSURE
         veg = foliage_mask(hsv)
         canopy = [float(b.mean()) for b in np.array_split(veg, N_NOZZLES, axis=1)]
 
@@ -216,7 +238,8 @@ class SprayPipeline:
                         p_diseased=p_dis, msp=msp, margin=margin, abstain=abstain,
                         session_estimate=est, gate_open=gate, nozzles=cmd.nozzles,
                         fsm_state=cmd.state.name, canopy=canopy, blank=blank,
-                        deferred=deferred, spray_spatial=spatial, latency_ms=(time.perf_counter() - t0) * 1000)
+                        deferred=deferred, spray_spatial=spatial, camera_fault=camera_fault,
+                        latency_ms=(time.perf_counter() - t0) * 1000)
 
 
 # --------------------------------------------------------------------------
@@ -236,7 +259,8 @@ def draw(frame: np.ndarray, d: Decision, truth: str, cond: str, leaf: str,
         f"session est {'-' if d.session_estimate is None else f'{d.session_estimate:.2f}'}"
         f"  gate {'OPEN' if d.gate_open else 'shut'}  FSM {d.fsm_state}",
         f"DECISION: {'SPRAY ' + str(sum(d.nozzles)) + '/4' if d.spray else 'no spray'}"
-        f"{'  [TOO DARK - DEFERRED]' if d.deferred else ''}   {d.latency_ms:.0f} ms",
+        f"{'  [CAMERA FAULT - DEFERRED, do not save]' if d.camera_fault else '  [TOO DARK - DEFERRED]' if d.deferred else ''}"
+        f"   {d.latency_ms:.0f} ms",
         f"plant {plant or '-'} leaf {leaf}  truth {truth or '?'}  condition {cond}"
         f"   [h/e/l 1-6 n p SPACE q]",
     ]
@@ -377,8 +401,13 @@ def run_camera(spec: str, out_dir: Path, diagnosis_source: str = "") -> int:
             d = pipe.decide(rgb)
             plant = f"P{plant_n:02d}"
             leaf = f"{plant}L{leaf_n:02d}"
-            cv2.imshow("selective sprayer - decision only", draw(frame, d, truth, cond,
-                                                                 leaf, pipe.tau, plant))
+            try:
+                cv2.imshow("selective sprayer - decision only", draw(frame, d, truth, cond,
+                                                                     leaf, pipe.tau, plant))
+            except cv2.error:
+                print("this OpenCV build has no window support - run the same capture in a "
+                      "browser instead: add --web 8090")
+                return 2
             key = chr(cv2.waitKey(1) & 0xFF)
             if key == "q":
                 break
@@ -397,7 +426,10 @@ def run_camera(spec: str, out_dir: Path, diagnosis_source: str = "") -> int:
                       f"conf={d.msp:.2f} spray={d.spray}")
     finally:
         cap.release()
-        cv2.destroyAllWindows()
+        try:
+            cv2.destroyAllWindows()
+        except cv2.error:          # no window support: nothing was opened
+            pass
     print(f"saved {log.n} labelled frames to {out_dir}")
     return 0
 
@@ -416,11 +448,19 @@ def main() -> int:
                     help="how the true labels were confirmed, e.g. 'agronomist', 'lab test', "
                          "'visual only'; recorded on every frame (a manifest's "
                          "diagnosis_source column overrides it per row)")
+    ap.add_argument("--web", type=int, metavar="PORT",
+                    help="with --camera: capture through a browser page on this port "
+                         "instead of an OpenCV window (demo/web_capture.py)")
+    ap.add_argument("--web-host", default="127.0.0.1",
+                    help="with --web: 0.0.0.0 to reach the page from a phone on the hotspot")
     a = ap.parse_args()
     if a.verify is not None:
         return run_verify(a.verify)
     if a.manifest is not None:
         return run_manifest(a.manifest, a.out, a.diagnosis_source)
+    if a.web:
+        from web_capture import run_web
+        return run_web(a.camera, a.out, a.diagnosis_source, a.web_host, a.web)
     return run_camera(a.camera, a.out, a.diagnosis_source)
 
 

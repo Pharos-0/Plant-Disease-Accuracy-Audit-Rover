@@ -371,8 +371,8 @@ def main() -> int:
                   f"{r.p4_confidence:8.2f}")
         print("  P2 called = healthy-leaf frames the classifier called diseased; P3 fires = "
               "frames the spatial-only policy sprays (tissue detected); P3 dark = deferred.\n"
-              "  P3 is measured on healthy, green tissue: it does not stand in for missed "
-              "treatment on brown, diseased leaves.")
+              "  P3 counts every frame whatever its label: it shows the tissue test finds "
+              "these leaves, not missed treatment on confirmed diseased leaves.")
         pr.to_csv(out / "pilot_report.csv")
 
     t.to_csv(out / "analysis_by_condition.csv")

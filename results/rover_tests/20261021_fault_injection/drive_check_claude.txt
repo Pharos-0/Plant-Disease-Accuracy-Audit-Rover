@@ -1,0 +1,2 @@
+before: armed=False blocked=True sensor_lost=False dist=18cm
+front not clear (or sensor lost) - NOT moving. Clear 30 cm in front / switch sensor on.

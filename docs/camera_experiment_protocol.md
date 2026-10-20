@@ -281,6 +281,12 @@ Frames are captured through the rover's camera with the unchanged decision rule:
 .venv/Scripts/python.exe demo/live_sprayer.py --camera 192.168.137.167:8080 --diagnosis-source "visual only (nursery stock)"
 ```
 
+*(Added 2026-10-21, at the session.)* The project's OpenCV has no window support, so on the
+laptop used the capture runs as a browser page instead — the same pipeline, overlay and log
+record, through `demo/web_capture.py`: add `--web 8090` and open `http://127.0.0.1:8090/`. The
+page also refuses a second diagnosis for one leaf and asks before a new plant, after the first
+capture showed both errors. The results are in `docs/pilot_results_20261021.md`.
+
 Keys, conditions and frame counts are those of §3 and §5: **normal and low light first** (the
 priority conditions), 5 frames per leaf per condition, 2–3 leaves, the rest of the conditions if
 time allows. Each record carries the camera source, including whether the clean `/raw` frame or
@@ -295,6 +301,7 @@ classifier; see `demo/rover_camera.py`).
 | When no diseased frame is missed, an **exact 95% upper bound** (Clopper–Pearson at zero) on the share of diseased plants with any miss is printed beside the pre-registered bootstrap, labelled supplementary | the percentile bootstrap cannot exceed 0 when no miss occurs, so it prints [0%, 0%]; with 6 diseased plants and no misses the exact bound is still 39% | none: no zero-miss condition in the dry run |
 | `demo/live_sprayer.py --camera` accepts the **rover camera** and reads it banner-free | the protocol could only use a laptop webcam; the rover servers stamp a banner (black, with text that can be green) on `/snapshot` | none: the decision rule is untouched |
 | The rover's **AUTO** now runs the spatial-only policy of §4 exactly (any of 4 zones ≥ 15% tissue; too-dark frames deferred) | it used a whole-frame 15% test with no deferral: it missed a plant filling one zone, and would have sprayed a frame too dark to judge | brings the robot into line with §4 |
+| *(2026-10-21, at the start of the session, still before any real leaf frame)* A **stuck-sensor frame is a camera fault and is deferred**, beside §4's blank-frame check: grey variation within rows (pooled) < 0.5 **and** between row means > 10 | on the rover the camera's sensor stuck and delivered static uniform-row stripes — s.d. ≈ 80, so not "blank" — which the tissue test read as 86% leaf: AUTO would have sprayed on a frozen image. A power-cycle of the Pi cleared it; a USB reset did not | none: of the 1,800 dry-run frames, none trips it (tested). A first version, using the *median* row, would have deferred 90 real harsh-light leaves on white and was rejected before use |
 
 All are covered by tests (`tests/test_camera_analysis.py`, `test_rover_camera.py`,
 `test_spatial_policy.py`, `test_rover_control_server.py`).

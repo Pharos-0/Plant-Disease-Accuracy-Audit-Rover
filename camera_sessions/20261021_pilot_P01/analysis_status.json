@@ -1,0 +1,18 @@
+{
+  "frames": 10,
+  "leaves": 8,
+  "units": 2,
+  "unit_kind": "plant",
+  "diseased_frames": 5,
+  "healthy_frames": 5,
+  "intervals_estimable": true,
+  "primary_outcome_estimable": true,
+  "wasted_spray_estimable": true,
+  "diseased_plants": 2,
+  "healthy_plants": 0,
+  "pilot": true,
+  "zero_miss_notes": [
+    "low_light / gated: 0 missed across 2 diseased plants - the bootstrap interval is degenerate at 0; exact 95% upper bound on the share of diseased plants with any miss: 78%",
+    "low_light / spatial-only: 0 missed across 2 diseased plants - the bootstrap interval is degenerate at 0; exact 95% upper bound on the share of diseased plants with any miss: 78%"
+  ]
+}

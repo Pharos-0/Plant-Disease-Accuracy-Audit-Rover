@@ -10,8 +10,8 @@ frame's own evidence beside it, so the artefact carries its provenance:
         --note "tomato in a pot on the floor"
 
 The heights are typed in from the tape, never estimated: the script refuses to run
-without the ground height. A blank or near-uniform frame is refused too - that is a
-dead camera, not a plant. Writes results/rover_artifacts/<date_time>/ containing
+without the ground height. A blank frame, or a stuck sensor's structureless stripes,
+is refused too - that is a camera fault, not a plant. Writes results/rover_artifacts/<date_time>/ containing
 plant_frame.jpg and artifact.json.
 """
 from __future__ import annotations
@@ -52,6 +52,9 @@ def capture(rover: str, height_cm: float, note: str, out_root: Path,
         raise SystemExit(f"frame is uniform (std {std:.3f}): a dead or capped camera, "
                          f"not a plant - nothing saved")
     sd = spatial_decision(frame)
+    if sd["camera_fault"]:
+        raise SystemExit("frame has no image along its rows - a stuck camera sensor "
+                         "(seen 2026-10-21: power-cycle the Pi to clear it) - nothing saved")
     out = out_root / time.strftime("%Y%m%d_%H%M%S")
     out.mkdir(parents=True, exist_ok=True)
     cv2.imwrite(str(out / "plant_frame.jpg"), frame, [cv2.IMWRITE_JPEG_QUALITY, 95])

@@ -25,11 +25,57 @@ import live_sprayer as ls  # noqa: E402
 import spatial_policy as sp  # noqa: E402
 
 PV = Path(r"C:/ds/plantvillage/raw/color")
+#: A real frame from the rover's camera on 2026-10-21, with its sensor stuck: static,
+#: perfectly uniform-row stripes - high contrast, so not "blank".
+STUCK = ROOT / "tests" / "fixtures" / "rover_stuck_sensor_20261021.jpg"
 
 
 def test_constants_match_the_analysed_demo():
     assert sp.MAX_GAIN == ls.MAX_GAIN and sp.MIN_EXPOSURE == ls.MIN_EXPOSURE
     assert sp.N_ZONES == ls.N_NOZZLES
+    assert (sp.STRIPE_WITHIN_MAX, sp.STRIPE_BETWEEN_MIN) == (ls.STRIPE_WITHIN_MAX,
+                                                          ls.STRIPE_BETWEEN_MIN)
+
+
+def test_the_real_stuck_sensor_frame_is_a_camera_fault_not_a_leaf():
+    """The failure seen on the robot: the tissue test alone reads these stripes as
+    mostly leaf, so without the fault check AUTO would spray on a stuck camera."""
+    f = cv2.imread(str(STUCK))
+    assert f.std() > 50                                  # passes the old blank check
+    d = sp.spatial_decision(f)
+    assert d["tissue_frac"] > 0.5                        # what fooled the tissue test
+    assert d["camera_fault"] is True and d["deferred"] is True and d["fire"] is False
+
+
+def test_a_leaf_on_a_blown_out_background_is_not_a_camera_fault():
+    """The first version of the check used the MEDIAN row and called 90 harsh-light
+    dry-run frames - real leaves on saturated white - camera faults. Stripes need
+    variation between rows AND none within them; this frame has rows of leaf."""
+    f = np.full((256, 256, 3), 255, np.uint8)
+    f[90:170, 40:215] = (40, 160, 60)                    # leaf across 31% of the rows
+    assert sp.spatial_decision(f)["camera_fault"] is False
+
+
+DRY = Path(r"C:/ds/camera_dryrun/manifest.csv")
+
+
+@pytest.mark.skipif(not DRY.exists(), reason="dry-run images not on this machine")
+def test_no_recorded_dry_run_frame_is_a_camera_fault():
+    """The fault check was added after the dry run was analysed, so it must not
+    change a single recorded decision: none of the 1,800 frames may trip it."""
+    import csv
+    rows = list(csv.DictReader(DRY.open(encoding="utf-8")))
+    flagged = [r["path"] for r in rows if sp.is_stuck_stripes(cv2.imread(r["path"]))]
+    assert len(rows) == 1800 and flagged == []
+
+
+def test_a_real_but_dim_scene_is_not_a_camera_fault():
+    rng = np.random.default_rng(3)
+    leaf = np.full((480, 640, 3), (40, 140, 50), np.float32)
+    leaf[:, ::7] *= 0.6                                  # some texture across the row
+    dim = ((leaf + rng.normal(0, 3, leaf.shape)) * 0.4).clip(0, 255).astype(np.uint8)
+    d = sp.spatial_decision(dim)
+    assert d["camera_fault"] is False and d["fire"] is True
 
 
 def test_foliage_masks_are_identical_on_random_colours():
@@ -61,7 +107,8 @@ def test_too_dark_and_blank_frames_are_deferred_not_sprayed():
 
 def _frames():
     out = [("blank", np.full((480, 640, 3), 90, np.uint8)),
-           ("noise", np.random.default_rng(1).integers(0, 256, (480, 640, 3), dtype=np.uint8))]
+           ("noise", np.random.default_rng(1).integers(0, 256, (480, 640, 3), dtype=np.uint8)),
+           ("stuck sensor (real, 2026-10-21)", cv2.imread(str(STUCK)))]
     for folder in ("Tomato___healthy", "Tomato___Early_blight", "Tomato___Late_blight"):
         for p in sorted((PV / folder).glob("*.JPG"))[:4]:
             bgr = cv2.resize(cv2.imread(str(p)), (640, 480))
@@ -86,6 +133,7 @@ def test_rover_decision_equals_the_demo_decision_frame_for_frame(pipe):
         assert rover["zones"] == pytest.approx(demo.canopy, abs=1e-12), name
         assert rover["deferred"] == demo.deferred, name
         assert rover["fire"] == demo.spray_spatial, name
+        assert rover["camera_fault"] == demo.camera_fault, name
         deferred_seen |= rover["deferred"]
         fired_seen |= rover["fire"]
     assert deferred_seen and fired_seen        # both branches actually exercised

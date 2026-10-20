@@ -108,15 +108,22 @@ Expected: `saved results/rover_artifacts/<time>/plant_frame.jpg (640x480, from r
 
 ## 6. Pilot capture through the rover camera (protocol §11) · 30–45 min
 
-Switch to **view-only** mode so nothing can move or spray while your hands are at the plant:
+**Do not switch the rover's mode for this step.** Learned 2026-10-21: switching between the
+view-only and control servers reopens the camera, and on a reopen this camera's sensor can stick
+(static stripes; the page shows `CAMERA FAULT`). Only a power-cycle of the Pi clears it. Stay in
+whichever mode is running — in control mode leave it **disarmed** with the tank box unticked, and
+nothing can move or spray.
 
 ```bash
-ssh pi@192.168.137.167 "sudo systemctl start rover-camstream.service"
-.venv/Scripts/python.exe demo/live_sprayer.py --camera 192.168.137.167:8080 --diagnosis-source "visual only (nursery stock)"
+.venv/Scripts/python.exe demo/live_sprayer.py --camera 192.168.137.167:8080 --web 8090 --diagnosis-source "visual only (nursery stock)"
 ```
 
-Check the first line says `rover camera: ... (raw)`. A window opens with the live decision
-overlay; **click the window** so it receives the keys.
+Open `http://127.0.0.1:8090/`: the live decision overlay, with buttons for the keys below (the
+keys work too). The OpenCV here has no window support, so the window mode cannot run. The page
+refuses a save without a label, a second diagnosis for one leaf, and a stuck-camera frame;
+*next plant* asks for confirmation; a "low light" frame that looks bright gets a warning.
+**Low light means room lights OFF** (screen glow or light from another room only) — at night,
+room lights ON is *normal*.
 
 | key | does |
 |---|---|

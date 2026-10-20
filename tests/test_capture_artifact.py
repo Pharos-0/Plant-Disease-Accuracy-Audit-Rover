@@ -82,6 +82,31 @@ def test_refuses_a_dead_camera_and_saves_nothing(tmp_path):
     assert not any(tmp_path.iterdir())
 
 
+def test_refuses_a_stuck_camera_and_saves_nothing(tmp_path):
+    stuck = cv2.imread(str(ROOT / "tests" / "fixtures" / "rover_stuck_sensor_20261021.jpg"))
+    srv, addr = _rover_serving(stuck)
+    try:
+        with pytest.raises(SystemExit, match="stuck"):
+            cra.capture(addr, 24.5, "", tmp_path)
+    finally:
+        srv.shutdown()
+    assert not any(tmp_path.iterdir())
+
+
+def test_harness_fails_a_stuck_camera_that_the_blank_check_passed():
+    import test_components as tc
+    stuck = cv2.imread(str(ROOT / "tests" / "fixtures" / "rover_stuck_sensor_20261021.jpg"))
+    assert not tc.frame_is_blank(stuck)                  # why it slipped through before
+    assert tc.frame_is_stuck_stripes(stuck)
+    assert tc.frames_are_frozen(stuck, stuck.copy())
+    real = _plant()
+    noisy = (real.astype(int) + np.random.default_rng(1).integers(-3, 4, real.shape)
+             ).clip(0, 255).astype(np.uint8)
+    assert not tc.frame_is_stuck_stripes(real)
+    assert not tc.frame_is_stuck_stripes(np.full((480, 640, 3), 255, np.uint8))  # blown out
+    assert not tc.frames_are_frozen(real, noisy)          # sensor noise: a live camera
+
+
 def test_harness_save_frame_flag_reaches_the_camera_test(monkeypatch):
     import test_components as tc
     seen = {}
