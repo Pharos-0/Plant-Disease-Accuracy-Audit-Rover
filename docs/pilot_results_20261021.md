@@ -19,7 +19,7 @@ judgement, recorded as *visual only (nursery stock)*. One plant ⇒ no interval 
 | P3 | Tissue detection; too-dark deferral | Spatial-only found tissue on **23/23** frames not too dark; **9/9** truly dark frames (median brightness 3–7) deferred. A wooden door behind the plant was counted as tissue |
 | P4 | Confidence under shift | Mean max-softmax 0.90 in room light, 0.74 lights-off — on different leaves; the only same-leaf pair (L05) had the lights on in both, so the dry run's "more confident in low light" was **not testable** |
 | P5 | §16 artefacts (plant frame + height) | **Done** — frames of the real plant; lens height 24.5 cm (`results/rover_artifacts/20261021_041635/`) |
-| P6 | Rover AUTO on the real plant | **Not yet run** |
+| P6 | Rover AUTO on the real plant | **Done** — fires on the plant (29/29 relay pulses confirmed on the pin), defers when the lens is covered, stops without the plant against a plain background; fires at a wooden door (`results/rover_tests/20261021_auto_on_plant/`) |
 
 ## Across all 32 frames (needs no disease label)
 

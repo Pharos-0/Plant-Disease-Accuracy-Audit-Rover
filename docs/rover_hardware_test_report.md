@@ -10,7 +10,8 @@
 | §1 ultrasonic fault injection | **Partly run** — `sensor_lost` flips within ~1 s; wheels-stop under a forward command not yet observed |
 | §3 plant frame | **Done** — 32 rover-camera frames of the real plant (pilot, `camera_sessions/20261021_pilot_P01*/frames/`, on disk, not in git) |
 | §3 camera height | **Done** — lens 24.5 cm above the ground (operator: "24.5 cm is the height of the camera in the rover"); artefact `results/rover_artifacts/20261021_041635/` |
-| AUTO on the real plant; pump with water; battery / power draw | **NOT RUN** |
+| AUTO on the real plant | **Done** — 29 fires in 91 s, all 29 seen on the relay pin; stops when the lens is covered; with the plant removed it stops against a plain white background but keeps firing at a wooden door (`results/rover_tests/20261021_auto_on_plant/SUMMARY.md`) |
+| Pump with water; battery / power draw | **NOT RUN** |
 | Camera reliability | after a reopen the camera twice stuck into stripes and once lost its blue channel; each cleared only by a power cycle; all three now detected as camera faults (no spray) |
 | Obstacle stop | works, but only saw one obstacle at ~4 cm (rover contacted it, 2026-10-21) — a backstop, not a guarantee |
 
