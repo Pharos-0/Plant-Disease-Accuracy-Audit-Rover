@@ -53,8 +53,8 @@ def capture(rover: str, height_cm: float, note: str, out_root: Path,
                          f"not a plant - nothing saved")
     sd = spatial_decision(frame)
     if sd["camera_fault"]:
-        raise SystemExit("frame has no image along its rows - a stuck camera sensor "
-                         "(seen 2026-10-21: power-cycle the Pi to clear it) - nothing saved")
+        raise SystemExit("camera fault: a stuck sensor (stripes) or a missing colour channel "
+                         "(seen 2026-10-21; power-cycle the Pi to clear it) - nothing saved")
     out = out_root / time.strftime("%Y%m%d_%H%M%S")
     out.mkdir(parents=True, exist_ok=True)
     cv2.imwrite(str(out / "plant_frame.jpg"), frame, [cv2.IMWRITE_JPEG_QUALITY, 95])

@@ -100,6 +100,13 @@ MIN_EXPOSURE = 128.0 / MAX_GAIN
 #: matter, not a camera fault), so no dry-run decision changes.
 STRIPE_WITHIN_MAX = 0.5
 STRIPE_BETWEEN_MIN = 10.0
+#: A camera whose colour pipeline failed after a reopen (rover, 2026-10-21) lost its
+#: blue channel: white read (4, 154, 122) in BGR, and the tissue test called 97% of the
+#: frame leaf. Rule: brightest channel's 99th percentile above 100 and the weakest one
+#: below a quarter of it. Measured weakest/brightest: broken 0.108; real frames >= 0.529
+#: (rover-view canopy), 0.609 (PlantVillage), 0.749 (dry run), 0.798 (pilot).
+DEAD_CHANNEL_BRIGHT = 100.0
+DEAD_CHANNEL_RATIO = 0.25
 
 
 def row_structure(bgr: np.ndarray) -> tuple[float, float]:
@@ -112,6 +119,12 @@ def row_structure(bgr: np.ndarray) -> tuple[float, float]:
 def is_stuck_stripes(bgr: np.ndarray) -> bool:
     within, between = row_structure(bgr)
     return within < STRIPE_WITHIN_MAX and between > STRIPE_BETWEEN_MIN
+
+
+def is_dead_channel(bgr: np.ndarray) -> bool:
+    """A colour channel missing from an otherwise bright frame - a camera fault."""
+    p = np.percentile(bgr.reshape(-1, 3), 99, axis=0)
+    return bool(p.max() > DEAD_CHANNEL_BRIGHT and p.min() < DEAD_CHANNEL_RATIO * p.max())
 
 
 def foliage_mask(hsv: np.ndarray) -> np.ndarray:
@@ -199,7 +212,7 @@ class SprayPipeline:
         t0 = time.perf_counter()
         bgr = cv2.cvtColor(np.asarray(rgb), cv2.COLOR_RGB2BGR)
         blank = float(bgr.std()) < 0.5        # the dead-camera check
-        camera_fault = blank or is_stuck_stripes(bgr)   # dead, or stuck sensor
+        camera_fault = blank or is_stuck_stripes(bgr) or is_dead_channel(bgr)  # camera faults
         lg = self.logits(rgb)
         z = lg - lg.max()
         p = np.exp(z) / np.exp(z).sum()

@@ -100,7 +100,7 @@ class Capture:
         elif not self.truth:
             self.message = "NOT saved: set the true label first (h / e / l)"
         elif self.d.camera_fault:
-            self.message = "NOT saved: camera fault (stuck sensor) - power-cycle the Pi"
+            self.message = "NOT saved: camera fault (stuck sensor or lost colour) - power-cycle the Pi"
         elif earlier and earlier != self.truth:
             # Seen in the first real pilot: the same leaf saved as two diagnoses.
             self.message = (f"NOT saved: {self.leaf} was saved as {earlier} - one leaf has one "

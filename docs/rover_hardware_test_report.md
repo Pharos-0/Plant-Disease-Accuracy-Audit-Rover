@@ -9,9 +9,9 @@
 | §2 relay state at power-on | **PASS** (2026-10-21, verified cold boot) |
 | §1 ultrasonic fault injection | **Partly run** — `sensor_lost` flips within ~1 s; wheels-stop under a forward command not yet observed |
 | §3 plant frame | **Done** — 32 rover-camera frames of the real plant (pilot, `camera_sessions/20261021_pilot_P01*/frames/`, on disk, not in git) |
-| §3 camera height, tape-measured | **NOT RUN** — needs a tape: `scripts/capture_rover_artifact.py --height-cm <reading>` |
+| §3 camera height | **Done** — lens 24.5 cm above the ground (operator: "24.5 cm is the height of the camera in the rover"); artefact `results/rover_artifacts/20261021_041635/` |
 | AUTO on the real plant; pump with water; battery / power draw | **NOT RUN** |
-| Camera reliability | stuck-sensor failure after a reopen (twice); cleared by a power cycle; now detected as a camera fault |
+| Camera reliability | after a reopen the camera twice stuck into stripes and once lost its blue channel; each cleared only by a power cycle; all three now detected as camera faults (no spray) |
 | Obstacle stop | works, but only saw one obstacle at ~4 cm (rover contacted it, 2026-10-21) — a backstop, not a guarantee |
 
 Rover left in its safe default: view-only server running and enabled at boot; control server
@@ -184,8 +184,10 @@ session. Both remain `NOT RUN`; arm E stays out of the results until they exist.
 
 Result (2026-10-21): **the frame exists** — the pilot captured 32 frames of the real plant through
 the rover camera (clean `/raw` frames, `camera_sessions/20261021_pilot_P01*/frames/`; kept on disk,
-not in git under the repo's `.gitignore`). **The height does not**: it must be read off a tape
-(lens centre above the floor), and was not taken. Arm E stays out of the results until it is.
+not in git under the repo's `.gitignore`). **The height**: 24.5 cm, given by the operator as the
+height of the camera on the rover; recorded with a fresh frame in
+`results/rover_artifacts/20261021_041635/artifact.json` (the frame itself is kept on disk, not in git).
+Both §16 artefacts now exist.
 
 ### 4. Gamma correction after the D1 fix
 

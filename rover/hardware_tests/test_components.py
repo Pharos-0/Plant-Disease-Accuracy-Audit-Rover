@@ -123,6 +123,21 @@ def frame_is_stuck_stripes(frame) -> bool:
     return bool((g - m).std() < STRIPE_WITHIN_MAX and m.std() > STRIPE_BETWEEN_MIN)
 
 
+#: A camera that lost a colour channel after a reopen (rover, 2026-10-21): blue ~4/255
+#: on a white panel. Brightest channel's 99th percentile > 100 with the weakest below a
+#: quarter of it (broken 0.108; real frames >= 0.529).
+DEAD_CHANNEL_BRIGHT = 100.0
+DEAD_CHANNEL_RATIO = 0.25
+
+
+def frame_has_dead_channel(frame) -> bool:
+    """True when a colour channel is missing from an otherwise bright frame."""
+    import numpy as np
+
+    p = np.percentile(np.asarray(frame).reshape(-1, 3), 99, axis=0)
+    return bool(p.max() > DEAD_CHANNEL_BRIGHT and p.min() < DEAD_CHANNEL_RATIO * p.max())
+
+
 def frames_are_frozen(prev, last, threshold: float = MIN_FRAME_CHANGE) -> bool:
     """True when two consecutive frames are identical: a stuck, replayed buffer."""
     import numpy as np
@@ -168,12 +183,13 @@ def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> di
         prev, last, frames = last, frame, frames + 1
 
     evidence: dict = {"frames_captured": frames}
-    blank = stripes = frozen = None
+    blank = stripes = frozen = dead_channel = None
     if last is not None:
         h, w = last.shape[:2]
         spatial_std = float(last.std())
         blank = spatial_std < UNIFORM_FRAME_STD
         stripes = frame_is_stuck_stripes(last)
+        dead_channel = frame_has_dead_channel(last)
         frozen = prev is not None and frames_are_frozen(prev, last)
         evidence.update(
             {
@@ -184,6 +200,7 @@ def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> di
                 "frame_std": round(spatial_std, 4),
                 "uniform_frame": blank,
                 "stuck_stripes": stripes,
+                "dead_colour_channel": dead_channel,
                 "frozen_frames": frozen,
             }
         )
@@ -202,6 +219,13 @@ def test_camera(index: int = 0, warmup: int = 5, save_frame: bool = False) -> di
             f"{frames} frames delivered but every pixel is identical "
             f"(std={evidence['frame_std']}) - the camera is blind, not dark. "
             "Check the privacy shutter and the OS camera permission.",
+            evidence,
+        )
+    if dead_channel:
+        return _result(
+            "camera", False,
+            f"{frames} frames delivered but a colour channel is missing (a white object reads "
+            "e.g. yellow-green) - the camera's colour pipeline failed. Power-cycle the Pi.",
             evidence,
         )
     if stripes or frozen:

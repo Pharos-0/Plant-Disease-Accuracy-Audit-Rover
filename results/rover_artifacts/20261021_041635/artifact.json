@@ -1,0 +1,22 @@
+{
+  "time": "2026-10-21T04:16:35",
+  "camera": "rover:http://192.168.137.167:8080",
+  "endpoint": "raw",
+  "camera_height_above_ground_cm": 24.5,
+  "lens_to_plant_cm": null,
+  "height_source": "tape measure (entered by the operator)",
+  "note": "operator: '24.5 cm is the height of the camera in the rover'; nursery tomato plant in a pot on the floor, in front of the rover",
+  "width": 640,
+  "height": 480,
+  "frame_std": 39.748,
+  "mean_brightness": 63.1,
+  "tissue_frac": 0.7025,
+  "tissue_zones": [
+    0.6023,
+    0.6434,
+    0.6563,
+    0.9079
+  ],
+  "deferred_too_dark": false,
+  "spatial_policy_would_spray": true
+}

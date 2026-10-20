@@ -28,6 +28,9 @@ PV = Path(r"C:/ds/plantvillage/raw/color")
 #: A real frame from the rover's camera on 2026-10-21, with its sensor stuck: static,
 #: perfectly uniform-row stripes - high contrast, so not "blank".
 STUCK = ROOT / "tests" / "fixtures" / "rover_stuck_sensor_20261021.jpg"
+#: Part of a real rover frame from 2026-10-21 with the camera's blue channel lost after a
+#: reopen: a white panel reads yellow-green, and the tissue test calls most of it leaf.
+DEAD_BLUE = ROOT / "tests" / "fixtures" / "rover_dead_blue_channel_20261021.jpg"
 
 
 def test_constants_match_the_analysed_demo():
@@ -35,6 +38,8 @@ def test_constants_match_the_analysed_demo():
     assert sp.N_ZONES == ls.N_NOZZLES
     assert (sp.STRIPE_WITHIN_MAX, sp.STRIPE_BETWEEN_MIN) == (ls.STRIPE_WITHIN_MAX,
                                                           ls.STRIPE_BETWEEN_MIN)
+    assert (sp.DEAD_CHANNEL_BRIGHT, sp.DEAD_CHANNEL_RATIO) == (ls.DEAD_CHANNEL_BRIGHT,
+                                                            ls.DEAD_CHANNEL_RATIO)
 
 
 def test_the_real_stuck_sensor_frame_is_a_camera_fault_not_a_leaf():
@@ -65,8 +70,32 @@ def test_no_recorded_dry_run_frame_is_a_camera_fault():
     change a single recorded decision: none of the 1,800 frames may trip it."""
     import csv
     rows = list(csv.DictReader(DRY.open(encoding="utf-8")))
-    flagged = [r["path"] for r in rows if sp.is_stuck_stripes(cv2.imread(r["path"]))]
+    flagged = [r["path"] for r in rows
+               if sp.is_stuck_stripes(im := cv2.imread(r["path"])) or sp.is_dead_channel(im)]
     assert len(rows) == 1800 and flagged == []
+
+
+PILOT = sorted(ROOT.glob("camera_sessions/20261021_pilot_P01*/frames/*.jpg"))
+
+
+@pytest.mark.skipif(not PILOT, reason="pilot frames not on this machine (they are not in git)")
+def test_no_pilot_frame_is_a_camera_fault():
+    """The dead-channel check was added after the pilot: it must change none of its 32."""
+    assert len(PILOT) == 32
+    assert [p.name for p in PILOT if sp.spatial_decision(cv2.imread(str(p)))["camera_fault"]] == []
+
+
+def test_a_camera_that_lost_its_blue_channel_is_a_camera_fault_not_a_leaf():
+    """The second failure seen on the robot: everything yellow-green, read as leaf."""
+    f = cv2.imread(str(DEAD_BLUE))
+    d = sp.spatial_decision(f)
+    assert d["tissue_frac"] > 0.5                        # what the tissue test alone sees
+    assert d["camera_fault"] is True and d["deferred"] is True and d["fire"] is False
+
+
+def test_a_dark_frame_is_too_dark_not_a_dead_channel():
+    dark = (np.full((480, 640, 3), (60, 140, 90), np.float32) * 0.2).astype(np.uint8)
+    assert sp.is_dead_channel(dark) is False             # every channel is low: darkness
 
 
 def test_a_real_but_dim_scene_is_not_a_camera_fault():
@@ -108,7 +137,8 @@ def test_too_dark_and_blank_frames_are_deferred_not_sprayed():
 def _frames():
     out = [("blank", np.full((480, 640, 3), 90, np.uint8)),
            ("noise", np.random.default_rng(1).integers(0, 256, (480, 640, 3), dtype=np.uint8)),
-           ("stuck sensor (real, 2026-10-21)", cv2.imread(str(STUCK)))]
+           ("stuck sensor (real, 2026-10-21)", cv2.imread(str(STUCK))),
+           ("dead blue channel (real, 2026-10-21)", cv2.imread(str(DEAD_BLUE)))]
     for folder in ("Tomato___healthy", "Tomato___Early_blight", "Tomato___Late_blight"):
         for p in sorted((PV / folder).glob("*.JPG"))[:4]:
             bgr = cv2.resize(cv2.imread(str(p)), (640, 480))

@@ -237,6 +237,20 @@ def test_auto_never_sprays_on_a_stuck_camera(rover):
     assert r.wait_until(lambda: r.relay_fired_since(i))          # and AUTO works again
 
 
+def test_auto_never_sprays_on_a_camera_that_lost_a_colour_channel(rover):
+    r, prc = rover, rover.prc
+    r.reset()
+    dead = cv2.imread(str(ROOT / "tests" / "fixtures" / "rover_dead_blue_channel_20261021.jpg"))
+    r.show(cv2.resize(dead, (640, 480)))
+    assert prc._state["camera_fault"] is True and prc._state["spatial_fire"] is False
+    i = len(r.gpio.calls)
+    r.post(prc.spray_enable, {"on": True})
+    r.post(prc.auto, {"on": True})
+    time.sleep(1.0)
+    assert not r.relay_fired_since(i)
+    r.post(prc.stop)
+
+
 def test_spray_is_refused_without_the_tank_gate(rover):
     r, prc = rover, rover.prc
     r.reset()

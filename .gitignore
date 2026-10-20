@@ -31,3 +31,6 @@ camera_sessions/*/frames/
 # unique_records.csv holds every retrieved work after deduplication.
 results/litsearch_paper2/raw_records.csv
 results/litsearch_paper2/supplement/raw_records.csv
+
+# rover-camera artefact photos show the room; kept on disk only, like session frames
+results/rover_artifacts/*/*.jpg

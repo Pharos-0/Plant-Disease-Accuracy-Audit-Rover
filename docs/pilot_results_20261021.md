@@ -18,7 +18,7 @@ judgement, recorded as *visual only (nursery stock)*. One plant ⇒ no interval 
 | P2 | False alarms on leaves judged healthy | The one leaf judged healthy in room light (attempt 2, L01): **5/5 frames called *early blight*, at 0.95–0.98** — above τ = 0.888, so not abstentions. Wasted spray 5/5 under both policies |
 | P3 | Tissue detection; too-dark deferral | Spatial-only found tissue on **23/23** frames not too dark; **9/9** truly dark frames (median brightness 3–7) deferred. A wooden door behind the plant was counted as tissue |
 | P4 | Confidence under shift | Mean max-softmax 0.90 in room light, 0.74 lights-off — on different leaves; the only same-leaf pair (L05) had the lights on in both, so the dry run's "more confident in low light" was **not testable** |
-| P5 | §16 artefacts (plant frame + tape-measured height) | **Not yet run** |
+| P5 | §16 artefacts (plant frame + height) | **Done** — frames of the real plant; lens height 24.5 cm (`results/rover_artifacts/20261021_041635/`) |
 | P6 | Rover AUTO on the real plant | **Not yet run** |
 
 ## Across all 32 frames (needs no disease label)

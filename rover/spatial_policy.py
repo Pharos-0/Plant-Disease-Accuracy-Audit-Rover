@@ -11,8 +11,9 @@ sections 4 and 9, version 3):
     a dead camera, is DEFERRED - too dark to judge: no spray, and flagged, never
     silently counted as a decision;
   * so is a stuck sensor's frame - static stripes, varying between rows but not
-    within them - a CAMERA FAULT. Observed on the rover 2026-10-21: high contrast,
-    so not "blank", and the tissue test read the stripes as 86% leaf;
+    within them - or a frame missing a colour channel: CAMERA FAULTS. Both were
+    observed on the rover 2026-10-21, after the camera was reopened; the tissue test
+    read the stripes as 86% leaf and the blue-less frame as 97%;
   * otherwise spray when any of the N_ZONES vertical nozzle zones holds at least
     ZONE_MIN tissue.
 
@@ -35,6 +36,13 @@ ZONE_MIN = 0.15
 #: exposure matter, not a camera fault).
 STRIPE_WITHIN_MAX = 0.5
 STRIPE_BETWEEN_MIN = 10.0
+#: A camera whose colour pipeline failed after a reopen (rover, 2026-10-21) lost its
+#: blue channel: white read (4, 154, 122) in BGR, and the tissue test called 97% of the
+#: frame leaf. Rule: brightest channel's 99th percentile above 100 and the weakest one
+#: below a quarter of it. Measured weakest/brightest: broken 0.108; real frames >= 0.529
+#: (rover-view canopy), 0.609 (PlantVillage), 0.749 (dry run), 0.798 (pilot).
+DEAD_CHANNEL_BRIGHT = 100.0
+DEAD_CHANNEL_RATIO = 0.25
 
 
 def row_structure(bgr: np.ndarray) -> tuple[float, float]:
@@ -49,6 +57,12 @@ def is_stuck_stripes(bgr: np.ndarray) -> bool:
     return within < STRIPE_WITHIN_MAX and between > STRIPE_BETWEEN_MIN
 
 
+def is_dead_channel(bgr: np.ndarray) -> bool:
+    """A colour channel missing from an otherwise bright frame - a camera fault."""
+    p = np.percentile(bgr.reshape(-1, 3), 99, axis=0)
+    return bool(p.max() > DEAD_CHANNEL_BRIGHT and p.min() < DEAD_CHANNEL_RATIO * p.max())
+
+
 def foliage_mask(hsv: np.ndarray) -> np.ndarray:
     """Plant tissue of any colour on an exposure-normalised V channel."""
     h, s, v = hsv[..., 0], hsv[..., 1], hsv[..., 2].astype(np.float32)
@@ -59,10 +73,10 @@ def foliage_mask(hsv: np.ndarray) -> np.ndarray:
 
 def spatial_decision(bgr: np.ndarray) -> dict:
     """{'zones': per-zone tissue fractions, 'tissue_frac': whole-frame fraction,
-    'camera_fault': blank, or a stuck sensor's stripes, 'deferred': fault or too dark,
+    'camera_fault': blank, stripes or a dead colour channel, 'deferred': fault or too dark,
     'fire': spray this frame}."""
     hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-    fault = float(bgr.std()) < 0.5 or is_stuck_stripes(bgr)
+    fault = float(bgr.std()) < 0.5 or is_stuck_stripes(bgr) or is_dead_channel(bgr)
     deferred = fault or float(np.median(hsv[..., 2])) < MIN_EXPOSURE
     veg = foliage_mask(hsv)
     zones = [float(b.mean()) for b in np.array_split(veg, N_ZONES, axis=1)]

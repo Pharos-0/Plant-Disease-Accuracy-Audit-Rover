@@ -107,6 +107,14 @@ def test_harness_fails_a_stuck_camera_that_the_blank_check_passed():
     assert not tc.frames_are_frozen(real, noisy)          # sensor noise: a live camera
 
 
+def test_harness_fails_a_camera_that_lost_a_colour_channel():
+    import test_components as tc
+    dead = cv2.imread(str(ROOT / "tests" / "fixtures" / "rover_dead_blue_channel_20261021.jpg"))
+    assert not tc.frame_is_blank(dead) and not tc.frame_is_stuck_stripes(dead)
+    assert tc.frame_has_dead_channel(dead)
+    assert not tc.frame_has_dead_channel(_plant())
+
+
 def test_harness_save_frame_flag_reaches_the_camera_test(monkeypatch):
     import test_components as tc
     seen = {}
