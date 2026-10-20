@@ -6,12 +6,15 @@ Flask handlers set a desired state that a single control loop applies.
 
 AUTOMATION IS SPATIAL, BY DESIGN
 --------------------------------
-AUTO sprays the relay when *leaf tissue* is in view (an OpenCV foliage test, any
-plant colour), not when a disease classifier calls a plant diseased. That is the
-project's "spray where, not whether" rule: under laboratory-to-field shift the
-classifier is unreliable, so letting it withhold or trigger treatment is the
-unsafe design. Running the disease classifier on the live feed is a separate,
-laptop-side *readout* (scripts/classify_pi_camera.py) that never drives the relay.
+AUTO sprays the relay when *leaf tissue* is in view, not when a disease classifier
+calls a plant diseased. That is the project's "spray where, not whether" rule: under
+laboratory-to-field shift the classifier is unreliable, so letting it withhold or
+trigger treatment is the unsafe design. The decision is rover/spatial_policy.py -
+the analysed spatial-only policy itself, checked frame for frame against the demo
+(tests/test_spatial_policy.py): any of 4 nozzle zones >= 15% tissue of any plant
+colour, and a too-dark frame DEFERRED (no spray, flagged) rather than judged.
+Running the disease classifier on the live feed is a separate, laptop-side
+*readout* (scripts/classify_pi_camera.py) that never drives the relay.
 
 SAFETY (this server drives real motors and the real spray relay)
 ----------------------------------------------------------------
@@ -19,7 +22,12 @@ SAFETY (this server drives real motors and the real spray relay)
 * Dead-man    - each drive command is valid HOLD_S; the UI re-sends while held, so
                 releasing it or losing the link stops the rover within HOLD_S.
 * Obstacle    - the HC-SR04 runs in its own thread; forward is refused within
-                OBSTACLE_STOP_CM; a stale reading counts as unknown.
+                OBSTACLE_STOP_CM. FAIL-SAFE: a reading older than DIST_STALE_S, or
+                none at all (sensor off, unplugged or failed), counts as an
+                obstacle, so forward is refused until the sensor reports again and
+                the UI shows SENSOR LOST. Reverse and turns stay available so the
+                operator can back out. (The delivered code failed open here -
+                defect D2: a missing reading silently removed the obstacle stop.)
 * Spray gate  - the relay fires (manual or AUTO) only when the UI's "tank empty /
                 pump disconnected" box is ticked (a server-side flag, not just
                 client-side), and AUTO auto-stops after AUTO_MAX_S.
@@ -37,8 +45,9 @@ import threading
 import time
 
 import cv2
-import numpy as np
 from flask import Flask, Response, jsonify, request
+
+from spatial_policy import spatial_decision   # deploy beside this file
 
 # -- pins (BCM); motor directions verified 2026-10-16
 IN1, IN2, IN3, IN4 = 17, 27, 22, 23
@@ -55,38 +64,25 @@ OBSTACLE_STOP_CM = 25.0   # forward blocked within this distance
 SPRAY_S = 1.0             # relay pulse length
 DIST_STALE_S = 1.0        # a distance older than this is "unknown"
 LOOP_HZ = 20
-# auto-spray (spatial): fire when foliage fraction of the view exceeds this
-TISSUE_THRESH = 0.15
+# auto-spray (spatial): the decision itself is rover/spatial_policy.py
 AUTO_SPRAY_COOLDOWN = 3.0
 AUTO_MAX_S = 120.0        # AUTO turns itself off after this
-MAX_GAIN = 4.0
 
 _state = {
     "armed": False, "direction": "stop", "active_until": 0.0,
-    "distance_cm": None, "distance_at": 0.0, "blocked": False,
+    "distance_cm": None, "distance_at": 0.0, "blocked": False, "sensor_lost": True,
     "spray_request": False, "relay_until": 0.0, "last_cmd": 0.0,
     "spray_enabled": False, "auto": False, "auto_until": 0.0,
-    "tissue_frac": 0.0, "auto_last_spray": 0.0, "auto_fires": 0,
+    "tissue_frac": 0.0, "tissue_zones": [0.0] * 4, "deferred": False,
+    "spatial_fire": False, "auto_last_spray": 0.0, "auto_fires": 0,
 }
 _lock = threading.Lock()
-_frame: bytes | None = None
-
-
-# -------------------------------------------------------------- vision
-def _foliage_frac(bgr) -> float:
-    """Fraction of the frame that looks like plant tissue of any colour, on an
-    exposure-normalised value channel (so a dim leaf still counts). Mirrors the
-    deployed demo's foliage_mask."""
-    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-    h, s, v = hsv[..., 0], hsv[..., 1], hsv[..., 2].astype(np.float32)
-    gain = min(MAX_GAIN, 128.0 / max(1.0, float(np.median(v))))
-    v = np.minimum(255.0, v * gain)
-    mask = ((h <= 95) | (h >= 170)) & (s >= 40) & (v >= 25)
-    return float(mask.mean())
+_frame: bytes | None = None   # annotated with the status banner, for the operator
+_raw: bytes | None = None     # the same frame without it, for measurement (/raw)
 
 
 def _camera_loop(index: int) -> None:
-    global _frame
+    global _frame, _raw
     cap = cv2.VideoCapture(index)
     if not cap.isOpened():
         raise SystemExit(f"camera {index} could not be opened")
@@ -96,16 +92,30 @@ def _camera_loop(index: int) -> None:
         if not ok:
             time.sleep(0.1)
             continue
-        tissue = _foliage_frac(frame)
+        sd = spatial_decision(frame)      # judged on the clean frame
+        tissue = sd["tissue_frac"]
+        # Encode the clean frame before the banner is drawn onto it in place: the
+        # banner is black with coloured text and must not reach a classifier or a
+        # tissue measurement made off the Pi.
+        ok_raw, raw = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 90])
+        if ok_raw:
+            with _lock:
+                _raw = raw.tobytes()
         with _lock:
             _state["tissue_frac"] = tissue
+            _state["tissue_zones"] = sd["zones"]
+            _state["deferred"] = sd["deferred"]
+            _state["spatial_fire"] = sd["fire"]
             armed, dist = _state["armed"], _state["distance_cm"]
             blocked, auto = _state["blocked"], _state["auto"]
+            lost = _state["sensor_lost"]
         h, w = frame.shape[:2]
         banner = (f"{'AUTO' if auto else ('ARMED' if armed else 'disarmed')}  "
-                  f"tissue {tissue * 100:3.0f}%  "
-                  f"dist {'-' if dist is None else f'{dist:.0f}cm'}"
-                  f"{'  OBSTACLE' if blocked else ''}  {time.strftime('%H:%M:%S')}")
+                  f"tissue {tissue * 100:3.0f}%"
+                  f"{'  TOO DARK' if sd['deferred'] else ('  LEAF' if sd['fire'] else '')}  "
+                  f"dist {'-' if lost or dist is None else f'{dist:.0f}cm'}"
+                  f"{'  SENSOR LOST' if lost else ('  OBSTACLE' if blocked else '')}"
+                  f"  {time.strftime('%H:%M:%S')}")
         cv2.rectangle(frame, (0, 0), (w, 24), (0, 0, 0), -1)
         cv2.putText(frame, banner, (8, 17), font, 0.5,
                     (0, 0, 255) if blocked else (0, 220, 0) if auto else (255, 255, 255),
@@ -174,19 +184,23 @@ def _control_loop() -> None:
                 spray_enabled = _state["spray_enabled"]
                 auto = _state["auto"] and now < _state["auto_until"]
                 _state["auto"] = auto
-                tissue = _state["tissue_frac"]
+                spatial_fire = _state["spatial_fire"]   # False when deferred (too dark)
                 relay_until = _state["relay_until"]
                 # idle auto-disarm (manual only; AUTO keeps itself alive)
                 if not auto and armed and now - _state["last_cmd"] > DISARM_AFTER_S:
                     _state["armed"] = armed = False
-                blocked = (fresh and dist is not None and dist < OBSTACLE_STOP_CM)
+                # Fail-safe: no fresh reading is treated as an obstacle, not as a
+                # clear path - loss of evidence must never widen what the rover does.
+                sensor_lost = not (fresh and dist is not None)
+                blocked = sensor_lost or dist < OBSTACLE_STOP_CM
                 _state["blocked"] = blocked
+                _state["sensor_lost"] = sensor_lost
                 if blocked and direction == "forward":
                     direction = "stop"
                 if not armed or expired:
                     direction = "stop"
-                # spatial auto-spray: fire when tissue is in view
-                if (auto and armed and spray_enabled and tissue >= TISSUE_THRESH
+                # spatial auto-spray: fire when any nozzle zone holds leaf tissue
+                if (auto and armed and spray_enabled and spatial_fire
                         and now - _state["auto_last_spray"] > AUTO_SPRAY_COOLDOWN):
                     _state["spray_request"] = True
                     _state["auto_last_spray"] = now
@@ -265,8 +279,10 @@ document.querySelectorAll('.dir').forEach(b=>{
 setInterval(async()=>{try{const t=await(await fetch('/telemetry')).json();
  document.getElementById('tele').textContent=
   (t.auto?'AUTO':(t.armed?'ARMED':'disarmed'))+' · tissue '+(t.tissue_frac*100).toFixed(0)+'%'
+  +(t.deferred?' · TOO DARK':(t.spatial_fire?' · LEAF':''))
   +' · '+(t.distance_cm==null?'dist —':'dist '+t.distance_cm.toFixed(0)+'cm')
-  +(t.blocked?' · OBSTACLE':'')+' · fires '+t.auto_fires;}catch(e){}},400);
+  +(t.sensor_lost?' · SENSOR LOST (forward refused)':(t.blocked?' · OBSTACLE':''))
+  +' · fires '+t.auto_fires;}catch(e){}},400);
 </script></body></html>"""
 
 
@@ -345,7 +361,10 @@ def telemetry():
         fresh = time.time() - _state["distance_at"] < DIST_STALE_S
         return jsonify({"armed": _state["armed"], "auto": _state["auto"],
                         "direction": _state["direction"], "blocked": _state["blocked"],
+                        "sensor_lost": _state["sensor_lost"],
                         "tissue_frac": _state["tissue_frac"], "auto_fires": _state["auto_fires"],
+                        "tissue_zones": _state["tissue_zones"], "deferred": _state["deferred"],
+                        "spatial_fire": _state["spatial_fire"],
                         "distance_cm": _state["distance_cm"] if fresh else None})
 
 
@@ -358,6 +377,17 @@ def index():
 def snapshot():
     with _lock:
         f = _frame
+    if f is None:
+        return ("no frame", 503)
+    return Response(f, mimetype="image/jpeg")
+
+
+@app.get("/raw")
+def raw():
+    """The latest frame without the status banner, at higher JPEG quality - what a
+    laptop-side classifier or protocol capture should judge. Read-only."""
+    with _lock:
+        f = _raw
     if f is None:
         return ("no frame", 503)
     return Response(f, mimetype="image/jpeg")

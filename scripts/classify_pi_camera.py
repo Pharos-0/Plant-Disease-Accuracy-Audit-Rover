@@ -11,24 +11,30 @@ The classifier is trained on tomato leaves (healthy / early blight / late blight
 so its output is only meaningful when the camera is pointed at a tomato leaf; on an
 arbitrary scene it still emits one of the three classes, meaninglessly.
 
+Frames are read banner-free (demo/rover_camera.py): the servers stamp a status
+banner on /snapshot, which would otherwise reach the classifier. This is a read-out
+only; for labelled, analysable frames use demo/live_sprayer.py --camera <rover URL>.
+
     python scripts/classify_pi_camera.py --pi 192.168.137.167:8080
     python scripts/classify_pi_camera.py --pi 192.168.137.167:8080 --interval 2 --n 20
 """
 from __future__ import annotations
 
 import argparse
-import io
+import json
 import sys
 import time
 import urllib.request
 from pathlib import Path
 
+import cv2
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "demo"))
 
 from live_sprayer import CLASSES, SprayPipeline  # noqa: E402
+from rover_camera import RoverCamera  # noqa: E402
 
 
 def _get(url: str, timeout: float = 5.0) -> bytes:
@@ -43,7 +49,12 @@ def main() -> int:
     ap.add_argument("--interval", type=float, default=1.5, help="seconds between frames")
     ap.add_argument("--n", type=int, default=0, help="number of frames (0 = run until Ctrl-C)")
     a = ap.parse_args()
-    base = f"http://{a.pi}"
+    cam = RoverCamera(a.pi)
+    base = cam.base
+    if not cam.isOpened():
+        print(f"no frame from {base} - is the Pi on the hotspot and a camera server running?")
+        return 1
+    print(f"rover camera {base}, frames from {cam.mode}")
 
     print("loading the classifier (MobileNetV3, the deployable model)...")
     pipe = SprayPipeline(device="cpu")
@@ -56,15 +67,15 @@ def main() -> int:
     try:
         while a.n == 0 or i < a.n:
             i += 1
-            try:
-                img = Image.open(io.BytesIO(_get(f"{base}/snapshot"))).convert("RGB")
-            except Exception as e:  # noqa: BLE001
-                print(f"  frame fetch failed: {e}")
+            ok, bgr = cam.read()
+            if not ok:
+                print("  frame fetch failed, retrying")
                 time.sleep(a.interval)
                 continue
+            img = Image.fromarray(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
             d = pipe.decide(img)
             try:
-                import json
+                # the Pi's own tissue fraction, which only the control server reports
                 tissue = json.loads(_get(f"{base}/telemetry").decode())["tissue_frac"] * 100
             except Exception:  # noqa: BLE001
                 tissue = float("nan")

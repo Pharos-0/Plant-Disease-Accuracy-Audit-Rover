@@ -10,6 +10,15 @@ and a tape-measured height). Run over SSH from the laptop to the Pi on the lapto
 (`pi@192.168.137.167`), using `rover/hardware_tests/test_components.py` copied to the Pi.
 See the session note at the end for the full command output.
 
+**Update (2026-10-17): integrated teleop drive + spray confirmed.** With the control server
+(`rover-control.service`, `rover/pi_rover_control.py`) running and driven from a browser, the
+operator confirmed the rover **drove under teleoperation and the spray actuated** — i.e. the
+whole path (browser → Pi → GPIO loop → motor driver / relay) works end to end, not just the
+isolated subsystems of 2026-10-16. The ultrasonic was now reading reliably (~94 cm) during this
+run. Caveat: whether the pump moved **liquid** (tank loaded) was not separately logged, so the
+pump-with-fluid and battery/power-draw items below remain as stated; and the §1 fault-injection,
+§2 relay boot-state and §16 camera-artefact follow-ups are still NOT RUN.
+
 This file records the outcome of **per-component isolation tests**, run *before* any
 ML integration (MASTER_PROMPT §9). The point of testing in isolation is that a
 failing relay or a dead camera must be found here, not inside a session-gating
@@ -67,6 +76,21 @@ stand:
    rover keeps driving and spraying when the sensor returns `None` — was not performed, and
    matters precisely because `None` readings already occur in normal operation.
 
+**Update (2026-10-20): the teleop server had the same defect, now fixed in the repo — not yet on
+the rover.** `rover/pi_rover_control.py` treated a stale or missing distance as *unknown* and
+unknown as a clear path, so with the sensor off, forward drove with no obstacle stop — D2 again.
+It now **fails safe**: no fresh reading counts as an obstacle, forward is refused, the UI shows
+`SENSOR LOST`, and reverse and turns stay available for backing out. This is tested on the
+control code (`tests/test_rover_control_server.py`: sensor removed → forward refused → back-out
+allowed → recovers when it returns), and a mutation check confirms the test fails on the old
+logic. **It is a property of the code until it is deployed and the fault injection below is
+run on the rover.**
+
+Fault-injection procedure (after deploying): drive forward at low speed with the wheels off the
+ground, then **switch the sensor off with its power switch** — do not pull jumpers from a
+powered board — and record verbatim what the wheels do and what the UI shows. Expected: wheels
+stop within about a second, `SENSOR LOST (forward refused)`; reverse still turns the wheels.
+
 ### 2. Relay boot state
 
 Confirm the relay is **de-asserted at power-on**, before any software runs. The float
@@ -85,9 +109,20 @@ do. The float trick remains the design; it is confirmed correct in operation, no
 
 Two artefacts are required, and together they decide whether **arm E is viable at all**:
 
-- one frame from the actual camera pointed at a **real plant** (saved automatically by
-  `--test camera`);
+- one frame from the actual camera pointed at a **real plant**;
 - the camera height above ground, **measured with a tape measure**, not estimated.
+
+**Correction (2026-10-20).** This section used to say the frame is "saved automatically by
+`--test camera`". It was not: the harness's frame saving is opt-in and had **no command-line
+flag**, so the documented step could not be carried out - which is why no frame existed. Two
+ways now work:
+
+```bash
+# from the laptop, with a rover camera server running (records the tape height with the frame)
+.venv/Scripts/python.exe scripts/capture_rover_artifact.py --height-cm <tape reading> --note "..."
+# or on the Pi, after stopping the camera services (only one process can hold the camera)
+python3 test_components.py --test camera --save-frame
+```
 
 Result (2026-10-16): the camera **hardware** is verified working (live feed, 50 frames,
 frame std 57.0 — not blank), but **neither §16 artefact exists yet**: the test was run with

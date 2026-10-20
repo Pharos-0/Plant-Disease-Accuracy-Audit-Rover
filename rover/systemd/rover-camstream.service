@@ -1,0 +1,13 @@
+[Unit]
+Description=Rover view-only camera stream (http :8080)
+After=network-online.target
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/pi_camera_stream.py --port 8080 --camera 0
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

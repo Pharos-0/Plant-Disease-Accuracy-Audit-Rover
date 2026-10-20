@@ -338,6 +338,10 @@ def main() -> int:
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--json", help="write results to this JSON file")
+    ap.add_argument("--save-frame", action="store_true",
+                    help="camera test: also save the last frame as a JPEG (the section-16 "
+                         "artefact; point the camera at the plant first). Stop the rover "
+                         "camera services first - only one process can hold the camera.")
     args = ap.parse_args()
 
     if args.list or not (args.test or args.all):
@@ -352,7 +356,8 @@ def main() -> int:
     for name in names:
         print(f"\n===== {name} =====")
         try:
-            results.append(TESTS[name]())
+            kw = {"save_frame": True} if name == "camera" and args.save_frame else {}
+            results.append(TESTS[name](**kw))
         except Exception as exc:  # noqa: BLE001
             results.append(_result(name, None, f"test raised {type(exc).__name__}: {exc}"))
         finally:

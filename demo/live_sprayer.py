@@ -30,7 +30,13 @@ MODES
 -----
     python demo/live_sprayer.py --verify 300           # parity with cached predictions
     python demo/live_sprayer.py --camera 0             # interactive, laptop webcam
+    python demo/live_sprayer.py --camera 192.168.137.167:8080   # interactive, ROVER camera
     python demo/live_sprayer.py --manifest frames.csv  # batch: path,truth,leaf_id,condition[,plant_id,diagnosis_source]
+
+With a rover URL the frames come from the Pi's camera server, banner-free
+(demo/rover_camera.py), and the source - including whether the clean /raw frame
+or a cropped /snapshot was used - is written into every log record. The rover is
+not driven from here: this script only reads its camera.
 
 Interactive keys: h / e / l set the true label (healthy / early / late blight),
 1-6 set the condition, n starts a new leaf on the same plant, p starts a new plant,
@@ -54,6 +60,7 @@ import torch
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "demo"))
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "rover"))
 sys.path.insert(0, str(ROOT / "dataset" / "scripts"))
@@ -327,21 +334,45 @@ def run_manifest(manifest: Path, out_dir: Path, diagnosis_source: str = "") -> i
     return 0
 
 
-def run_camera(index: int, out_dir: Path, diagnosis_source: str = "") -> int:
-    pipe = SprayPipeline(device="cpu")
-    cap = cv2.VideoCapture(index)
+def open_camera(spec: str):
+    """A webcam index ('0') or the rover's camera server ('host:port' or a URL).
+    Returns (reader, source label, misses tolerated in a row before giving up)."""
+    if spec.isdigit():
+        return cv2.VideoCapture(int(spec)), f"camera:{spec}", 1
+    from rover_camera import RoverCamera
+    cam = RoverCamera(spec)
+    # Over a phone hotspot a dropped packet is a missed frame, not the end of the
+    # session: tolerate a few seconds of misses before stopping.
+    return cam, f"rover:{cam.base}", 20
+
+
+def run_camera(spec: str, out_dir: Path, diagnosis_source: str = "") -> int:
+    cap, source, max_misses = open_camera(spec)
     if not cap.isOpened():
-        print(f"camera {index} could not be opened")
+        print(f"camera {spec} could not be opened"
+              + ("" if spec.isdigit() else " - is the Pi on the hotspot and a camera "
+                                           "server running? try opening its URL in a browser"))
         return 1
-    log = SessionLog(out_dir, source=f"camera:{index}", diagnosis_source=diagnosis_source)
+    if getattr(cap, "mode", None):
+        source = f"{source} ({cap.mode})"
+        print(f"rover camera: {source}")
+    pipe = SprayPipeline(device="cpu")
+    log = SessionLog(out_dir, source=source, diagnosis_source=diagnosis_source)
     truth, cond, leaf_n, plant_n = "", "normal", 1, 1
+    misses = 0
     print("keys: h/e/l truth, 1-6 condition, n new leaf, p new plant, SPACE save, q quit")
     try:
         while True:
             ok, frame = cap.read()
             if not ok:
-                print("camera returned no frame")
-                break
+                misses += 1
+                if misses >= max_misses:
+                    print("camera returned no frame")
+                    break
+                print(f"no frame ({misses}/{max_misses}), retrying")
+                time.sleep(0.25)
+                continue
+            misses = 0
             rgb = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             d = pipe.decide(rgb)
             plant = f"P{plant_n:02d}"
@@ -375,7 +406,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--verify", type=int, metavar="N")
-    g.add_argument("--camera", type=int, metavar="INDEX")
+    g.add_argument("--camera", metavar="INDEX|ROVER_URL",
+                   help="a webcam index such as 0, or the rover camera server, "
+                        "e.g. 192.168.137.167:8080")
     g.add_argument("--manifest", type=Path)
     ap.add_argument("--out", type=Path,
                     default=ROOT / "camera_sessions" / time.strftime("%Y%m%d_%H%M%S"))

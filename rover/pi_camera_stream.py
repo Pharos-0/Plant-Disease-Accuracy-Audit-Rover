@@ -14,7 +14,9 @@ imports nothing that could. It is safe to leave running. Operating the rover
     python3 rover/pi_camera_stream.py --port 8080 --camera 0
 
 Then browse to  http://<pi-ip>:8080/  from any device on the same network.
-Routes: /  (page)   /stream  (MJPEG)   /snapshot  (one JPEG)   /healthz.
+Routes: /  (page)   /stream  (MJPEG)   /snapshot  (one JPEG)   /healthz,
+and /raw - one JPEG without the view-only banner, for measurement: the banner is
+black with white text and must not reach a classifier or tissue measurement.
 """
 from __future__ import annotations
 
@@ -26,12 +28,13 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import cv2
 
 _lock = threading.Lock()
-_latest: bytes | None = None
+_latest: bytes | None = None       # annotated, for viewers
+_latest_raw: bytes | None = None   # clean, for measurement (/raw)
 _meta = {"frames": 0, "started": time.time(), "w": 0, "h": 0}
 
 
 def _capture_loop(index: int) -> None:
-    global _latest
+    global _latest, _latest_raw
     cap = cv2.VideoCapture(index)
     if not cap.isOpened():
         raise SystemExit(f"camera {index} could not be opened")
@@ -41,6 +44,10 @@ def _capture_loop(index: int) -> None:
         if not ok:
             time.sleep(0.1)
             continue
+        ok_raw, raw = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 90])
+        if ok_raw:      # before the banner is drawn onto the frame in place
+            with _lock:
+                _latest_raw = raw.tobytes()
         h, w = frame.shape[:2]
         cv2.rectangle(frame, (0, 0), (w, 24), (0, 0, 0), -1)
         cv2.putText(frame, "ROVER CAMERA - VIEW ONLY  " + time.strftime("%H:%M:%S"),
@@ -81,9 +88,9 @@ class Handler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.end_headers()
             self.wfile.write(body)
-        elif self.path == "/snapshot":
+        elif self.path in ("/snapshot", "/raw"):
             with _lock:
-                frame = _latest
+                frame = _latest_raw if self.path == "/raw" else _latest
             if frame is None:
                 self.send_error(503, "no frame yet")
                 return

@@ -10,6 +10,11 @@ confirmation recorded; intervals resample whole plants; and the primary outcome 
 the paired difference in missed treatment between the two policies on the same frames. The
 decision rule and conditions are unchanged.
 
+**Addendum 2026-10-20, still before any real leaf was photographed** (§11): the first real
+session will be a **single-plant pilot** captured through the **rover's camera**. What it will
+and will not report is fixed in §11 now, before any frame exists. The decision rule, thresholds
+and conditions are unchanged.
+
 ---
 
 ## 1. What this experiment can and cannot show
@@ -226,3 +231,70 @@ which plant a photograph came from, so the photographs are not known to be indep
 if several share a plant, that interval is too narrow. It is a dry-run estimate on edited
 images, not biological replication. That is the
 effect the real session tests on actual captures.
+
+## 11. Addendum of 2026-10-20 — the first session is a single-plant pilot
+
+Written the night before the first real session, **before any real leaf was photographed**.
+Nothing in §4 (decision rule, τ, thresholds) or §3 (conditions) changes.
+
+### 11.1 Why a pilot, stated in advance
+
+The first available material is **one plant, bought from a shop, very likely healthy, with a
+visual diagnosis only**. Against §2 and §10 (≥ 6 diseased and ≥ 4 healthy plants, independently
+confirmed) that is a pilot, and two consequences follow and are accepted now:
+
+- **The primary outcome cannot be estimated.** The gated-minus-spatial difference in missed
+  treatment (§6, §10) is defined on *diseased* frames. A healthy plant has none. The session will
+  not report it, and the analysis prints `PRIMARY OUTCOME NOT ESTIMABLE`.
+- **No interval is estimable.** One plant is one resampling unit; there is no between-plant
+  variation, so every interval is reported as n/a, never as a narrow interval.
+
+### 11.2 What the pilot will report — fixed now
+
+| # | Quantity | Measurable on one healthy plant because |
+|---|---|---|
+| P1 | The capture chain runs end to end on a real plant through the **rover camera** (frames logged, both policies recorded per frame) | it is a property of the software and camera, not of disease |
+| P2 | **False alarms on real healthy leaves**, per condition: share of frames predicted diseased, share abstained, and **wasted spray** under the gated and the spatial-only policy | the truth (healthy) is what the plant provides; this answers the open question in §9 — whether the classifier "almost never calls a leaf healthy" holds for real leaves |
+| P3 | **Tissue detection on real foliage**, per condition: share of leaf-in-view frames on which the spatial-only policy fires, and the deferral (too-dark) rate | the spatial decision never consults the classifier, so its tissue detection can be measured on any leaf. **Caveat, fixed now:** a healthy leaf is green; this is not a measurement on brown, diseased tissue and does not substitute for missed treatment on diseased leaves |
+| P4 | **Confidence under shift on real leaves**: mean max-softmax per condition, and the paired low-light-minus-normal change on the same leaf (direction and size only, no interval) | it is the dry run's live observation (§8: more confident, less accurate in low light), checked on a real capture |
+| P5 | The **§16 artefacts**: one saved rover-camera frame of the real plant, and the camera lens height above the ground **measured with a tape** (with the lens-to-plant distance beside it) | required by `docs/rover_hardware_test_report.md` §3 |
+| P6 | The **rover's on-board AUTO** on the real plant: fires on the plant, defers in darkness, relay actuation observed by the operator (tank empty, or dyed water only) | the on-board decision is the spatial-only policy itself (`rover/spatial_policy.py`, checked frame for frame against this demo) |
+
+`scripts/analyse_camera_session.py` prints P2–P4 per condition under **PILOT QUANTITIES** and
+writes them to `pilot_report.csv` whenever a session is below the §2 minimum; P5 comes from
+`scripts/capture_rover_artifact.py`, P6 from the operator's observation, recorded verbatim.
+
+**How it is described.** Every number from this session is reported as a **pilot on one
+plant**, with its diagnosis source recorded exactly (`--diagnosis-source "visual only (nursery
+stock)"`, or the confirming authority if one is obtained). It is not evidence for or against the
+primary claim, and the thesis and Paper 2 say so beside it.
+
+**Inclusion later.** The plant may join the full sample (§2) only if its diagnosis is later
+confirmed independently and that confirmation recorded; its frames are then analysed together
+with the others, plant-level resampling unchanged.
+
+### 11.3 Procedure
+
+Frames are captured through the rover's camera with the unchanged decision rule:
+
+```bash
+.venv/Scripts/python.exe demo/live_sprayer.py --camera 192.168.137.167:8080 --diagnosis-source "visual only (nursery stock)"
+```
+
+Keys, conditions and frame counts are those of §3 and §5: **normal and low light first** (the
+priority conditions), 5 frames per leaf per condition, 2–3 leaves, the rest of the conditions if
+time allows. Each record carries the camera source, including whether the clean `/raw` frame or
+a cropped `/snapshot` was used (the rover servers draw a status banner that must not reach the
+classifier; see `demo/rover_camera.py`).
+
+### 11.4 Software changes made before this session (none touches §3 or §4)
+
+| Change | Why | Effect on the dry-run results |
+|---|---|---|
+| Analysis reports **n/a**, not 0%, for a quantity with no frames to judge; intervals from a single unit are n/a; a session below the §2 minimum is labelled **PILOT**; the verdict is written to `analysis_status.json` | a healthy-only session printed "missed treatment 0.0%" — the safety criterion appearing met when it was never measured — and one plant printed zero-width intervals | none: re-run on `dryrun_v3`, stdout and both CSVs are byte-identical |
+| When no diseased frame is missed, an **exact 95% upper bound** (Clopper–Pearson at zero) on the share of diseased plants with any miss is printed beside the pre-registered bootstrap, labelled supplementary | the percentile bootstrap cannot exceed 0 when no miss occurs, so it prints [0%, 0%]; with 6 diseased plants and no misses the exact bound is still 39% | none: no zero-miss condition in the dry run |
+| `demo/live_sprayer.py --camera` accepts the **rover camera** and reads it banner-free | the protocol could only use a laptop webcam; the rover servers stamp a banner (black, with text that can be green) on `/snapshot` | none: the decision rule is untouched |
+| The rover's **AUTO** now runs the spatial-only policy of §4 exactly (any of 4 zones ≥ 15% tissue; too-dark frames deferred) | it used a whole-frame 15% test with no deferral: it missed a plant filling one zone, and would have sprayed a frame too dark to judge | brings the robot into line with §4 |
+
+All are covered by tests (`tests/test_camera_analysis.py`, `test_rover_camera.py`,
+`test_spatial_policy.py`, `test_rover_control_server.py`).

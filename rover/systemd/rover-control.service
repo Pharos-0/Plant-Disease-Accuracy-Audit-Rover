@@ -1,0 +1,14 @@
+[Unit]
+Description=Rover teleop control (camera + drive + spray) http :8080
+After=network-online.target
+Conflicts=rover-camstream.service
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/pi_rover_control.py --port 8080 --camera 0
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
