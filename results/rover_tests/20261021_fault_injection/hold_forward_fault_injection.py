@@ -48,7 +48,11 @@ def pin_sampler(stop):
             r = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=5",
                                 "pi@192.168.137.167", "pinctrl get 17,27,22,23"],
                                capture_output=True, text=True, timeout=10)
-            lv = tuple(1 if "| hi" in ln else 0 for ln in r.stdout.splitlines()[:4])
+            # pinctrl lists pins in NUMBER order (17, 22, 23, 27), not the order asked:
+            # read each line's pin number, then report IN1..IN4 = GPIO 17, 27, 22, 23.
+            level = {int(ln.split(":")[0]): 1 if "| hi" in ln else 0
+                     for ln in r.stdout.splitlines() if ":" in ln}
+            lv = tuple(level.get(p) for p in (17, 27, 22, 23))
             log({"kind": "pins", "IN1_IN4": lv, "wheels": PATTERN.get(lv, f"other {lv}")})
         except Exception as e:  # noqa: BLE001
             log({"kind": "pins", "error": str(e)})

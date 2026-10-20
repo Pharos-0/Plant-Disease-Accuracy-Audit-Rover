@@ -28,6 +28,11 @@ SAFETY (this server drives real motors and the real spray relay)
                 the UI shows SENSOR LOST. Reverse and turns stay available so the
                 operator can back out. (The delivered code failed open here -
                 defect D2: a missing reading silently removed the obstacle stop.)
+* Fault test  - while the file SENSOR_FAULT_FILE exists, every ultrasonic reading
+                is discarded, exactly as if the sensor had died, so the fail-safe
+                can be tested on the robot when the sensor shares its power switch
+                with the motors and cannot be unplugged. It can only make the rover
+                more restrictive; /tmp is emptied at boot; telemetry reports it.
 * Spray gate  - the relay fires (manual or AUTO) only when the UI's "tank empty /
                 pump disconnected" box is ticked (a server-side flag, not just
                 client-side), and AUTO auto-stops after AUTO_MAX_S.
@@ -41,6 +46,7 @@ rover/hardware_tests/test_components.py on 2026-10-16.
 from __future__ import annotations
 
 import argparse
+import os
 import threading
 import time
 
@@ -63,6 +69,7 @@ DISARM_AFTER_S = 60.0     # auto-disarm after this idle time (manual mode)
 OBSTACLE_STOP_CM = 25.0   # forward blocked within this distance
 SPRAY_S = 1.0             # relay pulse length
 DIST_STALE_S = 1.0        # a distance older than this is "unknown"
+SENSOR_FAULT_FILE = "/tmp/rover_inject_sensor_loss"   # fault-injection test hook
 LOOP_HZ = 20
 # auto-spray (spatial): the decision itself is rover/spatial_policy.py
 AUTO_SPRAY_COOLDOWN = 3.0
@@ -145,13 +152,22 @@ def _distance_cm(GPIO) -> float | None:
     return (time.time() - t1) * 17150.0
 
 
+def _sensor_fault_injected() -> bool:
+    return os.path.exists(SENSOR_FAULT_FILE)
+
+
+def _reading_accepted(d: float | None) -> bool:
+    """A reading counts only if there is one and no sensor fault is being injected."""
+    return d is not None and not _sensor_fault_injected()
+
+
 def _ultrasonic_loop() -> None:
     import RPi.GPIO as GPIO
     GPIO.setup(TRIG, GPIO.OUT)
     GPIO.setup(ECHO, GPIO.IN)
     while True:
         d = _distance_cm(GPIO)
-        if d is not None:
+        if _reading_accepted(d):
             with _lock:
                 _state["distance_cm"] = d
                 _state["distance_at"] = time.time()
@@ -389,6 +405,7 @@ def telemetry():
         return jsonify({"armed": _state["armed"], "auto": _state["auto"],
                         "direction": _state["direction"], "blocked": _state["blocked"],
                         "sensor_lost": _state["sensor_lost"],
+                        "sensor_fault_injected": _sensor_fault_injected(),
                         "tissue_frac": _state["tissue_frac"], "auto_fires": _state["auto_fires"],
                         "tissue_zones": _state["tissue_zones"], "deferred": _state["deferred"],
                         "camera_fault": _state["camera_fault"],

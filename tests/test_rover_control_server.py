@@ -77,7 +77,7 @@ def _fake_flask():
 
 
 @pytest.fixture(scope="module")
-def rover():
+def rover(tmp_path_factory):
     gpio = RecordingGPIO()
     rpi = types.ModuleType("RPi")
     rpi.GPIO = gpio
@@ -89,6 +89,7 @@ def rover():
                                                   ROOT / "rover" / "pi_rover_control.py")
     prc = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(prc)
+    prc.SENSOR_FAULT_FILE = str(tmp_path_factory.mktemp("fault") / "inject_sensor_loss")
 
     scene = {"frame": BENCH.copy()}
     stop = threading.Event()
@@ -98,7 +99,7 @@ def rover():
 
     def ultrasonic():
         while not stop.is_set():
-            if us["on"]:
+            if us["on"] and prc._reading_accepted(us["cm"]):   # the real loop's gate
                 with prc._lock:
                     prc._state["distance_cm"] = us["cm"]
                     prc._state["distance_at"] = time.time()
@@ -303,6 +304,34 @@ def test_unplugged_ultrasonic_refuses_forward_but_allows_backing_out(rover):
     i = len(r.gpio.calls)
     r.hold("forward", 0.5)
     assert r.duty_after(i) == prc.DUTY                          # recovered
+    r.post(prc.stop)
+
+
+def test_injected_sensor_fault_refuses_forward_on_the_real_control_path(rover):
+    """The robot test used when the sensor cannot be unplugged: a fault file makes
+    the ultrasonic readings vanish, and forward must stop, reverse must still work,
+    and removing the file must restore forward."""
+    r, prc = rover, rover.prc
+    r.reset()
+    r.show(BENCH)
+    r.post(prc.arm, {"armed": True})
+    i = len(r.gpio.calls)
+    r.hold("forward", 0.5)
+    assert r.duty_after(i) == prc.DUTY
+    Path(prc.SENSOR_FAULT_FILE).touch()                         # inject the fault
+    assert prc.telemetry()["sensor_fault_injected"] is True
+    assert r.wait_until(lambda: prc._state["sensor_lost"], timeout=prc.DIST_STALE_S + 1)
+    i = len(r.gpio.calls)
+    r.hold("forward", 0.6)
+    assert r.duty_after(i) == 0                                 # refused
+    i = len(r.gpio.calls)
+    r.hold("back", 0.5)
+    assert r.duty_after(i) == prc.DUTY                          # backing out allowed
+    Path(prc.SENSOR_FAULT_FILE).unlink()                        # clear the fault
+    assert r.wait_until(lambda: not prc._state["sensor_lost"])
+    i = len(r.gpio.calls)
+    r.hold("forward", 0.5)
+    assert r.duty_after(i) == prc.DUTY
     r.post(prc.stop)
 
 

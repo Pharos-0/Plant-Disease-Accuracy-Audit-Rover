@@ -1,0 +1,182 @@
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 58, "t": 0.13}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 58, "t": 0.32}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 0.37, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 57, "t": 0.52}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 122, "t": 0.72}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 44, "t": 0.9}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 63, "t": 1.08}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 1.28}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 215, "t": 1.48}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 1.67}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 1.67, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 1.86}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 2.05}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 2.25}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 2.45}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 69, "t": 2.65}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 2.86}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 2.97, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 64, "t": 3.03}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 62, "t": 3.23}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 3.42}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 218, "t": 3.6}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 64, "t": 3.81}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 4.02}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 4.22}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 4.28, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 4.4}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 4.57}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 4.76}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 4.96}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 5.16}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 71, "t": 5.36}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 233, "t": 5.56}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 5.61, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 233, "t": 5.76}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 54, "t": 5.97}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 6.17}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 6.39}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 69, "t": 6.57}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 6.76}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 6.9, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 64, "t": 6.96}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 7.14}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 7.34}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 7.53}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 7.71}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 7.89}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 70, "t": 8.09}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 8.2, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 8.28}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 8.46}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 8.67}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 218, "t": 8.85}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 9.05}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 71, "t": 9.24}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 9.44}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 9.5, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 9.62}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 52, "t": 9.82}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 10.01}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 70, "t": 10.2}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 112, "t": 10.38}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 158, "t": 10.57}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 225, "t": 10.76}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 10.84, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 10.94}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 69, "t": 11.13}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 224, "t": 11.31}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 218, "t": 11.5}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 222, "t": 11.7}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 134, "t": 11.87}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 12.06}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 12.18, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 139, "t": 12.27}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 69, "t": 12.45}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 226, "t": 12.63}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 233, "t": 12.82}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 72, "t": 13.01}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 13.2}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 202, "t": 13.38}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 13.48, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 224, "t": 13.58}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 226, "t": 13.76}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 13.96}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 14.13}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 205, "t": 14.34}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 70, "t": 14.53}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 14.73}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 14.8, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 14.9}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 15.09}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 95, "t": 15.28}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 15.46}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 15.64}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 72, "t": 15.85}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 72, "t": 16.03}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 16.1, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 16.21}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 227, "t": 16.39}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 70, "t": 16.57}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 16.77}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 62, "t": 16.97}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 63, "t": 17.18}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 69, "t": 17.36}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 17.38, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 72, "t": 17.56}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 17.74}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 71, "t": 17.91}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 225, "t": 18.11}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 226, "t": 18.3}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 220, "t": 18.48}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 18.66}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 18.68, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 18.87}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 19.06}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 19.25}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 19.45}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 19.62}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 226, "t": 19.82}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 19.99}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 20.0, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 58, "t": 20.17}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 20.35}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 20.55}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 218, "t": 20.74}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 20.92}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 57, "t": 21.14}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 21.3, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 219, "t": 21.31}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 21.49}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 21.67}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 64, "t": 21.86}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 220, "t": 22.05}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 22.23}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 22.41}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 58, "t": 22.59}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 22.59, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 58, "t": 22.78}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 220, "t": 22.98}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 220, "t": 23.16}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 23.37}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 81, "t": 23.55}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 58, "t": 23.73}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 23.92, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 221, "t": 23.92}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 24.1}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 24.28}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 24.48}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 95, "t": 24.66}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 234, "t": 24.85}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 221, "t": 25.05}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 25.2, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 124, "t": 25.25}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 221, "t": 25.43}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 159, "t": 25.61}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 25.8}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 224, "t": 25.98}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 226, "t": 26.19}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 234, "t": 26.39}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 26.57, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 31, "t": 26.58}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 52, "t": 26.76}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 53, "t": 26.96}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 64, "t": 27.15}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 63, "t": 27.33}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 63, "t": 27.51}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 233, "t": 27.7}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 27.87, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 63, "t": 27.88}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 66, "t": 28.07}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 63, "t": 28.27}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 28.44}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 68, "t": 28.62}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 28.8}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 67, "t": 28.98}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 220, "t": 29.16}
+{"kind": "pins", "IN1_IN4": [1, 0, 1, 0], "wheels": "forward", "t": 29.18, "note": "relabelled: pinctrl prints pins in number order"}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 123, "t": 29.35}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 223, "t": 29.54}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 65, "t": 29.73}
+{"kind": "tick", "cmd": "forward", "armed": true, "sensor_lost": false, "blocked": false, "dist": 223, "t": 29.91}
+{"kind": "end", "armed_after_stop": false, "t": 31.29}
