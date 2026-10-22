@@ -186,6 +186,10 @@ number).
 With a USB power meter in line: read the watts idle, driving, and during a spray pulse.
 Otherwise it stays *not measured*, which is fine — say so.
 
+Without a meter, the Pi can report its **own** rails (not the motors, pump or USB camera):
+`ssh pi@192.168.137.167 "vcgencmd pmic_read_adc; vcgencmd get_throttled"`. Done 2026-10-23,
+nothing moving: `results/rover_tests/20261023_pi_power/` (script + raw samples).
+
 ## 11. Finish
 
 Tap **■ STOP**. Then switch back to the safe default and tell Claude what you recorded:
