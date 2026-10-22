@@ -1,0 +1,2106 @@
+{
+ "marks_pi_time": {
+  "inject": 1792704280.7901943,
+  "clear": 1792704287.803559,
+  "stop": 1792704291.5038457
+ },
+ "telemetry": [
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704222.420931,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704222.6423771,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704222.8103237,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704223.0113163,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704223.2083638,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704223.398182,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704223.599488,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704223.7870648,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704223.9802387,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704224.1742237,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704224.3778784,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704224.5788083,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704224.793719,
+   "sensor_lost": false,
+   "blocked": true,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704224.981311,
+   "sensor_lost": false,
+   "blocked": true,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704225.175443,
+   "sensor_lost": false,
+   "blocked": true,
+   "fault_injected": false
+  },
+  {
+   "phase": "A sensor ok",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704225.3593793,
+   "sensor_lost": false,
+   "blocked": true,
+   "fault_injected": false
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704225.8372812,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704226.04486,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704226.2414684,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704226.4245045,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704226.6146762,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704226.7942724,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704227.003201,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704227.1919546,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704227.376388,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704227.5851417,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704227.7824965,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704227.9689066,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704228.1608493,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704228.348934,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704228.5405579,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "B fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704228.7307878,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704228.9410808,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704229.1335745,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704229.3359783,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704229.5438385,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704229.733782,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704229.9395251,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704230.1448708,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704230.3485348,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704230.5359242,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "C fault: reverse asked",
+   "asked": "back",
+   "pi_time": null,
+   "laptop": 1792704230.7527983,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704230.9388554,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704231.1470256,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704231.336412,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704231.544347,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704231.7337444,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704231.9571304,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704232.159213,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "D fault: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704232.3598168,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": true
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704232.8469038,
+   "sensor_lost": true,
+   "blocked": true,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704233.035882,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704233.2165656,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704233.4260268,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704233.6184306,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704233.8065622,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704233.9974608,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704234.1905916,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704234.3929808,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704234.5744393,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704234.77197,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704234.9632325,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704235.1753602,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704235.3600729,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704235.5701616,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  },
+  {
+   "phase": "E cleared: forward asked",
+   "asked": "forward",
+   "pi_time": null,
+   "laptop": 1792704235.7472425,
+   "sensor_lost": false,
+   "blocked": false,
+   "fault_injected": false
+  }
+ ],
+ "pins": [
+  {
+   "pi_time": 1792704276.878214,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704276.9969037,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704277.1017845,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704277.2072332,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704277.3185897,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704277.4228494,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704277.529605,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704277.6370776,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704277.742578,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704277.849026,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704277.953948,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.0588648,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.1645293,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.2704022,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.3755305,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.4807663,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.58705,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.6935315,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.7978377,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704278.9031281,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704279.0128078,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704279.1226604,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704279.2289033,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704279.333092,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704279.4379802,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704279.5429869,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704279.6475194,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704279.756893,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704279.862131,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704279.9697783,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.0787191,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.1830788,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.288697,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.3977299,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.5044594,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.6094067,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.7169557,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704280.826264,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704280.9349647,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.0418692,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.1485355,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.2535214,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.3589876,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.463167,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.5674746,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.6720533,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.7770884,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704281.8836784,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704281.9890442,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.094211,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.2019455,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.3072371,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.4210732,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.5254116,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.6312327,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.7373326,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.8428528,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704282.948095,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.05295,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.1582508,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.2636561,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.3691177,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.4740326,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.579483,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.6882126,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.7950094,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704283.8990824,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704284.004651,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.1132405,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.2219312,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.3269415,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.4320865,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.5367746,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.6448376,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.7516987,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.8560588,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704284.9609387,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.0666392,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.1710408,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.2755926,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.3803377,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.486238,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.5935004,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.6980898,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.8057935,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704285.9152644,
+   "IN1_IN4": [
+    0,
+    1,
+    0,
+    1
+   ],
+   "wheels": "back"
+  },
+  {
+   "pi_time": 1792704286.0226145,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.1293414,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.2337239,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.342584,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.4480958,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.5624614,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.6669116,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.7719452,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.8771062,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704286.9820936,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.0866337,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.1914933,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.299132,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.4046776,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.5096374,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.6144733,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.7236946,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.836148,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704287.9439409,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.0485468,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.1532495,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.2614696,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.3678563,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.477715,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.5822248,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704288.6876612,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.793282,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704288.9032235,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.0076845,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.1122918,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.2174766,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.322773,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.428048,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.5370226,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.6424794,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704289.7518013,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.8572497,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704289.9615352,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.0674083,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.1843338,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.2900472,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.3981402,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.5028057,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.6078475,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.7166893,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.8217864,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704290.9260757,
+   "IN1_IN4": [
+    1,
+    0,
+    1,
+    0
+   ],
+   "wheels": "forward"
+  },
+  {
+   "pi_time": 1792704291.0316236,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.14152,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.2486386,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.3579118,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.4623656,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.567049,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.676205,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.7819054,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.8872786,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704291.9920614,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704292.1004946,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704292.2068675,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704292.3165689,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704292.4211686,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704292.5263855,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704292.6361983,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  },
+  {
+   "pi_time": 1792704292.7438676,
+   "IN1_IN4": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "wheels": "stopped"
+  }
+ ],
+ "armed_after_stop": false
+}

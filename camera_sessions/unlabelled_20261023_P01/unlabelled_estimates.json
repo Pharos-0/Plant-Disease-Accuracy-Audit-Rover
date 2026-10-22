@@ -1,0 +1,26 @@
+{
+  "what": "camera_sessions\\unlabelled_20261023_P01",
+  "frames": 60,
+  "judged": 60,
+  "deferred_too_dark_or_fault": 0,
+  "predictions": {
+    "late_blight": 6,
+    "early_blight": 54
+  },
+  "confident_healthy_calls": 0,
+  "mean_confidence": 0.691,
+  "abstain_rate": 1.0,
+  "spatial_sprays": 60,
+  "gated_sprays": 60,
+  "gated_equals_spatial": 60,
+  "estimates": {
+    "confidence": 0.691,
+    "entropy": 0.448,
+    "atc_mc": 0.6,
+    "atc_ne": 1.0,
+    "doc": 0.726,
+    "nuclear_norm": 0.585,
+    "mano": 0.903,
+    "cot": 0.433
+  }
+}

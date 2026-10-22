@@ -1,0 +1,26 @@
+{
+  "what": "32 images: camera_sessions/20261021_pilot_P01*/frames/*.jpg",
+  "frames": 32,
+  "judged": 23,
+  "deferred_too_dark_or_fault": 9,
+  "predictions": {
+    "early_blight": 30,
+    "late_blight": 2
+  },
+  "confident_healthy_calls": 0,
+  "mean_confidence": 0.797,
+  "abstain_rate": 0.5,
+  "spatial_sprays": 23,
+  "gated_sprays": 23,
+  "gated_equals_spatial": 32,
+  "estimates": {
+    "confidence": 0.857,
+    "entropy": 0.695,
+    "atc_mc": 0.783,
+    "atc_ne": 0.87,
+    "doc": 0.891,
+    "nuclear_norm": 0.713,
+    "mano": 0.919,
+    "cot": 0.472
+  }
+}

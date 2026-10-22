@@ -1,13 +1,13 @@
 # Rover Hardware Test Report
 
-**Current status (2026-10-21).**
+**Current status (2026-10-23).**
 
 | Item | Status |
 |---|---|
 | Isolation tests: platform, camera, ultrasonic, relay, motors | **PASS** (2026-10-16) |
 | Teleop drive + relay actuation, end to end | **PASS** (2026-10-17, operator-confirmed) |
 | §2 relay state at power-on | **PASS** (2026-10-21, verified cold boot) |
-| §1 ultrasonic fault injection | **Partly run** — `sensor_lost` flips within ~1 s; wheels-stop under a forward command not yet observed |
+| §1 ultrasonic fault injection | **PASS** (2026-10-23, sensor loss injected in software — the sensor shares the motors' power switch and is soldered in): forward refused 1.09 s after the fault, reverse still allowed, forward restored 0.14 s after recovery — read off the motor-driver pins (`results/rover_tests/20261021_fault_injection/FAULT_INJECTION_SUMMARY.md`) |
 | §3 plant frame | **Done** — 32 rover-camera frames of the real plant (pilot, `camera_sessions/20261021_pilot_P01*/frames/`, on disk, not in git) |
 | §3 camera height | **Done** — lens 24.5 cm above the ground (operator: "24.5 cm is the height of the camera in the rover"); artefact `results/rover_artifacts/20261021_041635/` |
 | AUTO on the real plant | **Done** — 29 fires in 91 s, all 29 seen on the relay pin; stops when the lens is covered; with the plant removed it stops against a plain white background but keeps firing at a wooden door (`results/rover_tests/20261021_auto_on_plant/SUMMARY.md`) |
