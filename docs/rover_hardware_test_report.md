@@ -12,8 +12,10 @@
 | §3 camera height | **Done** — lens 24.5 cm above the ground (operator: "24.5 cm is the height of the camera in the rover"); artefact `results/rover_artifacts/20261021_041635/` |
 | AUTO on the real plant | **Done** — 29 fires in 91 s, all 29 seen on the relay pin; stops when the lens is covered; with the plant removed it stops against a plain white background but keeps firing at a wooden door (`results/rover_tests/20261021_auto_on_plant/SUMMARY.md`) |
 | Raspberry Pi's own power | **Measured** (2026-10-23, from the Pi 5's power chip, nothing moving): about 1.7–2 W with the camera server running, about 4.8 W with all four cores busy; 5 V input ≥ 4.95 V, never throttled (`results/rover_tests/20261023_pi_power/SUMMARY.md`) |
-| Pump with water; motor / pump / camera draw; battery capacity | **NOT RUN** |
-| Camera reliability | after a reopen the camera twice stuck into stripes and once lost its blue channel; each cleared only by a power cycle; all three now detected as camera faults (no spray) |
+| Pump with water | **Done** (2026-10-23, operator-confirmed: "pump ran, water out") — four 1 s relay pulses with the pump on water, nozzle into a cup; pulse length 1.00–1.01 s on the relay pin. Dose per pulse **not measured** |
+| Motor / relay / pump load on the Pi's 5 V input | **Measured** (2026-10-23, wheels in the air, 35 % duty): no sag beyond 0.01 V. The motor and pump current does not reach the Pi's input, so a motor start or pump pulse did not brown out the Pi (`results/rover_tests/20261023_pi_power/SUMMARY.md`) |
+| Motor / pump / camera current; battery capacity; dose per pulse; loaded drive on the floor | **NOT RUN** — needs an inline meter or a current sensor |
+| Camera reliability | after a reopen the camera has stuck into stripes three times (the third on 2026-10-23, switching back to view-only after the load test) and once lost its blue channel; each cleared only by a power cycle; all are detected as camera faults (no spray). Not every reopen fails: the switch to control on 2026-10-23 came up clean |
 | Obstacle stop | works, but only saw one obstacle at ~4 cm (rover contacted it, 2026-10-21) — a backstop, not a guarantee |
 
 Rover left in its safe default: view-only server running and enabled at boot; control server
@@ -214,7 +216,7 @@ thesis claim may rest on it.
 | Component | Why it could not be verified |
 |---|---|
 | battery / power draw | not measured on 2026-10-16. On 2026-10-23 only the Pi's own power was measured, from its power chip (`results/rover_tests/20261023_pi_power/SUMMARY.md`). The motors, pump and camera have no current figure, and the battery has no Wh or run-time figure |
-| pump (as distinct from its relay) | the relay switches correctly, but the pump outlet was disconnected, so the pump itself was not run |
+| pump (as distinct from its relay) | not run on 2026-10-16 (outlet disconnected). **Run with water on 2026-10-23** (operator-confirmed); its dose per pulse and current remain unmeasured |
 
 All five isolation-test subsystems (platform, camera, ultrasonic, relay, motors) were verified
 this session; the rows above are the parts that remain unverified.
