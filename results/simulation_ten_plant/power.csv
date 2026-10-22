@@ -1,0 +1,11 @@
+mode,condition,median_difference,difference_2.5%,difference_97.5%,power_lo_above_0,median_interval_width,median_missed_gated,median_missed_spatial
+identical,distance_angle,0.053,0.0,0.186,0.336,0.123,0.067,0.0
+identical,harsh_light,0.0,0.0,0.0,0.0,0.0,0.029,0.029
+identical,low_light,0.24,0.067,0.48,0.921,0.419,0.254,0.0
+identical,normal,0.014,0.0,0.067,0.028,0.046,0.029,0.0
+identical,occlusion,0.0,0.0,0.031,0.0,0.0,0.04,0.04
+independent,distance_angle,0.062,0.014,0.125,0.703,0.101,0.071,0.012
+independent,harsh_light,0.0,0.0,0.0,0.0,0.0,0.031,0.031
+independent,low_light,0.25,0.143,0.373,1.0,0.26,0.267,0.013
+independent,normal,0.014,0.0,0.047,0.108,0.046,0.038,0.014
+independent,occlusion,0.0,0.0,0.014,0.0,0.0,0.067,0.062

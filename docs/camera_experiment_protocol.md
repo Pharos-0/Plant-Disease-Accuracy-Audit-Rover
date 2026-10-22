@@ -306,3 +306,24 @@ classifier; see `demo/rover_camera.py`).
 
 All are covered by tests (`tests/test_camera_analysis.py`, `test_rover_camera.py`,
 `test_spatial_policy.py`, `test_rover_control_server.py`).
+
+## 12. Prospective power of the planned session — a simulation (2026-10-23)
+
+**Not a result of the session, which has not been run.** No plant was photographed for this and
+no diagnosis is assumed for any real plant. `scripts/simulate_ten_plant_session.py` assembled
+1,000 simulated sessions of exactly the §2/§10 size (6 diseased + 4 healthy plants, 2–3 leaves,
+≤ 5 frames per leaf per condition) from the dry run's real, dataset-labelled photographs and the
+decisions already logged for them (`dryrun_v3`), and ran the pre-registered analysis
+(`policy_comparison`, plant-level intervals) on each. The photographs carry no plant identity, so
+two bounds: a plant's leaves are different photographs (optimistic) or one photograph repeated
+(pessimistic).
+
+| Low light (the pre-registered claim) | Median gated − spatial | 95% of sessions | Power: interval above 0 | Median interval width |
+|---|---:|---|---:|---:|
+| independent leaves | +25.0 points | 14.3 – 37.3 | **100%** | 26 points |
+| identical leaves | +24.0 points | 6.7 – 48.0 | **92%** | 42 points |
+
+Other conditions: distance/angle +5–6 points (power 34–70%); normal, harsh light and occlusion
+≈ 0 (no policy difference to detect). **Reading:** if real captures behave like the dry run, the
+planned session is adequately powered for its primary claim. If they do not, that is what the
+session is for. Results: `results/simulation_ten_plant/`.
