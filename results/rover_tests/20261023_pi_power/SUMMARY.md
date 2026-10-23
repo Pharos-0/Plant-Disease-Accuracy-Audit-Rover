@@ -106,3 +106,5 @@ measured either.
 **Camera:** the camera survived the switch to `rover-control` (no fault in telemetry), but on
 the switch back to view-only it came up with stuck stripes. The guard detected it
 (`is_stuck_stripes` = True on `/raw`). As before, only a Pi power-cycle clears it.
+
+**Cleared:** the operator power-cycled the Pi. On the next boot, three `/raw` frames passed both checks (no stripes, no dead channel; channel means 69–72) and differed from one another (live). The rover is back in its safe default.
