@@ -72,7 +72,7 @@ plus the full rail sum every 0.25 s. Raw data: `load_sag_run1.jsonl` (wheels + 2
 
 | Run | Wheels | Relay pulses on the pin |
 |---|---|---|
-| 1 | forward 3.0 s, then back 3.0 s; stopped ≈ 0.23 s after the last drive command (dead-man) | 1.008 s, 1.011 s |
+| 1 | forward 3.0 s, then back 3.0 s; stopped ≈ 0.23 s after each driving phase ended, i.e. within the 0.4 s dead-man hold of the last command (commands were re-sent every 0.15 s; the send times were not logged) | 1.008 s, 1.011 s |
 | 2 | stopped throughout | 1.004 s, 1.010 s |
 
 Both runs ended stopped, disarmed and with the relay released.
