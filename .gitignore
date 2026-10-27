@@ -19,9 +19,17 @@ PC-handoff/
 
 # Rover-view tomato dataset: image bytes and cached archives live on the dataset
 # volume (see dataset/config.yaml). Only scripts, metadata and documentation are
-# tracked. A sample grid under documentation/ is small and IS tracked.
+# tracked. The sample grids show third-party dataset images whose licences were not
+# checked, so they stay local.
 dataset/raw/
 dataset/processed/
+dataset/documentation/samples/
+
+# Word lock files and LaTeX build leftovers
+~$*
+paper*/build/inter/
+paper*/build/*.log
+paper*/build/*.blg
 
 # Camera sessions: logs and analysis are tracked; captured frames are personal
 # images and stay local unless deliberately added.

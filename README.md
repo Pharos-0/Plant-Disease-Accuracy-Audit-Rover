@@ -1,97 +1,124 @@
-# Unsupervised Accuracy Estimation under Agricultural Laboratory-to-Field Shift
+# Plant-Disease Accuracy Audit Rover
 
-*Also called label-free accuracy estimation. We lead with "unsupervised" because in
-agriculture "label-free" denotes dye-free biosensing — see `docs/litsearch_scopus.md`.*
+**From laboratory images to a sprayer rover.** This project audits nine label-free accuracy
+estimators across 20 plant-disease classifiers under laboratory-to-field distribution shift,
+using 5,039 labeled tomato images. It also includes a Raspberry Pi 5 sprayer rover, fail-safe
+control software, hardware tests and a digital twin for evaluating controller behavior.
 
-M.Tech research project. **Status: research complete, ready for thesis writing.**
+M.Tech research project, Department of Data Science and Business Systems, SRM Institute of
+Science and Technology (SRM IST), Kattankulathur.
+Author: **Pharos Sophy Samuel T J**. Guide: **Dr. S. Ganesh Kumar**.
 
 ---
 
-## What this asks
+## The paper
 
-A plant-disease classifier trained on laboratory imagery is ~96% accurate there and ~50%
-accurate on real field photographs. You cannot measure that drop without field labels, which
-is exactly what deployment lacks. **Label-free accuracy estimation** claims to estimate a
-fixed model's accuracy on unlabelled data. Does it work under real agricultural shift — and
-how much of such an estimate actually depends on the field data at all?
+*From Laboratory Images to a Sprayer Rover: Auditing Unsupervised Accuracy Estimation of
+Plant-Disease Classifiers under Laboratory-to-Field Shift*, IEEE two-column format.
 
-## Why it matters
+- PDF: [`paper3/build/main.pdf`](paper3/build/main.pdf) (8 pages)
+- Word: [`paper3/main.docx`](paper3/main.docx)
+- Sources, build steps and where every number comes from: [`paper3/README.md`](paper3/README.md)
 
-An autonomous rover deciding whether to spray needs to know whether to trust its classifier.
-If the estimate is really an echo of laboratory calibration, trusting it is unsafe.
+## The question
 
-## Datasets
+A plant-disease classifier trained on laboratory photographs is about 96% accurate there and
+about 50% accurate on real field photographs. Measuring that drop needs labeled field images,
+which a deployed system does not have. **Unsupervised (label-free) accuracy estimators** claim
+to estimate a classifier's accuracy from unlabeled images alone. This project asks whether
+they work under a real agricultural shift. It then asks what a sprayer should do if they don't.
 
-| arm | role | photographs | crops | classifier accuracy |
-|---|---|---:|---:|---:|
-| PlantVillage (source) | training / calibration | — | — | — |
-| `source_test` | zero-shift control | 109 | 435 | **0.962** |
-| PlantDoc | severe shift (web imagery) | 262 | 262 | **0.503** |
-| Tomato-Village | severe shift (real Indian field) | 391 | 1,616 | **0.500** |
+## Data and models
 
-Label set `SHARED_3`. Sampling is **always at photograph level** — 1,616 crops come from
-only 391 photographs, and treating crops as independent would inflate everything downstream.
+| dataset | role | images analyzed |
+|---|---|---|
+| PlantVillage, tomato | source: training, calibration, laboratory test | 2,918 images of 730 leaves |
+| PlantDoc | field target (scene shift) | 262 |
+| Tomato-Village | field target (acquisition shift, Rajasthan) | 1,616 crops from 391 photographs |
+| Pakistan field set | fourth target, added after the main study | 243 |
+| Rover camera | deployment test on one tomato plant | 92 frames |
 
-## Models
+- **Classes:** three, the only ones that mean the same disease in every dataset: healthy,
+  early blight and late blight.
+- **Splits and sampling:** splits are by physical leaf, and sampling is always by photograph.
+- **Leakage control:** enforced in code. No estimator can reach a target label.
+- **Classifiers:** 20 = 4 architectures × 5 seeds. The architectures are ResNet-50,
+  EfficientNet-B0, MobileNetV3-Large and ViT-S/16.
+- **Estimators:** 9, covering every main family. They are Confidence, Entropy, ATC-MC,
+  ATC-NE, DoC, COT, nuclear norm, MaNo and GdScore. In total 94,160 estimates were scored.
 
-20 frozen classifiers: **4 architectures × 5 seeds** — ResNet-50, EfficientNet-B0,
-MobileNetV3-Large, ViT-S/16. They are not 20 independent datasets.
+## Key results
 
-## Estimators
-
-Nine: `confidence`, `entropy`, `atc_mc`, `atc_ne`, `doc`, `cot`, `nuclear_norm`, `mano`,
-`gdscore`. This is a **sample** of the field, not the state of the art — at least twenty
-methods exist. Selection is justified in `docs/estimator_selection.md`, which separates
-principled exclusions from ignorance.
-
-## Key findings
-
-1. **They do not work well here.** Best MAE **0.1337** (entropy); none beats an oracle
-   constant at **0.0610**.
-2. **Most are not listening to the field.** Six of nine move **4–14× more** under source
-   resampling than target resampling; four change by only 0.06–0.11 when the target is
-   replaced by random logits.
-3. **The relationship between target responsiveness and error reverses with shift
-   severity** — +0.40/+0.44/+0.45 on the zero-shift arm versus −0.28 to −0.51 on both field
-   arms, at every feasible sample size (paired *p* = 1e-4 to 1e-6).
-4. **More unlabelled data does not help under shift** — Tomato-Village +0.0137 MAE going
-   from 25 to 200 photographs, 2 of 9 estimators improved; under zero shift, 8 of 8 improved.
-5. **No signal ranks field sessions usefully** for a fixed model (best Spearman 0.22), so a
-   deployment gate cannot enable autonomy.
-6. **~10–50 labelled photographs beat every label-free estimator** in this setting.
+1. **The shift is severe.** Accuracy falls from 0.962 in the laboratory to 0.503 (PlantDoc),
+   0.500 (Tomato-Village) and 0.360 (Pakistan).
+2. **No estimator beats an oracle constant.** On Tomato-Village the best estimator errs by
+   0.134, against 0.061 for the constant.
+3. **Most estimators are not reading the field.** A Sobol' variance audit shows six of the nine
+   responding 4–14 times more to their laboratory calibration than to the field images.
+4. **Responsiveness and error reverse their relation under shift**, at every sample size.
+5. **More unlabeled data does not help, and neither does per-image confidence.** Confidence
+   flags field errors only weakly (AUROC 0.57–0.67).
+6. **Ten labeled field photographs beat every estimator.**
 
 ## The rover
 
-A **deployment case study**, not a contribution. Runtime perception monitoring is
-established in automotive and rail. Two modes:
+A Raspberry Pi 5 rover with a USB camera, an ultrasonic range sensor, a relay-switched pump and
+four motors. The control software is in [`rover/`](rover/).
 
-- **NORMAL** — classifier → downstream autonomous action; works with the research module off.
-- **RESEARCH** — session gate → OPERATE / REVIEW / WITHHOLD; refuses per-image queries by
-  construction.
+- **The spray rule:** it sprays wherever the camera sees plant tissue, and never lets an
+  unverified classifier withhold spray.
+- **Fail-safes:** forward motion is refused near an obstacle or when the range sensor is lost.
+  The relay is released at power-on and on STOP. Faulty camera frames are rejected.
+- **Tests on the robot:** 29 of 29 automatic spray commands reached the relay. Forward motion
+  was refused 1.09 s after an injected sensor loss.
+- **Dry run on 1,800 edited photographs:** letting the classifier withhold spray missed 26.6% of
+  diseased leaves in low light. The rover's rule missed 1.6%.
+- **Digital twin** ([`rover/digital_twin.py`](rover/digital_twin.py)): a nine-state controller
+  design held its safety invariants over 160,000 fuzzed commands and 600 injected faults. A
+  label-free gate inside it never withheld, even as true accuracy fell to 0.533.
 
-**Deployment recommendation: do not enable autonomous spraying under this shift.**
+**Environmental benefit (estimated).** In simulation over real open-field images, a
+crop-targeting controller design cut estimated pesticide use by 62.5% (95% interval
+53.0–71.7%). It still treated 98.4% of the zones designated diseased, so less chemical would
+reach soil and water.
+
+**Not yet shown.** The rover is operator-driven. It has pumped water but no pesticide, and it
+has not been field-tested. Spray dose per pulse, currents and battery life are not measured.
+The full controller has run only in the twin.
+
+## Repository map
+
+| folder | contents |
+|---|---|
+| `paper3/` | **the final paper** (IEEE): source, figures, PDF, Word |
+| `thesis/` | M.Tech thesis (LaTeX source and PDF) |
+| `paper/`, `paper2/` | earlier manuscripts: the estimator study and the rover paper |
+| `src/` | data layer, estimators, sessions, evaluation, training, inference |
+| `rover/` | on-robot control software, spray rule, controller, digital twin, hardware tests |
+| `scripts/` | experiments, analyses, figure and manuscript builders |
+| `results/` | committed results with provenance manifests |
+| `camera_sessions/` | logs and analyses of the rover-camera sessions (frames stay local) |
+| `docs/` | protocols, audits, claim-evidence table, dataset class mapping |
+| `tests/` | test suite (`pytest`: 382 passed, 1 skipped) |
 
 ## Reproduce
 
-**Fast validation** (~1 minute, no GPU) — verifies committed results and runs the test suite:
+Fast validation (about a minute, no GPU) checks the committed results against their sources:
 
 ```bash
 python scripts/run_all_validations.py
+python -m pytest -q
 ```
 
-**Rover demonstration** (~10 seconds, replays cached real data):
+Rebuild the paper's figures and bibliography from the committed results:
 
 ```bash
-python scripts/run_rover_demo.py
+python scripts/make_paper3_assets.py
 ```
 
-**Regenerate figures and tables** (~1 minute):
+The steps that build the PDF and the Word file are in [`paper3/README.md`](paper3/README.md).
 
-```bash
-python scripts/make_thesis_figures.py && python scripts/make_thesis_tables.py
-```
-
-**Full reproduction** (hours, GPU required) — training, caching, then the experiments:
+Full reproduction takes hours and needs a GPU: training, caching, then the experiments.
 
 ```bash
 python scripts/run_training.py --stage v1v2
@@ -101,39 +128,20 @@ python scripts/ti_audit.py --n-boot 100 --arms source_test,plantdoc,tomatovillag
 python scripts/ti_sample_size.py && python scripts/gate_evaluation.py
 ```
 
-Every experiment writes a manifest with git commit, seeds, package versions, hardware and
-cache fingerprints. **Cached results are never presented as freshly reproduced.**
+Every experiment writes a manifest with the git commit, seeds, package versions and cache
+fingerprints.
 
-## Expected outputs
+## Data availability
 
-`results/figures/` — 31 figures · `results/tables/thesis/` — 12 tables (CSV + Markdown) ·
-`results/<experiment>/manifest*.json` — provenance · **136 passing tests**.
+The image datasets are **not redistributed** here. Download them from their publishers:
+PlantVillage, PlantDoc, Tomato-Village and the Pakistani field deposit. The citations are in
+the paper. Code, results, manifests and dataset metadata are included. Rover-camera frames
+are kept private.
 
 ## Limitations
 
-One source dataset, one crop, three target arms, 20 models, 5 seeds per architecture.
-**N = 400 does not exist on any arm**; `source_test` has no N = 200; GdScore needs ≥128
-crops so some cells are absent. TI is a first-order Sobol index — **not a new metric** — and
-is **not comparable across sample sizes**. Scopus, Web of Science, IEEE Xplore and ACM DL
-were **not searched** (no institutional access). No validated disease→chemical mapping. No
-field trial; no demonstrated safe autonomous spraying. No new estimator — one was built and
-rejected on its own evidence.
-
-## Never claimed
-
-A new estimator · a new metric · "first" anything · per-image correctness · that label-free
-estimation fails in general · universal agricultural performance · validated treatment
-mapping · safe autonomous spraying.
-
-## Where to look
-
-| question | file |
-|---|---|
-| Thesis outline, abstract, RQ answers | `docs/thesis/THESIS_OUTLINE_AND_ABSTRACT.md` |
-| Every claim and its evidence | `docs/CLAIM_EVIDENCE_TABLE.md` |
-| What was tried and rejected | `docs/WHAT_WE_TRIED_AND_REJECTED.md` |
-| Final contribution statement | `docs/THESIS_CONTRIBUTION_FINAL.md` |
-| Rover evaluation | `docs/ROVER_RESEARCH_INTEGRATION.md` |
-| Literature search | `docs/litsearch_results.md` |
-| Viva preparation | `docs/VIVA_QUESTIONS_AND_ANSWERS.md` |
-| Project status | `docs/PROJECT_COMPLETION_STATUS.md` |
+- One crop, three classes and one source dataset.
+- Four targets, one of them only partially independent.
+- The 20 classifiers are 4 architectures × 5 seeds, not 20 independent models.
+- The rover case study rests on one plant without a confirmed diagnosis.
+- The pesticide savings are simulated decisions, not measured chemical use.
