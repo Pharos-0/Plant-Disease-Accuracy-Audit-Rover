@@ -94,7 +94,7 @@ The full controller has run only in the twin.
 | `results/` | committed results with provenance manifests |
 | `camera_sessions/` | logs and analyses of the rover-camera sessions (frames stay local) |
 | `docs/` | protocols, audits, claim-evidence table, dataset class mapping |
-| `tests/` | test suite (`pytest`: 382 passed, 1 skipped) |
+| `tests/` | test suite (`pytest`); tests that need the datasets or trained weights skip without them |
 
 ## Reproduce
 
