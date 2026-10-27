@@ -4,7 +4,7 @@ PlantDoc filenames are scraped web URLs and 20 of the 747 tomato files contain
 characters ( ? : * < > | " ) that NTFS refuses, which makes `git checkout` abort
 the whole worktree. We therefore pull the zipball and extract only the tomato
 entries, sanitising illegal characters and recording the original -> written
-name map so provenance stays traceable (MASTER_PROMPT sections 14-15).
+name map so provenance stays traceable (study protocol).
 """
 from __future__ import annotations
 

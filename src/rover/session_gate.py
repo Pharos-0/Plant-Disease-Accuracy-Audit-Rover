@@ -1,6 +1,6 @@
 """Session-level deployment gate.
 
-THE CONCEPTUAL CONSTRAINT (MASTER_PROMPT section 2). ATC, DoC, MaNo and COT
+THE CONCEPTUAL CONSTRAINT (study protocol). ATC, DoC, MaNo and COT
 estimate accuracy over a **dataset / session**. They do not produce a per-image
 correctness probability. This module therefore refuses to answer questions about
 a single image:

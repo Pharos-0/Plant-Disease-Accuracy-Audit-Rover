@@ -1,6 +1,6 @@
 """The leakage firewall, enforced in code rather than by discipline.
 
-MASTER_PROMPT section 5:
+Study protocol (leakage control):
 
     src/estimators/  MAY see: source val labels, source+target logits/features.
                      NEVER target labels.

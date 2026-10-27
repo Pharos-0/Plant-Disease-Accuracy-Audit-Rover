@@ -1,4 +1,4 @@
-"""Per-component isolation tests for the rover (MASTER_PROMPT section 9).
+"""Per-component isolation tests for the rover (study protocol).
 
 Run each subsystem **on its own, before any ML integration**. A failing relay or a
 dead camera must be found here, not inside a session-gating experiment.

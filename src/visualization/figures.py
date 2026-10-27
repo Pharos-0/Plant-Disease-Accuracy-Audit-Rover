@@ -1,4 +1,4 @@
-"""Figures, generated from logged results only (MASTER_PROMPT section 15).
+"""Figures, generated from logged results only (study protocol).
 
 Every function here reads a table written by ``run_evaluation.py`` or a run
 manifest. Nothing is hand-drawn and no number is typed in.

@@ -1,7 +1,7 @@
 """Scoring estimates against the truth.
 
 This module MAY read target labels. It runs strictly after estimates are written
-to ``results/raw/estimates/`` (MASTER_PROMPT section 5). Nothing here may be
+to ``results/raw/estimates/`` (study protocol). Nothing here may be
 imported by ``src/estimators/`` - the firewall test enforces that.
 """
 from __future__ import annotations

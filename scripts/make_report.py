@@ -5,7 +5,7 @@ without target labels?*
 
 Every number is read from the tables produced by ``run_evaluation.py``. Nothing
 is typed in by hand, so the report cannot drift from the runs it describes
-(MASTER_PROMPT section 15).
+(study protocol).
 """
 from __future__ import annotations
 

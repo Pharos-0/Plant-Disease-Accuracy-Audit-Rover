@@ -1,6 +1,6 @@
 """Leaf-crop proposal, tested offline against real field frames.
 
-MASTER_PROMPT §11 step 13 requires the rover modules to be "offline-tested against
+The study protocol requires the rover modules to be "offline-tested against
 saved frames" before they go near hardware. Tomato-Village is real Rajasthan field
 photography, so it stands in for rover frames until arm E imagery exists.
 

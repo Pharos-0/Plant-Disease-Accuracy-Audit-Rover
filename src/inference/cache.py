@@ -1,6 +1,6 @@
 """Stage 2 - cache logits and penultimate features for every model x domain pair.
 
-This is the load-bearing engineering decision (MASTER_PROMPT section 6). Training
+This is the load-bearing engineering decision (study protocol). Training
 happens once; estimator evaluation happens hundreds of thousands of times. Once
 logits and features are on disk, every estimator, session, N and seed downstream
 is array arithmetic.

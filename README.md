@@ -11,14 +11,10 @@ Author: **Pharos Sophy Samuel T J**. Guide: **Dr. S. Ganesh Kumar**.
 
 ---
 
-## The paper
+## Publication
 
-*From Laboratory Images to a Sprayer Rover: Auditing Unsupervised Accuracy Estimation of
-Plant-Disease Classifiers under Laboratory-to-Field Shift*, IEEE two-column format.
-
-- PDF: [`paper3/build/main.pdf`](paper3/build/main.pdf) (8 pages)
-- Word: [`paper3/main.docx`](paper3/main.docx)
-- Sources, build steps and where every number comes from: [`paper3/README.md`](paper3/README.md)
+A manuscript on this work is under submission. It is not in this repository while it is
+under review; this repository holds the code, results and rover software behind it.
 
 ## The question
 
@@ -90,12 +86,11 @@ The full controller has run only in the twin.
 
 | folder | contents |
 |---|---|
-| `paper3/` | **the final paper** (IEEE): source, figures, PDF, Word |
-| `thesis/` | M.Tech thesis (LaTeX source and PDF) |
-| `paper/`, `paper2/` | earlier manuscripts: the estimator study and the rover paper |
 | `src/` | data layer, estimators, sessions, evaluation, training, inference |
 | `rover/` | on-robot control software, spray rule, controller, digital twin, hardware tests |
-| `scripts/` | experiments, analyses, figure and manuscript builders |
+| `scripts/` | experiments, analyses, figures and tables |
+| `dataset/` | dataset scripts, metadata and documentation (no images) |
+| `demo/` | camera and live-sprayer demos |
 | `results/` | committed results with provenance manifests |
 | `camera_sessions/` | logs and analyses of the rover-camera sessions (frames stay local) |
 | `docs/` | protocols, audits, claim-evidence table, dataset class mapping |
@@ -109,14 +104,6 @@ Fast validation (about a minute, no GPU) checks the committed results against th
 python scripts/run_all_validations.py
 python -m pytest -q
 ```
-
-Rebuild the paper's figures and bibliography from the committed results:
-
-```bash
-python scripts/make_paper3_assets.py
-```
-
-The steps that build the PDF and the Word file are in [`paper3/README.md`](paper3/README.md).
 
 Full reproduction takes hours and needs a GPU: training, caching, then the experiments.
 
@@ -134,9 +121,11 @@ fingerprints.
 ## Data availability
 
 The image datasets are **not redistributed** here. Download them from their publishers:
-PlantVillage, PlantDoc, Tomato-Village and the Pakistani field deposit. The citations are in
-the paper. Code, results, manifests and dataset metadata are included. Rover-camera frames
-are kept private.
+PlantVillage, PlantDoc, Tomato-Village and the Pakistani field deposit (Mendeley Data,
+doi:10.17632/3mbnb82mxd.2). Their sources and the class mapping are in
+[`docs/dataset_class_mapping.md`](docs/dataset_class_mapping.md). Code, results, manifests and
+dataset metadata are included. Rover-camera frames and the literature-search records (which
+contain publishers' abstracts) are kept private.
 
 ## Limitations
 

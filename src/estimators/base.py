@@ -1,6 +1,6 @@
 """Estimator interface and the label-free contract.
 
-LEAKAGE FIREWALL (MASTER_PROMPT section 5). Everything in ``src/estimators/``
+LEAKAGE FIREWALL (study protocol). Everything in ``src/estimators/``
 may see source validation labels and source/target logits and features. It may
 **never** see target labels. The contract is structural, not a convention:
 ``Estimator.estimate`` is handed target logits and features and nothing else,

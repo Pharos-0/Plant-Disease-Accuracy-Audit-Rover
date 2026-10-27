@@ -1,6 +1,6 @@
 # Stop Condition F — investigation
 
-MASTER_PROMPT §12:
+Study protocol:
 
 > | After | Stop if |
 > |---|---|

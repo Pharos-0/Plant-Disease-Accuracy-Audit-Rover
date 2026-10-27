@@ -1,6 +1,6 @@
 """Measure how far each target domain actually sits from the source.
 
-MASTER_PROMPT section 6 is explicit: the arms represent different *types* of
+The study protocol is explicit: the arms represent different *types* of
 shift and must not be assumed to form an increasing severity ordering.
 Whether an ordering exists is measured here, on penultimate features, and
 reported as a result.

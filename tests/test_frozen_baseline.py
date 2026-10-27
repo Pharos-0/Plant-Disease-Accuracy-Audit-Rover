@@ -1,7 +1,7 @@
 """The V0 baseline must stay byte-identical, and the audit must stay true to it.
 
-`START_HERE.txt`: *"web_rover.py must remain byte-identical … Every rover
-before/after number is measured against this exact file."* The usual way it gets
+The rule: web_rover.py must remain byte-identical, because every rover
+before/after number is measured against this exact file. The usual way it gets
 corrupted on Windows is line-ending conversion, so `.gitattributes` marks it
 `-text` and this test is the tripwire.
 

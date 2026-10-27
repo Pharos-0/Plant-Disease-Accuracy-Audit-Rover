@@ -9,7 +9,7 @@ it is and bias every estimate optimistically.
 
 Sessions at large N necessarily overlap: Tomato-Village's SHARED_3 subset holds
 1,616 images but only 391 distinct photographs. That overlap is measured and
-reported here rather than hidden (MASTER_PROMPT section 6).
+reported here rather than hidden (study protocol).
 """
 from __future__ import annotations
 

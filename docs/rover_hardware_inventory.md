@@ -3,7 +3,7 @@
 **Status: PARTIAL — populated from photographs 2026-09-08. No component has been
 functionally tested.**
 
-MASTER_PROMPT §9 is explicit and the distinction governs this whole document:
+The study protocol is explicit and the distinction governs this whole document:
 
 > A component visible in a photograph is *present*, not *working*.
 

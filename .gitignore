@@ -11,11 +11,53 @@ results/raw/**/*.npz
 # hardware-probe evidence frames, written by rover/hardware_tests on every run
 rover_camera_sample_*.jpg
 
-# Transport bundle pasted in on 2026-09-28. Its whole content is committed in
-# literature/ (verified an identical tree) plus CAMPUS_SESSION_HANDOFF.md and
-# literature/BUNDLE_README.md, so tracking it too would duplicate a 2.8 MB tree.
-# Kept on disk; see docs/CAMPUS_HANDOFF_INTEGRATION.md.
+# Transport bundle from another machine; kept on disk only.
 PC-handoff/
+
+# Manuscripts under submission, the thesis and their working notes stay on this
+# computer until they are published.
+paper/
+paper2/
+paper3/
+thesis/
+docs/thesis/
+docs/PAPER_*.md
+docs/PPT_STRUCTURE.md
+docs/VIVA_QUESTIONS_AND_ANSWERS.md
+docs/FINAL_THESIS_FRAMING_READINESS.md
+docs/THESIS_CONTRIBUTION_FINAL.md
+docs/FINAL_PROJECT_DECISION.md
+scripts/make_ieee_docx.py
+scripts/tex_to_docx.py
+scripts/word_to_pdf.ps1
+scripts/make_icabdai_abstract.py
+scripts/make_paper2_assets.py
+scripts/make_paper3_assets.py
+scripts/make_paper3_figures.py
+scripts/make_paper_new_figures.py
+scripts/make_thesis_doc_figures.py
+scripts/make_rover_figure.py
+scripts/make_viva_qualitative_figure.py
+# a grid of dataset photographs (licences unchecked, like the sample grids)
+results/figures/viva_qualitative_shift.png
+
+# Working notes, session handoffs and superseded status summaries
+MASTER_PROMPT.md
+CAMPUS_SESSION_HANDOFF.md
+START_HERE.txt
+SOFTWARE_PROJECT_SUMMARY.md
+PROJECT_STATUS.md
+research_log.md
+reports/
+docs/CAMPUS_HANDOFF_INTEGRATION.md
+docs/PROJECT_STATUS.md
+docs/PROJECT_COMPLETION_STATUS.md
+
+# Literature-search records hold third-party abstracts, so they stay local; the
+# search scripts in scripts/litsearch*.py regenerate them.
+literature/
+results/litsearch/
+results/litsearch_paper2/
 
 # Rover-view tomato dataset: image bytes and cached archives live on the dataset
 # volume (see dataset/config.yaml). Only scripts, metadata and documentation are
@@ -25,20 +67,12 @@ dataset/raw/
 dataset/processed/
 dataset/documentation/samples/
 
-# Word lock files and LaTeX build leftovers
+# Word lock files
 ~$*
-paper*/build/inter/
-paper*/build/*.log
-paper*/build/*.blg
 
 # Camera sessions: logs and analysis are tracked; captured frames are personal
 # images and stay local unless deliberately added.
 camera_sessions/*/frames/
-
-# Paper 2 literature search: per-query raw records (12.7 MB) are local only;
-# unique_records.csv holds every retrieved work after deduplication.
-results/litsearch_paper2/raw_records.csv
-results/litsearch_paper2/supplement/raw_records.csv
 
 # rover-camera artefact photos show the room; kept on disk only, like session frames
 results/rover_artifacts/*/*.jpg

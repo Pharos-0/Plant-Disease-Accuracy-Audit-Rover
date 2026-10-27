@@ -1,4 +1,4 @@
-"""Run manifests (MASTER_PROMPT section 15).
+"""Run manifests (study protocol).
 
 Every run writes ``results/raw/<version>/manifest.json`` carrying the seed, the
 full config, the git commit, package versions, dataset checksums and metrics.

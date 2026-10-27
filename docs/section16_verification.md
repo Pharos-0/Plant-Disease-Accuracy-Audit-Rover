@@ -1,6 +1,6 @@
 # §16 Verification — the four items left open at handoff
 
-MASTER_PROMPT §16 lists four unresolved checks, "cheap and one is load-bearing".
+The study protocol lists four unresolved checks, "cheap and one is load-bearing".
 This document resolves three of them and records why the fourth is blocked.
 
 **Headline: the load-bearing item is FALSIFIED.** The FBR-UDA paper does not make
@@ -48,7 +48,7 @@ evaluation is.
 ### The replacement motivation
 
 The thesis does not need repair, only a correction of which sentence carries the
-weight. MASTER_PROMPT §1 already states the true claim:
+weight. The study protocol already states the true claim:
 
 > Everyone who has measured that collapse used **labeled** field test sets — which
 > a deployed machine never has.
@@ -146,7 +146,7 @@ to be checked carefully. It does **not** pre-empt it:
 
 - Its gate is **per-sample** — `π_τ(x) = 1 if u(x) ≤ τ else 0`, applied to each input.
 - It uses **per-sample uncertainty to defer**, which is *selective prediction* — the
-  exact confusion MASTER_PROMPT §2 forbids, at the exact granularity we refuse.
+  exact confusion the study protocol forbids, at the exact granularity we refuse.
 - It employs **no dataset-level label-free accuracy estimator** of any kind.
 - Domain is temporal activity recognition (EGO4D, iAssist, GTEA), not agriculture.
 

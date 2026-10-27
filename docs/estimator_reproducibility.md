@@ -1,6 +1,6 @@
 # Estimator Reproducibility
 
-One row per estimator, with an honest reproduction level (MASTER_PROMPT section 8).
+One row per estimator, with an honest reproduction level (study protocol).
 
 | Level | Meaning |
 |---|---|

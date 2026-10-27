@@ -1,6 +1,6 @@
 """Check our ATC against the official release.
 
-MASTER_PROMPT section 8 requires the official implementation where one exists.
+The study protocol requires the official implementation where one exists.
 ``find_atc_threshold`` is a vectorised transcription of ``find_ATC_threshold``
 from github.com/saurabhgarg1996/ATC_code; this test loads that file directly
 and asserts the two agree, which is what lets the reproducibility table claim

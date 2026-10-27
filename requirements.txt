@@ -1,4 +1,4 @@
-# Install PyTorch FIRST and SEPARATELY — see MASTER_PROMPT.md section 3.
+# Install PyTorch FIRST and SEPARATELY.
 # Detect the GPU (nvidia-smi), then install a matching torch/torchvision build
 # from the correct PyTorch index. Do NOT `pip install torch` blindly.
 #

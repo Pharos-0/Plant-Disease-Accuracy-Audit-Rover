@@ -77,7 +77,7 @@ pump-with-fluid and battery/power-draw items below remain as stated; and the §1
 §2 relay boot-state and §16 camera-artefact follow-ups are still NOT RUN.
 
 This file records the outcome of **per-component isolation tests**, run *before* any
-ML integration (MASTER_PROMPT §9). The point of testing in isolation is that a
+ML integration (study protocol). The point of testing in isolation is that a
 failing relay or a dead camera must be found here, not inside a session-gating
 experiment where its symptoms would be misread as an estimator problem.
 

@@ -81,6 +81,7 @@ def main() -> int:
              ha="center", fontsize=6.2, color=INK_2)
     fig.tight_layout()
     out = ROOT / "paper" / "figures" / "fig12_openfield.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out, dpi=400, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     print(f"wrote {out.relative_to(ROOT)}")
