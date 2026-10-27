@@ -24,6 +24,8 @@ sys.path.insert(0, str(ROOT / "demo"))
 
 PV = Path(r"C:/ds/plantvillage/raw/color/Tomato___healthy")
 STUCK = ROOT / "tests" / "fixtures" / "rover_stuck_sensor_20261021.jpg"
+#: trained weights the demo loads; too large for git, so a fresh clone lacks them
+WEIGHTS = ROOT / "results" / "raw" / "V9" / "mobilenetv3_large_seed0.pt"
 
 
 def _jpeg(bgr):
@@ -74,7 +76,8 @@ def _act(base, what, value=""):
     return json.loads(urllib.request.urlopen(req, timeout=10).read())
 
 
-pytestmark = pytest.mark.skipif(not PV.exists(), reason="PlantVillage photographs absent")
+pytestmark = pytest.mark.skipif(not (PV.exists() and WEIGHTS.exists()),
+                                reason="PlantVillage photographs or trained weights absent")
 
 
 def test_page_and_frame_are_served(setup):

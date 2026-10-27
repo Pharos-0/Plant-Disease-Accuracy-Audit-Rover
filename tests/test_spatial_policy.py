@@ -25,6 +25,8 @@ import live_sprayer as ls  # noqa: E402
 import spatial_policy as sp  # noqa: E402
 
 PV = Path(r"C:/ds/plantvillage/raw/color")
+#: trained weights the demo loads; too large for git, so a fresh clone lacks them
+WEIGHTS = ROOT / "results" / "raw" / "V9" / "mobilenetv3_large_seed0.pt"
 #: A real frame from the rover's camera on 2026-10-21, with its sensor stuck: static,
 #: perfectly uniform-row stripes - high contrast, so not "blank".
 STUCK = ROOT / "tests" / "fixtures" / "rover_stuck_sensor_20261021.jpg"
@@ -153,7 +155,8 @@ def pipe():
     return ls.SprayPipeline(device="cpu")
 
 
-@pytest.mark.skipif(not PV.exists(), reason="PlantVillage photographs not on this machine")
+@pytest.mark.skipif(not (PV.exists() and WEIGHTS.exists()),
+                    reason="PlantVillage photographs or trained weights not on this machine")
 def test_rover_decision_equals_the_demo_decision_frame_for_frame(pipe):
     frames = _frames()
     deferred_seen = fired_seen = False
